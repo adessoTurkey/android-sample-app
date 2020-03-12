@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Margin Sizes -->
+    <dimen name="margin_xxl">32dp</dimen>
+    <dimen name="margin_extra_large">24dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_extra_small">4dp</dimen>
+
+    <!-- Popular Movie List -->
+    <dimen name="margin_popular_movie_text">10dp</dimen>
+    <dimen name="margin_popular_movie_release">18dp</dimen>
+    <dimen name="elevation_popular_movie_card">8dp</dimen>
+    <dimen name="padding_popular_movie_drawable">5dp</dimen>
+
+    <!-- Chip -->
+    <dimen name="radius_chip">12dp</dimen>
+    <dimen name="padding_horizontal_chip">10dp</dimen>
+    <dimen name="padding_vertical_chip">4dp</dimen>
+
+    <!-- Now Playing Show -->
+    <dimen name="margin_now_playing_page">23dp</dimen>
+    <dimen name="offset_now_playing_page">56dp</dimen>
+    <dimen name="margin_and_offset_now_playing_page">79dp</dimen>
+    <dimen name="margin_now_playing_show_header">112dp</dimen>
+
+    <!-- Top Rated TV Show -->
+    <dimen name="margin_top_rated_tv_show_text">10dp</dimen>
+    <dimen name="margin_top_top_rated_tv_show_rating">13dp</dimen>
+
+    <!-- Show Detail -->
+    <dimen name="margin_show_detail_time">10dp</dimen>
+
+    <!-- Width, Height, Sizes, Percents -->
+    <dimen name="popup_size">70dp</dimen>
+    <dimen name="height_popup_button">56dp</dimen>
+    <dimen name="size_bottom_bar_icon">50dp</dimen>
+
+    <!-- Common sizes -->
+    <dimen name="radius_show_card">8dp</dimen>
+    <dimen name="popup_radius">16dp</dimen>
+    <dimen name="button_radius">12dp</dimen>
+
+    <!--  TEXT  -->
+    <dimen name="button_text_size">20sp</dimen>
+    <dimen name="header_text_size">24sp</dimen>
+    <dimen name="popup_text_size">16sp</dimen>
+
+</resources>

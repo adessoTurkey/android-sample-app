@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="showHeader"
+            type="com.example.movee.uimodel.ShowHeaderUiModel" />
+
+        <variable
+            name="nowPlayingShowCallback"
+            type="com.example.movee.widget.nowplayingshow.NowPlayingShowCallback" />
+
+    </data>
+
+    <merge
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:parentTag="androidx.coordinatorlayout.widget.CoordinatorLayout">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                style="@style/CollapsingToolbar.Show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:expandedTitleMarginStart="@dimen/margin_xxl"
+                app:title="@{showHeader.title}">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    app:layout_scrollFlags="scroll">
+
+                    <com.example.movee.widget.nowplayingshow.NowPlayingShowView
+                        android:id="@+id/now_playing_show_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_now_playing_show_header"
+                        app:callback="@{nowPlayingShowCallback}"
+                        app:submitList="@{showHeader.nowPlayingShows}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_xxl"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginEnd="@dimen/margin_xxl"
+                        android:text="@{showHeader.subtitle}"
+                        android:textAppearance="@style/TextField.Subtitle1" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorPrimary"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </merge>
+
+</layout>

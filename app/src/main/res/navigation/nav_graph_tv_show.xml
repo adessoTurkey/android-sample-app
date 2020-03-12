@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_tv_show"
+    app:startDestination="@id/tvShowFragment">
+
+    <fragment
+        android:id="@+id/tvShowFragment"
+        android:name="com.example.movee.scene.tvshow.TvShowFragment"
+        tools:layout="@layout/fragment_tv_show">
+
+        <action
+            android:id="@+id/to_tv_show_detail"
+            app:destination="@id/tvShowDetailFragment">
+
+            <argument
+                android:name="show"
+                app:argType="com.example.movee.uimodel.ShowUiModel"
+                app:nullable="false" />
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/tvShowDetailFragment"
+        android:name="com.example.movee.scene.tvshowdetail.TvShowDetailFragment"
+        tools:layout="@layout/fragment_tv_show_detail">
+
+        <argument
+            android:name="show"
+            app:argType="com.example.movee.uimodel.ShowUiModel"
+            app:nullable="false" />
+
+    </fragment>
+
+</navigation>

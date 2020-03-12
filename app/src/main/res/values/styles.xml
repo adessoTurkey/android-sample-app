@@ -1,0 +1,194 @@
+<resources>
+
+    <style name="TextField" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="TextField.Header6">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextField.Header5">
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="TextField.Header4">
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="TextField.Subtitle1">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextField.Body1">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextField.Body2">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextField.White" parent="android:Widget.TextView">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextField.Header">
+        <item name="android:textSize">@dimen/header_text_size</item>
+        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="fontFamily">@font/nunito_bold</item>
+    </style>
+
+    <style name="TextField.Header.Black">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/header_text_size</item>
+        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="fontFamily">@font/nunito_bold</item>
+    </style>
+
+    <style name="TextField.Popup">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">@dimen/popup_text_size</item>
+    </style>
+
+    <style name="Button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/background_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="fontFamily">@font/nunito_bold</item>
+    </style>
+
+    <style name="Button.Secondary">
+        <item name="android:background">@drawable/background_secondary_button</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextField.ListItem"/>
+
+    <style name="TextField.ListItem.PopularMovie">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginStart">@dimen/margin_popular_movie_text</item>
+        <item name="android:layout_marginEnd">@dimen/margin_popular_movie_text</item>
+        <item name="android:layout_marginTop">@dimen/margin_popular_movie_text</item>
+    </style>
+
+    <style name="TextField.ListItem.PopularMovie.Title">
+        <item name="android:textAppearance">@style/TextField.Subtitle1</item>
+    </style>
+
+    <style name="TextField.ListItem.PopularMovie.Genre">
+        <item name="android:textAppearance">@style/TextField.Body2</item>
+        <item name="android:layout_marginTop">@dimen/margin_extra_small</item>
+    </style>
+
+    <style name="TextField.ReleaseDate">
+        <item name="android:drawableStart">@drawable/ic_calendar</item>
+        <item name="android:drawablePadding">@dimen/padding_popular_movie_drawable</item>
+        <item name="android:textColor">@color/text_color_60</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextField.ListItem.TopRated">
+        <item name="android:layout_marginStart">@dimen/margin_top_rated_tv_show_text</item>
+        <item name="android:layout_marginEnd">@dimen/margin_top_rated_tv_show_text</item>
+        <item name="android:layout_marginTop">@dimen/margin_top_rated_tv_show_text</item>
+    </style>
+
+    <style name="TextField.ListItem.TopRated.Title">
+        <item name="android:lines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">@style/TextField.Body1</item>
+    </style>
+
+    <style name="CollapsingToolbar"/>
+
+    <style name="TextField.ShowCollapsingToolbar" parent="TextField.White"/>
+
+    <style name="TextField.ShowCollapsingToolbar.Expanded">
+        <item name="android:textAppearance">@style/TextField.Header4</item>
+    </style>
+
+    <style name="TextField.ShowCollapsingToolbar.Collapsed">
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="CollapsingToolbar.Show">
+        <item name="expandedTitleTextAppearance">@style/TextField.ShowCollapsingToolbar.Expanded</item>
+        <item name="expandedTitleGravity">top</item>
+        <item name="collapsedTitleGravity">center</item>
+        <item name="collapsedTitleTextAppearance">@style/TextField.ShowCollapsingToolbar.Collapsed</item>
+        <item name="layout_scrollFlags">scroll|exitUntilCollapsed</item>
+        <item name="android:background">@drawable/background_show_app_bar</item>
+    </style>
+
+    <style name="TextField.Rating" parent="TextField.White">
+        <item name="android:background">@drawable/background_chip</item>
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+        <item name="android:drawableStart">@drawable/ic_star</item>
+        <item name="android:drawablePadding">@dimen/padding_popular_movie_drawable</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">@dimen/padding_horizontal_chip</item>
+        <item name="android:paddingEnd">@dimen/padding_horizontal_chip</item>
+        <item name="android:paddingTop">@dimen/padding_vertical_chip</item>
+        <item name="android:paddingBottom">@dimen/padding_vertical_chip</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextField.ShowDetail">
+        <item name="android:layout_marginStart">@dimen/margin_xxl</item>
+        <item name="android:layout_marginEnd">@dimen/margin_xxl</item>
+    </style>
+
+    <style name="TextField.ShowDetail.Title">
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:textAppearance">@style/TextField.Header5</item>
+    </style>
+
+    <style name="TextField.ShowDetail.Genre">
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:textAppearance">@style/TextField.Body2</item>
+    </style>
+
+    <style name="TextField.ShowDetail.Time">
+        <item name="android:textAppearance">@style/TextField.Body2</item>
+        <item name="android:textColor">@color/almost_black_60</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+    </style>
+
+    <style name="TextField.ShowDetail.Overview">
+        <item name="android:textAppearance">@style/TextField.Body1</item>
+        <item name="android:layout_marginTop">@dimen/margin_large</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+    </style>
+
+    <style name="TextField.ShowDetail.Season">
+        <item name="android:paddingStart">@dimen/padding_horizontal_chip</item>
+        <item name="android:paddingEnd">@dimen/padding_horizontal_chip</item>
+        <item name="android:paddingTop">@dimen/padding_vertical_chip</item>
+        <item name="android:paddingBottom">@dimen/padding_vertical_chip</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/background_chip</item>
+        <item name="android:layout_marginTop">@dimen/margin_large</item>
+        <item name="android:backgroundTint">@color/charcoal_grey</item>
+    </style>
+
+    <style name="TextField.ShowDetail.PersonTitle">
+        <item name="android:textAppearance">@style/TextField.Body1</item>
+        <item name="android:layout_marginTop">28dp</item>
+    </style>
+
+    <style name="TextField.ShowDetail.Person">
+        <item name="android:textAppearance">@style/TextField.Body1</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginStart">5dp</item>
+    </style>
+
+</resources>

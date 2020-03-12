@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="show"
+            type="com.example.movee.uimodel.ShowUiModel" />
+
+    </data>
+
+    <merge
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:parentTag="android.widget.LinearLayout">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager_now_playing_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextField.Rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:text="@{show.averageString}"
+            app:hideIfNull="@{show}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextField.ListItem.PopularMovie.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_xxl"
+            android:text="@{show.title}"
+            android:textAppearance="@style/TextField.Header5"
+            tools:text="Joker" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextField.ListItem.PopularMovie.Genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_xxl"
+            android:text="@{show.genreString}"
+            tools:text="Joker" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_xxl"
+            android:background="@color/almost_black_60"
+            app:hideIfNull="@{show}" />
+
+    </merge>
+
+</layout>

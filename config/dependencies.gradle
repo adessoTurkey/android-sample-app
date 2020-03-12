@@ -1,0 +1,131 @@
+ext {
+
+    compiler = [
+            java  : JavaVersion.VERSION_1_8,
+            kotlin: '1.3.61'
+    ]
+
+    android = [
+            minSdk    : 21,
+            targetSdk : 28,
+            compileSdk: 28
+    ]
+
+    build = [
+            apiKey       : System.getenv("moveeApiKey"),
+
+            ciBuild      : System.getenv("CI_BUILD") == "true",
+            // allows for -DpreDex=false to be set
+            preDexEnabled: System.getProperty("preDex", "true") == "true"
+    ]
+
+    application = [
+            id                       : 'com.example.movee',
+            versionCode              : 1,
+            versionName              : "0.1.0",
+            testInstrumentationRunner: "android.support.test.runner.AndroidJUnitRunner"
+    ]
+
+    // Libraries
+    daggerVersion = '2.21'
+    supportLibraryVersion = '27.0.+'
+    retrofitVersion = '2.6.0'
+    okHttpVersion = '3.9.+'
+    moshiVersion = '1.8.0'
+    moshiLazyAdapterVersion = '2.1'
+    lifecycleVersion = '1.1.0'
+    materialVersion = '1.0.0'
+    roomVersion = '1.1.1'
+    navigationVersion = '2.2.0-rc02'
+    constraintLayoutVersion = '2.0.0-beta3'
+    androidKtxVersion = '0.1'
+    kotlinxCoroutinesVersion = '1.3.2'
+    glideVersion = '4.5.0'
+    stethoVersion = '1.5.1'
+    apacheHttpClientVersion = '4.5.6'
+    ok2curlClientVersion = '0.5.0'
+    chuckerVersion = "3.0.1"
+    lottieVersion = '3.2.2'
+    preferenceVersion = '1.1.0'
+    viewPager2Version = '1.0.0'
+
+    // Testing
+    jUnitVersion = '4.12'
+    mockitoVersion = '2.13.+'
+    espressoVersion = '3.0.+'
+
+    // app dependencies
+    androidxDependencies = [
+            "androidx.core:core-ktx:${androidKtxVersion}",
+            "androidx.navigation:navigation-fragment-ktx:$navigationVersion",
+            "androidx.navigation:navigation-ui-ktx:$navigationVersion",
+            "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
+            "androidx.viewpager2:viewpager2:$viewPager2Version",
+            "androidx.preference:preference-ktx:$preferenceVersion"
+    ]
+
+    commonKaptDependencies = [
+            "android.arch.lifecycle:compiler:$lifecycleVersion",
+            "com.google.dagger:dagger-compiler:${daggerVersion}",
+            "com.google.dagger:dagger-android-processor:${daggerVersion}"
+    ]
+
+    commonDependencies = [
+            "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$compiler.kotlin",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinxCoroutinesVersion}",
+            "org.jetbrains.kotlin:kotlin-reflect:$compiler.kotlin",
+            "com.github.bumptech.glide:glide:${glideVersion}",
+            "com.airbnb.android:lottie:${lottieVersion}",
+    ]
+
+    networkDependencies = [
+            "com.squareup.okhttp3:mockwebserver:$okHttpVersion",
+            "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
+            "com.squareup.moshi:moshi-kotlin:$moshiVersion",
+            "com.serjltt.moshi:moshi-lazy-adapters:$moshiLazyAdapterVersion",
+            "org.apache.httpcomponents:httpclient:$apacheHttpClientVersion",
+            "com.github.mrmike:ok2curl:$ok2curlClientVersion"
+    ]
+
+    archDependencies = [
+            "android.arch.lifecycle:runtime:$lifecycleVersion",
+            "android.arch.lifecycle:extensions:$lifecycleVersion",
+            "android.arch.lifecycle:reactivestreams:$lifecycleVersion",
+            "android.arch.persistence.room:runtime:$roomVersion",
+    ]
+
+    supportDependencies = [
+            "com.android.support:design:$supportLibraryVersion",
+            "com.android.support:support-vector-drawable:$supportLibraryVersion",
+            "com.android.support:recyclerview-v7:${supportLibraryVersion}",
+            "com.android.support:cardview-v7:${supportLibraryVersion}",
+    ]
+
+    daggerDependencies = [
+            "com.google.dagger:dagger:${daggerVersion}",
+            "com.google.dagger:dagger-android-support:${daggerVersion}"
+    ]
+
+    commonTestDependencies = [
+            "junit:junit:$jUnitVersion"
+    ]
+
+    materialDependencies = [
+            "com.google.android.material:material:$materialVersion"
+    ]
+
+    commonInstrumentationTestDependencies = [
+            "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            "com.android.support:support-annotations:$supportLibraryVersion"
+    ]
+
+    commonDebugDependencies = [
+            "com.github.ChuckerTeam.Chucker:library:$chuckerVersion"
+    ]
+
+    commonReleaseDependencies = [
+            "com.github.ChuckerTeam.Chucker:library-no-op:$chuckerVersion"
+    ]
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="tvShow"
+            type="com.example.movee.uimodel.TvShowUiModel" />
+
+        <variable
+            name="callback"
+            type="com.example.movee.scene.tvshow.TopRatedTvShowCallback" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> callback.onTopRatedTvShowClick(tvShow)}"
+        app:cardCornerRadius="@dimen/radius_show_card">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_view_poster"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                app:imageFromUrl="@{tvShow.posterPath}"
+                app:layout_constraintDimensionRatio="@string/aspect_ratio_width_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_title"
+                style="@style/TextField.ListItem.TopRated.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{tvShow.title}"
+                app:layout_constraintTop_toBottomOf="@id/image_view_poster"
+                tools:text="True Detective" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_rating"
+                style="@style/TextField.Rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_top_rated_tv_show_text"
+                android:layout_marginTop="@dimen/margin_top_top_rated_tv_show_rating"
+                android:layout_marginEnd="@dimen/margin_top_rated_tv_show_text"
+                android:layout_marginBottom="@dimen/margin_top_rated_tv_show_text"
+                android:text="@{tvShow.averageString}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_title"
+                tools:text="9.9" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
