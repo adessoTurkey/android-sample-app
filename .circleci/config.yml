@@ -1,0 +1,35 @@
+# CircleCI configuration file
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/android-boilerplate
+    docker:
+      - image: circleci/android:api-29
+    environment:
+      GRADLE_OPTS: -Xmx4g -Dorg.gradle.daemon=false
+      JVM_OPTS: -Xmx4g
+    steps:
+      - checkout
+      - run: echo "fabric.key=$FABRIC_KEY" >> local.properties
+      - run: echo "fabric.secret=$FABRIC_SECRET" >> local.properties
+      - run: echo "signing.key.alias=$SIGNING_KEY_ALIAS" >> local.properties
+      - run: echo "signing.key.password=$SIGNING_KEY_PASSWORD" >> local.properties
+      - run: echo "signing.store.file=$SIGNING_STORE_FILE" >> local.properties
+      - run: echo "signing.store.password=$SIGNING_STORE_PASSWORD" >> local.properties
+      - restore_cache:
+          key: gradle-{{ checksum "build.gradle" }}
+      - run:
+          name: Run Ktlint
+          command: ./gradlew ktlint
+      - run:
+          name: Run Lint
+          command: ./gradlew lintDebug
+      - run:
+          name: Run Unit Tests
+          command: ./gradlew testDebugUnitTest
+      - store_artifacts:
+          path: build/dependencyUpdates
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-{{ checksum "build.gradle" }}
