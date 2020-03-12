@@ -11,6 +11,10 @@
             name="viewModel"
             type="com.adesso.movee.scene.tvshowdetail.TvShowDetailViewModel" />
 
+        <variable
+            name="tvShowCastAdapter"
+            type="com.adesso.movee.scene.tvshowdetail.TvShowCastAdapter" />
+
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -27,9 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_extra_small"
+            android:clipToPadding="false"
             android:paddingBottom="@dimen/margin_extra_large"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:clipToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider_overview">
@@ -72,15 +76,49 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.tvShowDetails.creatorsString}"
-                    app:layout_constraintStart_toEndOf="@id/text_view_creators_title"
                     app:layout_constraintBaseline_toBaselineOf="@id/text_view_creators_title"
-                    tools:text="David Benioff, D.B Weiss"/>
+                    app:layout_constraintStart_toEndOf="@id/text_view_creators_title"
+                    tools:text="David Benioff, D.B Weiss" />
 
                 <androidx.constraintlayout.widget.Group
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="text_view_creators,text_view_creators_title"
-                    app:visibleIf="@{viewModel.tvShowDetails.shouldShowCreators}"/>
+                    app:visibleIf="@{viewModel.tvShowDetails.shouldShowCreators}" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_seasons_and_creators"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="text_view_seasons,text_view_creators_title,text_view_creators" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_view_cast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:paddingStart="@dimen/margin_xxl"
+                    android:paddingEnd="@dimen/margin_xxl"
+                    android:text="@string/cast"
+                    android:textAppearance="@style/TextField.Header5"
+                    app:layout_constraintTop_toBottomOf="@id/barrier_seasons_and_creators" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_cast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_xxl"
+                    android:paddingEnd="@dimen/margin_xxl"
+                    app:adapter="@{tvShowCastAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_cast"
+                    app:submitList="@{viewModel.tvShowCasts}"
+                    tools:listitem="@layout/item_tv_show_cast" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

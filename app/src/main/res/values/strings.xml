@@ -35,6 +35,7 @@
         <item quantity="one">%d season</item>
         <item quantity="other">%d seasons</item>
     </plurals>
+    <string name="cast">Cast</string>
 
     <!-- Movie Detail -->
     <string name="director">Director:</string>

@@ -66,4 +66,6 @@ class TvShowRepository @Inject constructor(
     }
 
     suspend fun fetchTvShowDetail(id: Long) = remoteDataSource.fetchTvShowDetail(id).toUiModel()
+
+    suspend fun fetchCredits(id: Long) = remoteDataSource.fetchCredits(id).toUiModel()
 }
