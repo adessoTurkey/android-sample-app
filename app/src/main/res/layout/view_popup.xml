@@ -9,11 +9,11 @@
 
         <variable
             name="model"
-            type="com.example.movee.internal.popup.PopupUiModel" />
+            type="com.adesso.movee.internal.popup.PopupUiModel" />
 
         <variable
             name="callback"
-            type="com.example.movee.internal.popup.PopupCallback" />
+            type="com.adesso.movee.internal.popup.PopupCallback" />
 
     </data>
 

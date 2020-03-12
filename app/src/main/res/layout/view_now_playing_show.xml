@@ -7,7 +7,7 @@
 
         <variable
             name="show"
-            type="com.example.movee.uimodel.ShowUiModel" />
+            type="com.adesso.movee.uimodel.ShowUiModel" />
 
     </data>
 

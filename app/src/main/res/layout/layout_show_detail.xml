@@ -7,7 +7,7 @@
 
         <variable
             name="showDetail"
-            type="com.example.movee.uimodel.ShowDetailUiModel" />
+            type="com.adesso.movee.uimodel.ShowDetailUiModel" />
     </data>
 
     <merge tools:parentTag="androidx.constraintlayout.motion.widget.MotionLayout">

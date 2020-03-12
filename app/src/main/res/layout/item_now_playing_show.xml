@@ -7,11 +7,11 @@
 
         <variable
             name="show"
-            type="com.example.movee.uimodel.ShowUiModel" />
+            type="com.adesso.movee.uimodel.ShowUiModel" />
 
         <variable
             name="callback"
-            type="com.example.movee.widget.nowplayingshow.NowPlayingShowCallback" />
+            type="com.adesso.movee.widget.nowplayingshow.NowPlayingShowCallback" />
 
     </data>
 

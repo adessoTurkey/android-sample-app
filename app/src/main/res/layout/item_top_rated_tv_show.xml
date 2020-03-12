@@ -7,11 +7,11 @@
 
         <variable
             name="tvShow"
-            type="com.example.movee.uimodel.TvShowUiModel" />
+            type="com.adesso.movee.uimodel.TvShowUiModel" />
 
         <variable
             name="callback"
-            type="com.example.movee.scene.tvshow.TopRatedTvShowCallback" />
+            type="com.adesso.movee.scene.tvshow.TopRatedTvShowCallback" />
 
     </data>
 

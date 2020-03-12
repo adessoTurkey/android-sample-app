@@ -7,11 +7,11 @@
 
         <variable
             name="showHeader"
-            type="com.example.movee.uimodel.ShowHeaderUiModel" />
+            type="com.adesso.movee.uimodel.ShowHeaderUiModel" />
 
         <variable
             name="nowPlayingShowCallback"
-            type="com.example.movee.widget.nowplayingshow.NowPlayingShowCallback" />
+            type="com.adesso.movee.widget.nowplayingshow.NowPlayingShowCallback" />
 
     </data>
 
@@ -39,7 +39,7 @@
                     android:orientation="vertical"
                     app:layout_scrollFlags="scroll">
 
-                    <com.example.movee.widget.nowplayingshow.NowPlayingShowView
+                    <com.adesso.movee.widget.nowplayingshow.NowPlayingShowView
                         android:id="@+id/now_playing_show_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

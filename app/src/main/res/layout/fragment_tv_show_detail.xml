@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.movee.scene.tvshowdetail.TvShowDetailViewModel" />
+            type="com.adesso.movee.scene.tvshowdetail.TvShowDetailViewModel" />
 
     </data>
 

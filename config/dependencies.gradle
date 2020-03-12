@@ -12,15 +12,11 @@ ext {
     ]
 
     build = [
-            apiKey       : System.getenv("moveeApiKey"),
-
-            ciBuild      : System.getenv("CI_BUILD") == "true",
-            // allows for -DpreDex=false to be set
-            preDexEnabled: System.getProperty("preDex", "true") == "true"
+            apiKey       : System.getenv("API_KEY_TMDB"),
     ]
 
     application = [
-            id                       : 'com.example.movee',
+            id                       : 'com.adesso.movee',
             versionCode              : 1,
             versionName              : "0.1.0",
             testInstrumentationRunner: "android.support.test.runner.AndroidJUnitRunner"
@@ -28,7 +24,6 @@ ext {
 
     // Libraries
     daggerVersion = '2.21'
-    supportLibraryVersion = '27.0.+'
     retrofitVersion = '2.6.0'
     okHttpVersion = '3.9.+'
     moshiVersion = '1.8.0'
@@ -61,13 +56,13 @@ ext {
             "androidx.navigation:navigation-ui-ktx:$navigationVersion",
             "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
             "androidx.viewpager2:viewpager2:$viewPager2Version",
-            "androidx.preference:preference-ktx:$preferenceVersion"
+            "androidx.preference:preference-ktx:$preferenceVersion",
     ]
 
     commonKaptDependencies = [
             "android.arch.lifecycle:compiler:$lifecycleVersion",
             "com.google.dagger:dagger-compiler:${daggerVersion}",
-            "com.google.dagger:dagger-android-processor:${daggerVersion}"
+            "com.google.dagger:dagger-android-processor:${daggerVersion}",
     ]
 
     commonDependencies = [
@@ -86,7 +81,7 @@ ext {
             "com.squareup.moshi:moshi-kotlin:$moshiVersion",
             "com.serjltt.moshi:moshi-lazy-adapters:$moshiLazyAdapterVersion",
             "org.apache.httpcomponents:httpclient:$apacheHttpClientVersion",
-            "com.github.mrmike:ok2curl:$ok2curlClientVersion"
+            "com.github.mrmike:ok2curl:$ok2curlClientVersion",
     ]
 
     archDependencies = [
@@ -96,36 +91,28 @@ ext {
             "android.arch.persistence.room:runtime:$roomVersion",
     ]
 
-    supportDependencies = [
-            "com.android.support:design:$supportLibraryVersion",
-            "com.android.support:support-vector-drawable:$supportLibraryVersion",
-            "com.android.support:recyclerview-v7:${supportLibraryVersion}",
-            "com.android.support:cardview-v7:${supportLibraryVersion}",
-    ]
-
     daggerDependencies = [
             "com.google.dagger:dagger:${daggerVersion}",
-            "com.google.dagger:dagger-android-support:${daggerVersion}"
+            "com.google.dagger:dagger-android-support:${daggerVersion}",
     ]
 
     commonTestDependencies = [
-            "junit:junit:$jUnitVersion"
+            "junit:junit:$jUnitVersion",
     ]
 
     materialDependencies = [
-            "com.google.android.material:material:$materialVersion"
+            "com.google.android.material:material:$materialVersion",
     ]
 
     commonInstrumentationTestDependencies = [
             "com.android.support.test.espresso:espresso-core:$espressoVersion",
-            "com.android.support:support-annotations:$supportLibraryVersion"
     ]
 
     commonDebugDependencies = [
-            "com.github.ChuckerTeam.Chucker:library:$chuckerVersion"
+            "com.github.ChuckerTeam.Chucker:library:$chuckerVersion",
     ]
 
     commonReleaseDependencies = [
-            "com.github.ChuckerTeam.Chucker:library-no-op:$chuckerVersion"
+            "com.github.ChuckerTeam.Chucker:library-no-op:$chuckerVersion",
     ]
 }

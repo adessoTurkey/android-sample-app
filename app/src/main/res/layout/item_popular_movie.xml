@@ -7,11 +7,11 @@
 
         <variable
             name="movie"
-            type="com.example.movee.uimodel.MovieUiModel" />
+            type="com.adesso.movee.uimodel.MovieUiModel" />
 
         <variable
             name="callback"
-            type="com.example.movee.scene.movie.PopularMovieCallback" />
+            type="com.adesso.movee.scene.movie.PopularMovieCallback" />
 
     </data>
 

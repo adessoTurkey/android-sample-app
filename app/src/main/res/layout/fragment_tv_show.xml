@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.movee.scene.tvshow.TvShowViewModel" />
+            type="com.adesso.movee.scene.tvshow.TvShowViewModel" />
 
         <variable
             name="topRatedTvShowAdapter"
-            type="com.example.movee.scene.tvshow.TopRatedTvShowListAdapter" />
+            type="com.adesso.movee.scene.tvshow.TopRatedTvShowListAdapter" />
 
     </data>
 

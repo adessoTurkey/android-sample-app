@@ -64,7 +64,6 @@ dependencies {
     implementation androidxDependencies
     implementation commonDependencies
     implementation archDependencies
-    implementation supportDependencies
     implementation networkDependencies
     implementation daggerDependencies
     debugImplementation commonDebugDependencies

@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.movee.scene.movie.MovieViewModel" />
+            type="com.adesso.movee.scene.movie.MovieViewModel" />
 
         <variable
             name="popularMovieAdapter"
-            type="com.example.movee.scene.movie.PopularMovieListAdapter" />
+            type="com.adesso.movee.scene.movie.PopularMovieListAdapter" />
 
     </data>
 
