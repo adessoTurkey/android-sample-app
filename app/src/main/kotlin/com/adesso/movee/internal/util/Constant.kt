@@ -10,6 +10,6 @@ object Constant {
 
     object Locale {
         val LOCALE_TURKISH = JavaLocale.forLanguageTag("tr-TR")
-        var default = LOCALE_TURKISH
+        val LOCALE_ENGLISH = JavaLocale.ENGLISH
     }
 }
