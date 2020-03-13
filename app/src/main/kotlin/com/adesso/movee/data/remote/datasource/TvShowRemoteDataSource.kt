@@ -6,6 +6,7 @@ import com.adesso.movee.data.remote.model.tv.NowPlayingTvShowResponseModel
 import com.adesso.movee.data.remote.model.tv.TopRatedTvShowResponseModel
 import com.adesso.movee.data.remote.model.tv.TvShowDetailResponseModel
 import com.adesso.movee.data.remote.model.tv.TvShowGenreResponseModel
+import com.adesso.movee.data.remote.model.tv.TvShowCreditsResponseModel
 import javax.inject.Inject
 
 class TvShowRemoteDataSource @Inject constructor(
@@ -26,5 +27,9 @@ class TvShowRemoteDataSource @Inject constructor(
 
     suspend fun fetchTvShowDetail(id: Long): TvShowDetailResponseModel = invoke {
         service.fetchTvShowDetail(id)
+    }
+
+    suspend fun fetchCredits(id: Long): TvShowCreditsResponseModel = invoke {
+        service.fetchCredits(id)
     }
 }

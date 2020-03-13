@@ -15,6 +15,11 @@ class TvShowDetailFragment :
     override fun initialize() {
         super.initialize()
 
-        viewModel.fetchTvShowDetail(args.show)
+        binder.tvShowCastAdapter = TvShowCastAdapter()
+
+        with(viewModel) {
+            fetchTvShowDetail(args.show)
+            fetchTvShowCredits(args.show)
+        }
     }
 }
