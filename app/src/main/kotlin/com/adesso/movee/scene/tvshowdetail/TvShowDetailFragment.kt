@@ -4,9 +4,11 @@ import androidx.navigation.fragment.navArgs
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseTransparentStatusBarFragment
 import com.adesso.movee.databinding.FragmentTvShowDetailBinding
+import com.adesso.movee.uimodel.TvShowCastUiModel
 
 class TvShowDetailFragment :
-    BaseTransparentStatusBarFragment<TvShowDetailViewModel, FragmentTvShowDetailBinding>() {
+    BaseTransparentStatusBarFragment<TvShowDetailViewModel, FragmentTvShowDetailBinding>(),
+    TvShowCastCallback {
 
     private val args by navArgs<TvShowDetailFragmentArgs>()
 
@@ -15,11 +17,15 @@ class TvShowDetailFragment :
     override fun initialize() {
         super.initialize()
 
-        binder.tvShowCastAdapter = TvShowCastAdapter()
+        binder.tvShowCastAdapter = TvShowCastAdapter(tvShowCastCallback = this)
 
         with(viewModel) {
             fetchTvShowDetail(args.show)
             fetchTvShowCredits(args.show)
         }
+    }
+
+    override fun onTvShowCastClick(tvShowCast: TvShowCastUiModel) {
+        viewModel.onTvShowCastClick(tvShowCast)
     }
 }

@@ -12,6 +12,9 @@ import com.adesso.movee.scene.tvshow.TvShowFragment
 import com.adesso.movee.scene.tvshow.TvShowModule
 import com.adesso.movee.scene.tvshowdetail.TvShowDetailFragment
 import com.adesso.movee.scene.tvshowdetail.TvShowDetailModule
+import com.adesso.movee.internal.injection.scope.PersonDetailScope
+import com.adesso.movee.scene.persondetail.PersonDetailFragment
+import com.adesso.movee.scene.persondetail.PersonDetailModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -33,4 +36,8 @@ internal abstract class FragmentsModule {
     @MovieDetailScope
     @ContributesAndroidInjector(modules = [MovieDetailModule::class])
     abstract fun contributeMovieDetailFragment(): MovieDetailFragment
+
+    @PersonDetailScope
+    @ContributesAndroidInjector(modules = [PersonDetailModule::class])
+    abstract fun contributePersonDetailFragment(): PersonDetailFragment
 }
