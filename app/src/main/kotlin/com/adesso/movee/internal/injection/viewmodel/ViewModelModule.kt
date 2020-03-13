@@ -6,6 +6,7 @@ import com.adesso.movee.scene.main.MainViewModel
 import com.adesso.movee.scene.splash.SplashViewModel
 import com.adesso.movee.scene.movie.MovieViewModel
 import com.adesso.movee.scene.moviedetail.MovieDetailViewModel
+import com.adesso.movee.scene.persondetail.PersonDetailViewModel
 import com.adesso.movee.scene.tvshow.TvShowViewModel
 import com.adesso.movee.scene.tvshowdetail.TvShowDetailViewModel
 import dagger.Binds
@@ -47,4 +48,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MovieDetailViewModel::class)
     abstract fun bindsMovieDetailViewModel(viewModel: MovieDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PersonDetailViewModel::class)
+    abstract fun bindsPersonDetailViewModel(viewModel: PersonDetailViewModel): ViewModel
 }

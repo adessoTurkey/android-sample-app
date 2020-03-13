@@ -9,6 +9,7 @@ import com.adesso.movee.internal.util.NetworkHandler
 import com.adesso.movee.internal.util.api.ApiKeyInterceptor
 import com.adesso.movee.internal.util.api.ErrorHandlingInterceptor
 import com.adesso.movee.internal.util.api.RetryAfterInterceptor
+import com.adesso.movee.data.remote.api.PersonService
 import com.moczul.ok2curl.CurlInterceptor
 import com.moczul.ok2curl.logger.Loggable
 import com.squareup.moshi.Moshi
@@ -108,5 +109,11 @@ internal class NetworkModule {
     @Singleton
     fun provideTvShowService(retrofit: Retrofit): TvShowService {
         return retrofit.create(TvShowService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePersonService(retrofit: Retrofit): PersonService {
+        return retrofit.create(PersonService::class.java)
     }
 }
