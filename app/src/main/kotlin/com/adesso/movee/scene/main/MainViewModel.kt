@@ -1,7 +1,6 @@
 package com.adesso.movee.scene.main
 
 import android.app.Application
-import android.content.Context
 import com.adesso.movee.base.BaseAndroidViewModel
 import javax.inject.Inject
 

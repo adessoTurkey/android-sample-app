@@ -18,7 +18,7 @@ data class TvShowDetailUiModel(
     val popularity: Double,
     val backdropPath: String?,
     val creators: List<TvShowCreatorUiModel>
-) : ShowDetailUiModel, Serializable{
+) : ShowDetailUiModel, Serializable {
 
     fun seasons(context: Context): String {
         return context.resources.getQuantityString(

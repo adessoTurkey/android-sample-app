@@ -17,7 +17,6 @@ class ApiKeyInterceptor : Interceptor {
         val requestBuilder = request.newBuilder()
             .url(url)
 
-
         return chain.proceed(requestBuilder.build())
     }
 

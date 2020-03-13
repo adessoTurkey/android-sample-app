@@ -28,5 +28,4 @@ interface ShowUiModel : ListAdapterItem, Serializable {
 
     val genreString: String
         get() = genres.joinToString(separator = ", ", limit = 3, truncated = "") { it.name }
-
 }

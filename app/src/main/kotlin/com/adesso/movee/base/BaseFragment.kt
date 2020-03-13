@@ -103,7 +103,6 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
                 (activity as? MainActivity)
                     ?.navController
                     ?.navigate(command.deepLink.toUri(), null, getExtras())
-
             }
             is NavigationCommand.Popup -> {
                 with(command) {

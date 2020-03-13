@@ -11,8 +11,8 @@ interface PopularMovieCallback {
     fun onPopularMovieClick(movie: MovieUiModel)
 }
 
-class PopularMovieListAdapter(private val popularMovieCallback: PopularMovieCallback)
-    : BaseListAdapter<ItemPopularMovieBinding, MovieUiModel>() {
+class PopularMovieListAdapter(private val popularMovieCallback: PopularMovieCallback) :
+    BaseListAdapter<ItemPopularMovieBinding, MovieUiModel>() {
 
     override val layoutRes: Int get() = R.layout.item_popular_movie
 
@@ -23,8 +23,3 @@ class PopularMovieListAdapter(private val popularMovieCallback: PopularMovieCall
         }
     }
 }
-
-
-
-
-
