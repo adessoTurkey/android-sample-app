@@ -21,8 +21,8 @@
         android:layout_marginStart="@dimen/margin_xxl"
         android:layout_marginEnd="@dimen/margin_xxl"
         android:layout_marginBottom="@dimen/margin_large"
-        app:cardCornerRadius="@dimen/radius_show_card"
-        app:cardElevation="@dimen/elevation_popular_movie_card"
+        app:cardCornerRadius="@dimen/radius_small"
+        app:cardElevation="@dimen/elevation_small"
         android:onClick="@{() -> callback.onPopularMovieClick(movie)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout

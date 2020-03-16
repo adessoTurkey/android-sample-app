@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:elevation="0dp"
-            app:cardCornerRadius="@dimen/radius_show_card"
+            app:cardCornerRadius="@dimen/radius_small"
             app:cardElevation="0dp"
             app:layout_constraintDimensionRatio="@string/aspect_ratio_width_image"
             app:layout_constraintEnd_toEndOf="parent"
