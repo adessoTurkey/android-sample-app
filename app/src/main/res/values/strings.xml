@@ -49,4 +49,15 @@
     <string name="see_full_bio">See full bio >></string>
     <string name="see_less">See less >></string>
 
+    <!-- Search -->
+    <string name="search_message_search">Search</string>
+    <string name="search_message_movies_or_series">Movies or Series</string>
+    <string name="search_message_movie">Movie</string>
+    <string name="search_message_tv_series">TV Series</string>
+    <string name="search_message_actor">Actor</string>
+    <string name="search_message_director">Director</string>
+    <string name="search_message_writer">Writer</string>
+    <string name="search_message_crew">Crew</string>
+    <string name="search_message_empty_search_result">your search didn’t have any results</string>
+
 </resources>

@@ -121,7 +121,7 @@
         <item name="collapsedTitleGravity">center</item>
         <item name="collapsedTitleTextAppearance">@style/TextField.ShowCollapsingToolbar.Collapsed</item>
         <item name="layout_scrollFlags">scroll|exitUntilCollapsed</item>
-        <item name="android:background">@drawable/background_show_app_bar</item>
+        <item name="android:background">@drawable/background_main_tab_app_bar</item>
     </style>
 
     <style name="TextField.Rating" parent="TextField.White">
@@ -217,6 +217,38 @@
 
     <style name="TextField.PersonBioToggle" parent="TextField.Body1">
         <item name="android:textColor">@color/vibrant_blue</item>
+    </style>
+
+    <style name="TextField.ListItem.MultiSearch">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginStart">@dimen/margin_multi_search_text</item>
+        <item name="android:layout_marginEnd">@dimen/margin_multi_search_text</item>
+        <item name="android:layout_marginTop">@dimen/margin_multi_search_text</item>
+    </style>
+
+    <style name="TextField.ListItem.MultiSearch.Title">
+        <item name="android:textAppearance">@style/TextField.Subtitle1</item>
+    </style>
+
+    <style name="TextField.ListItem.MultiSearch.Subtitle">
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:textAppearance">@style/TextField.Body2</item>
+    </style>
+
+    <style name="TextField.ListItem.MultiSearch.Type">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_color_60</item>
+        <item name="android:layout_marginBottom">@dimen/margin_large</item>
+        <item name="android:drawablePadding">@dimen/margin_small</item>
+    </style>
+
+    <style name="TextField.MainTabTitle" parent="TextField.White">
+        <item name="android:textAppearance">@style/TextField.Header4</item>
+        <item name="android:paddingStart">@dimen/margin_xxl</item>
+        <item name="android:paddingTop">@dimen/margin_extra_large</item>
+        <item name="android:paddingEnd">@dimen/margin_xxl</item>
+        <item name="android:paddingBottom">@dimen/margin_extra_large</item>
     </style>
 
 </resources>

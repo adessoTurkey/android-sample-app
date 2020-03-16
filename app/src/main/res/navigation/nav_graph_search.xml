@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_search"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.adesso.movee.scene.search.SearchFragment"
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/to_movie_detail"
+            app:destination="@id/movieDetailFragment">
+
+            <argument
+                android:name="id"
+                app:argType="long"
+                app:nullable="false" />
+
+        </action>
+
+        <action
+            android:id="@+id/to_tv_show_detail"
+            app:destination="@id/tvShowDetailFragment">
+
+            <argument
+                android:name="id"
+                app:argType="long"
+                app:nullable="false" />
+
+        </action>
+
+        <action
+            android:id="@+id/to_person_detail"
+            app:destination="@id/personDetailFragment">
+
+            <argument
+                android:name="id"
+                app:argType="long"
+                app:nullable="false" />
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.adesso.movee.scene.moviedetail.MovieDetailFragment"
+        tools:layout="@layout/fragment_movie_detail">
+
+        <argument
+            android:name="id"
+            app:argType="long"
+            app:nullable="false" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/tvShowDetailFragment"
+        android:name="com.adesso.movee.scene.tvshowdetail.TvShowDetailFragment"
+        tools:layout="@layout/fragment_tv_show_detail">
+
+        <argument
+            android:name="id"
+            app:argType="long"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/to_person_detail"
+            app:destination="@id/personDetailFragment">
+
+            <argument
+                android:name="id"
+                app:argType="long"
+                app:nullable="false" />
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/personDetailFragment"
+        android:name="com.adesso.movee.scene.persondetail.PersonDetailFragment"
+        tools:layout="@layout/fragment_person_detail">
+
+        <argument
+            android:name="id"
+            app:argType="long"
+            app:nullable="false" />
+
+    </fragment>
+
+</navigation>
