@@ -9,11 +9,16 @@
             name="tvShowCast"
             type="com.adesso.movee.uimodel.TvShowCastUiModel" />
 
+        <variable
+            name="callback"
+            type="com.adesso.movee.scene.tvshowdetail.TvShowCastCallback" />
+
     </data>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> callback.onTvShowCastClick(tvShowCast)}"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView

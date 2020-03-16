@@ -61,4 +61,8 @@ class TvShowDetailViewModel @Inject constructor(
     private fun postTvShowCredits(tvShowCreditUiModel: TvShowCreditUiModel) {
         _tvShowCredits.value = tvShowCreditUiModel
     }
+
+    fun onTvShowCastClick(tvShowCast: TvShowCastUiModel) {
+        navigate(TvShowDetailFragmentDirections.toPersonDetail(tvShowCast.id))
+    }
 }

@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class DateAdapter : JsonAdapter<Date>() {
-    private val dateFormat = SimpleDateFormat(SERVER_FORMAT, Constant.Locale.default)
+    private val dateFormat = SimpleDateFormat(DATE_FORMAT_SERVER, Constant.Locale.LOCALE_ENGLISH)
 
     @FromJson
     override fun fromJson(reader: JsonReader): Date? {
@@ -30,6 +30,6 @@ class DateAdapter : JsonAdapter<Date>() {
     }
 
     companion object {
-        private const val SERVER_FORMAT = ("yyyy-MM-dd")
+        private const val DATE_FORMAT_SERVER = "yyyy-MM-dd"
     }
 }

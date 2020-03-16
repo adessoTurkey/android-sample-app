@@ -42,4 +42,11 @@
     <string name="writers">Writers:</string>
     <string name="stars">Stars:</string>
 
+    <!-- Person Detail -->
+    <string name="born_date">Born: %s</string>
+    <string name="born_place">Born: in %s</string>
+    <string name="born_date_and_place">Born: %1s in %2s</string>
+    <string name="see_full_bio">See full bio >></string>
+    <string name="see_less">See less >></string>
+
 </resources>
