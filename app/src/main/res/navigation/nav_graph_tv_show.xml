@@ -15,8 +15,8 @@
             app:destination="@id/tvShowDetailFragment">
 
             <argument
-                android:name="show"
-                app:argType="com.adesso.movee.uimodel.ShowUiModel"
+                android:name="id"
+                app:argType="long"
                 app:nullable="false" />
 
         </action>
@@ -29,8 +29,8 @@
         tools:layout="@layout/fragment_tv_show_detail">
 
         <argument
-            android:name="show"
-            app:argType="com.adesso.movee.uimodel.ShowUiModel"
+            android:name="id"
+            app:argType="long"
             app:nullable="false" />
 
         <action
@@ -38,7 +38,7 @@
             app:destination="@id/personDetailFragment">
 
             <argument
-                android:name="personId"
+                android:name="id"
                 app:argType="long"
                 app:nullable="false"/>
 
@@ -52,7 +52,7 @@
         tools:layout="@layout/fragment_person_detail">
 
         <argument
-            android:name="personId"
+            android:name="id"
             app:argType="long"
             app:nullable="false" />
 

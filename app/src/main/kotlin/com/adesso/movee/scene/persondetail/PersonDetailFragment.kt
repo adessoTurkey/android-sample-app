@@ -19,6 +19,6 @@ class PersonDetailFragment : BaseFragment<PersonDetailViewModel, FragmentPersonD
             viewModel.onProfileAppBarStateChange(state)
         }
 
-        viewModel.fetchPersonDetails(args.personId)
+        viewModel.fetchPersonDetails(args.id)
     }
 }

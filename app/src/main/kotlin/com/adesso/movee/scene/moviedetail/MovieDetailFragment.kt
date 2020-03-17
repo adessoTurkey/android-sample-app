@@ -16,8 +16,8 @@ class MovieDetailFragment :
         super.initialize()
 
         with(viewModel) {
-            fetchMovieDetails(args.show)
-            fetchMovieCredits(args.show)
+            fetchMovieDetails(args.id)
+            fetchMovieCredits(args.id)
         }
     }
 }

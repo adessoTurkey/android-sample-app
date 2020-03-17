@@ -8,7 +8,6 @@ import com.adesso.movee.domain.FetchMovieCreditsUseCase
 import com.adesso.movee.domain.FetchMovieDetailUseCase
 import com.adesso.movee.uimodel.MovieCreditUiModel
 import com.adesso.movee.uimodel.MovieDetailUiModel
-import com.adesso.movee.uimodel.ShowUiModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,11 +22,11 @@ class MovieDetailViewModel @Inject constructor(
     val movieDetails: LiveData<MovieDetailUiModel> get() = _movieDetails
     val movieCredits: LiveData<MovieCreditUiModel> get() = _movieCredits
 
-    fun fetchMovieDetails(show: ShowUiModel) {
+    fun fetchMovieDetails(id: Long) {
         if (_movieDetails.value == null) {
             bgScope.launch {
                 val movieDetailResult =
-                    fetchMovieDetailUseCase.run(FetchMovieDetailUseCase.Params(show.id))
+                    fetchMovieDetailUseCase.run(FetchMovieDetailUseCase.Params(id))
 
                 onUIThread {
                     movieDetailResult.either(::handleFailure, ::postMovieDetail)
@@ -40,11 +39,11 @@ class MovieDetailViewModel @Inject constructor(
         _movieDetails.value = movieDetailUiModel
     }
 
-    fun fetchMovieCredits(show: ShowUiModel) {
+    fun fetchMovieCredits(id: Long) {
         if (_movieCredits.value == null) {
             bgScope.launch {
                 val movieCreditsResult =
-                    fetchMovieCreditsUseCase.run(FetchMovieCreditsUseCase.Params(show.id))
+                    fetchMovieCreditsUseCase.run(FetchMovieCreditsUseCase.Params(id))
 
                 onUIThread {
                     movieCreditsResult.either(::handleFailure, ::postMovieCredits)

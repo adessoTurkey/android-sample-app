@@ -15,9 +15,9 @@
             app:destination="@id/movieDetailFragment">
 
             <argument
-                android:name="show"
-                app:argType="com.adesso.movee.uimodel.ShowUiModel"
-                app:nullable="false"/>
+                android:name="id"
+                app:argType="long"
+                app:nullable="false" />
 
         </action>
 
@@ -29,9 +29,9 @@
         tools:layout="@layout/fragment_movie_detail">
 
         <argument
-            android:name="show"
-            app:argType="com.adesso.movee.uimodel.ShowUiModel"
-            app:nullable="false"/>
+            android:name="id"
+            app:argType="long"
+            app:nullable="false" />
 
     </fragment>
 

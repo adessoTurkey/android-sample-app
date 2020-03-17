@@ -20,8 +20,8 @@ class TvShowDetailFragment :
         binder.tvShowCastAdapter = TvShowCastAdapter(tvShowCastCallback = this)
 
         with(viewModel) {
-            fetchTvShowDetail(args.show)
-            fetchTvShowCredits(args.show)
+            fetchTvShowDetail(args.id)
+            fetchTvShowCredits(args.id)
         }
     }
 

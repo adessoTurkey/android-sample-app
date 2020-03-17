@@ -7,7 +7,6 @@ import androidx.lifecycle.Transformations
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchTvShowCreditsUseCase
 import com.adesso.movee.domain.FetchTvShowDetailUseCase
-import com.adesso.movee.uimodel.ShowUiModel
 import com.adesso.movee.uimodel.TvShowDetailUiModel
 import com.adesso.movee.uimodel.TvShowCastUiModel
 import com.adesso.movee.uimodel.TvShowCreditUiModel
@@ -28,11 +27,11 @@ class TvShowDetailViewModel @Inject constructor(
             tvShowCredits.cast
         }
 
-    fun fetchTvShowDetail(show: ShowUiModel) {
+    fun fetchTvShowDetail(id: Long) {
         if (_tvShowDetails.value == null) {
             bgScope.launch {
                 val tvShowDetailResult =
-                    fetchTvShowDetailUseCase.run(FetchTvShowDetailUseCase.Params(show.id))
+                    fetchTvShowDetailUseCase.run(FetchTvShowDetailUseCase.Params(id))
 
                 onUIThread {
                     tvShowDetailResult.either(::handleFailure, ::postTvShowDetail)
@@ -45,11 +44,11 @@ class TvShowDetailViewModel @Inject constructor(
         _tvShowDetails.value = tvShowDetail
     }
 
-    fun fetchTvShowCredits(show: ShowUiModel) {
+    fun fetchTvShowCredits(id: Long) {
         if (_tvShowCredits.value == null) {
             bgScope.launch {
                 val tvShowCreditResult =
-                    fetchTvShowCreditsUseCase.run(FetchTvShowCreditsUseCase.Params(show.id))
+                    fetchTvShowCreditsUseCase.run(FetchTvShowCreditsUseCase.Params(id))
 
                 onUIThread {
                     tvShowCreditResult.either(::handleFailure, ::postTvShowCredits)
