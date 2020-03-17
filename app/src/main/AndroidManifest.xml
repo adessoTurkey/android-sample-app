@@ -33,6 +33,7 @@
 
         <activity
             android:name=".scene.main.MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
     </application>
