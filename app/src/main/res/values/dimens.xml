@@ -41,11 +41,11 @@
     <dimen name="radius_small">8dp</dimen>
     <dimen name="elevation_small">8dp</dimen>
     <dimen name="popup_radius">16dp</dimen>
-    <dimen name="button_radius">12dp</dimen>
+    <dimen name="button_radius">4dp</dimen>
     <dimen name="height_main_tab_toolbar">176dp</dimen>
 
     <!--  TEXT  -->
-    <dimen name="button_text_size">20sp</dimen>
+    <dimen name="button_text_size">17sp</dimen>
     <dimen name="header_text_size">24sp</dimen>
     <dimen name="popup_text_size">16sp</dimen>
 
