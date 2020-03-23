@@ -89,14 +89,14 @@ class TvShowViewModel @Inject constructor(
     }
 
     fun onTopRatedTvShowClick(tvShow: TvShowUiModel) {
-        navigateTvShowDetailFragment(tvShow)
+        navigateTvShowDetailFragment(tvShow.id)
     }
 
     fun onNowPlayingShowClick(show: ShowUiModel) {
-        navigateTvShowDetailFragment(show)
+        navigateTvShowDetailFragment(show.id)
     }
 
-    private fun navigateTvShowDetailFragment(show: ShowUiModel) {
-        navigate(TvShowFragmentDirections.toTvShowDetail(show))
+    private fun navigateTvShowDetailFragment(id: Long) {
+        navigate(TvShowFragmentDirections.toTvShowDetail(id))
     }
 }

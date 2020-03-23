@@ -78,6 +78,7 @@ ext {
             "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
             "com.squareup.moshi:moshi-kotlin:$moshiVersion",
             "com.serjltt.moshi:moshi-lazy-adapters:$moshiLazyAdapterVersion",
+            "com.squareup.moshi:moshi-adapters:$moshiVersion",
             "com.github.mrmike:ok2curl:$ok2curlClientVersion",
     ]
 

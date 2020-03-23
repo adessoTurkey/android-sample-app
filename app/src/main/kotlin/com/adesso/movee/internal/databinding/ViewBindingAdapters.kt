@@ -1,9 +1,12 @@
 package com.adesso.movee.internal.databinding
 
+import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.Dimension
 import androidx.annotation.DrawableRes
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +15,7 @@ import com.adesso.movee.R
 import com.adesso.movee.base.BaseListAdapter
 import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.internal.extension.loadImage
+import com.adesso.movee.internal.extension.setOnDrawableEndClickListener
 import com.adesso.movee.internal.util.GridLayoutSpaceItemDecoration
 
 @BindingAdapter("lottieFile")
@@ -73,4 +77,33 @@ fun setImage(
         placeholderRes ?: defaultDrawable,
         errorRes ?: defaultDrawable
     )
+}
+
+@BindingAdapter("setClearable")
+fun setClearable(
+    view: EditText,
+    clearDrawable: Drawable
+) {
+    with(view) {
+        val updateEndDrawable: () -> Unit = {
+            val currentDrawables = compoundDrawablesRelative
+
+            setCompoundDrawablesRelativeWithIntrinsicBounds(
+                currentDrawables[0],
+                currentDrawables[1],
+                if (text.isNullOrBlank()) null else clearDrawable,
+                currentDrawables[3]
+            )
+        }
+
+        updateEndDrawable()
+
+        doAfterTextChanged {
+            updateEndDrawable()
+        }
+
+        setOnDrawableEndClickListener {
+            text = null
+        }
+    }
 }

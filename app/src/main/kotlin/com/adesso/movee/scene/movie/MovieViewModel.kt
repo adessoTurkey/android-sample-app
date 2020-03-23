@@ -96,6 +96,6 @@ class MovieViewModel @Inject constructor(
     }
 
     private fun navigateMovieDetailFragment(show: ShowUiModel) {
-        navigate(MovieFragmentDirections.toMovieDetail(show))
+        navigate(MovieFragmentDirections.toMovieDetail(show.id))
     }
 }

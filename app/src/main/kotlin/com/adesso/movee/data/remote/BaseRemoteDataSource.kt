@@ -17,7 +17,7 @@ open class BaseRemoteDataSource {
         return when (exception) {
             is Failure -> exception
             is JsonDataException -> Failure.JsonError()
-            else -> Failure.UnknownError(exception.localizedMessage)
+            else -> Failure.UnknownError(exception)
         }
     }
 }

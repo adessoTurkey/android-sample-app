@@ -2,13 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph_tv_show"
-    app:startDestination="@id/tvShowFragment">
+    android:id="@+id/nav_graph_search"
+    app:startDestination="@id/searchFragment">
 
     <fragment
-        android:id="@+id/tvShowFragment"
-        android:name="com.adesso.movee.scene.tvshow.TvShowFragment"
-        tools:layout="@layout/fragment_tv_show">
+        android:id="@+id/searchFragment"
+        android:name="com.adesso.movee.scene.search.SearchFragment"
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/to_movie_detail"
+            app:destination="@id/movieDetailFragment">
+
+            <argument
+                android:name="id"
+                app:argType="long"
+                app:nullable="false" />
+
+        </action>
 
         <action
             android:id="@+id/to_tv_show_detail"
@@ -20,6 +31,29 @@
                 app:nullable="false" />
 
         </action>
+
+        <action
+            android:id="@+id/to_person_detail"
+            app:destination="@id/personDetailFragment">
+
+            <argument
+                android:name="id"
+                app:argType="long"
+                app:nullable="false" />
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.adesso.movee.scene.moviedetail.MovieDetailFragment"
+        tools:layout="@layout/fragment_movie_detail">
+
+        <argument
+            android:name="id"
+            app:argType="long"
+            app:nullable="false" />
 
     </fragment>
 
@@ -40,7 +74,7 @@
             <argument
                 android:name="id"
                 app:argType="long"
-                app:nullable="false"/>
+                app:nullable="false" />
 
         </action>
 

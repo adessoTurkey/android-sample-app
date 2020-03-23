@@ -5,7 +5,7 @@
         <color android:color="@color/colorPrimary"/>
     </item>
 
-    <item android:top="176dp">
+    <item android:top="@dimen/height_main_tab_toolbar">
         <color android:color="@color/white"/>
     </item>
 

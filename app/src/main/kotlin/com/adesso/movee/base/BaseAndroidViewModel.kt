@@ -56,7 +56,7 @@ abstract class BaseAndroidViewModel(application: Application) : AndroidViewModel
             is Failure.IoError -> Pair("", getString(R.string.error_message_can_not_save_data))
             is Failure.UnknownError -> Pair(
                 "",
-                failure.message ?: getString(R.string.error_unknown)
+                failure.exception.localizedMessage ?: getString(R.string.error_unknown)
             )
             is Failure.HttpError -> Pair(
                 "",

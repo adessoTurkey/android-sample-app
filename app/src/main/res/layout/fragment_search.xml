@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".scene.search.SearchFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.adesso.movee.scene.search.SearchViewModel" />
+
+        <variable
+            name="multiSearchAdapter"
+            type="com.adesso.movee.scene.search.MultiSearchAdapter" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_main_tab_app_bar"
+            android:minHeight="@dimen/height_main_tab_toolbar"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_search"
+                style="@style/TextField.MainTabTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/search_message_search"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_extra_large"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:layout_marginEnd="@dimen/margin_extra_large"
+                app:cardCornerRadius="@dimen/radius_small"
+                app:cardElevation="@dimen/elevation_small"
+                app:layout_constraintTop_toBottomOf="@id/text_view_search">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edit_text_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="@dimen/margin_small"
+                    android:hint="@string/search_message_movies_or_series"
+                    android:padding="@dimen/margin_small"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextField.Body1"
+                    app:setClearable="@{@drawable/ic_clear}" />
+
+            </androidx.cardview.widget.CardView>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_multi_search"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="@dimen/margin_extra_large"
+            app:adapter="@{multiSearchAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_search"
+            app:submitList="@{viewModel.multiSearchResults}"
+            tools:listitem="@layout/item_multi_search" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_view_empty_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:src="@drawable/ic_empty_multi_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_search" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_empty_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="6sp"
+            android:text="@string/search_message_empty_search_result"
+            android:textAppearance="@style/TextField.Body1"
+            android:textColor="@color/vibrant_blue"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/image_view_empty_search"
+            app:layout_constraintStart_toStartOf="@id/image_view_empty_search"
+            app:layout_constraintTop_toBottomOf="@id/image_view_empty_search" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="image_view_empty_search,text_view_empty_search"
+            app:visibleIf="@{viewModel.shouldShowEmptyResultView}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
