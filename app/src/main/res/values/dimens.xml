@@ -52,4 +52,7 @@
     <!-- Multi Search -->
     <dimen name="margin_multi_search_text">10dp</dimen>
 
+    <!-- Login -->
+    <dimen name="margin_login_image_view_movee">100dp</dimen>
+
 </resources>

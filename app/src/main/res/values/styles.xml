@@ -251,4 +251,19 @@
         <item name="android:paddingBottom">@dimen/margin_extra_large</item>
     </style>
 
+    <style name="TextInputLogin">
+        <item name="android:layout_marginStart">@dimen/margin_xxl</item>
+        <item name="android:layout_marginEnd">@dimen/margin_xxl</item>
+        <item name="android:theme">@style/LoginTextInputTheme</item>
+    </style>
+
+    <style name="EditTextLogin">
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextField.White.Login">
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

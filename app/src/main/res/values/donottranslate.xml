@@ -5,4 +5,6 @@
     <string name="aspect_ratio_width_image">W, 1:0.7</string>
     <string name="aspect_ratio_header">0.9:1</string>
 
+    <string name="arg_hide_bottom_nav">hideBottomNavigation</string>
+
 </resources>

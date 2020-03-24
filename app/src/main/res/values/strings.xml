@@ -1,19 +1,20 @@
 <resources>
 
     <string name="app_name">Movee</string>
-    <string name="ok">Tamam</string>
-    <string name="cancel">İptal</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
     <!-- ERROR MESSAGES  -->
-    <string name="error_message_invalid_response">Sunucu yanıtı eksik ya da hatalı.</string>
-    <string name="error_message_invalid_form">Geçersiz form hatası.</string>
-    <string name="error_message_network_connection">Cihazın internet erişimi yok.</string>
-    <string name="error_message_unknown_host">Bağlanılmaya çalışılan sunucuya erişilemedi.</string>
-    <string name="error_message_can_not_save_data">Bilgileriniz kaydedilemedi</string>
-    <string name="error_unknown">Bilinmeyen Hata</string>
+    <string name="error_message_invalid_response">Invalid server response</string>
+    <string name="error_message_invalid_form">Invalid form</string>
+    <string name="error_message_network_connection">No internet connection</string>
+    <string name="error_message_unknown_host">Server not responding</string>
+    <string name="error_message_can_not_save_data">We could not save your data</string>
+    <string name="error_unknown">Unknown error</string>
     <string name="popup_error_title_form_validation" />
-    <string name="error_message_http">Beklenmeyen bir hata oluştu, tekrar deneyin \n (%1$s)</string>
-    <string name="error_message_timeout">İstek zaman aşımına uğradı</string>
+    <string name="error_message_http">An error occurred please try again later \n (%1$s)</string>
+    <string name="error_message_timeout">Request timed out</string>
+    <string name="error_message_unauthorized">Only logged in users can perform this operation</string>
 
     <!-- Movie -->
     <string name="movie_message_popular_movies">Popular Movies</string>
@@ -58,6 +59,18 @@
     <string name="search_message_director">Director</string>
     <string name="search_message_writer">Writer</string>
     <string name="search_message_crew">Crew</string>
-    <string name="search_message_empty_search_result">your search didn’t have any results</string>
+    <string name="search_message_empty_search_result">Your search didn’t have any results</string>
+
+    <!-- Profile -->
+    <string name="profile_message_profile">Profile</string>
+    <string name="profile_message_hello">Hello,</string>
+    <string name="profile_message_login">Login</string>
+
+    <!-- Login -->
+    <string name="login_hint_username">Username</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_message_forgot_password">Forgot Password?</string>
+    <string name="login_message_login">Login</string>
+    <string name="login_message_register">Don\'t have an account? Register now</string>
 
 </resources>

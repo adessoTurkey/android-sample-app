@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".scene.profile.ProfileFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.adesso.movee.scene.profile.ProfileViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:minHeight="@dimen/height_main_tab_toolbar"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_search"
+                style="@style/TextField.MainTabTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_message_profile"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_hello"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xxl"
+                android:layout_marginEnd="@dimen/margin_xxl"
+                android:text="@string/profile_message_hello"
+                android:textAppearance="@style/TextField.Subtitle1"
+                android:textColor="@color/white"
+                app:visibleIf="@{viewModel.shouldShowUserDetails}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xxl"
+                android:layout_marginEnd="@dimen/margin_xxl"
+                android:text="@{viewModel.userDetails.displayName}"
+                android:textAppearance="@style/TextField.Header6"
+                android:textColor="@color/white"
+                app:visibleIf="@{viewModel.shouldShowUserDetails}"
+                tools:text="Jessie Doe" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include
+            android:id="@+id/layout_logged_out"
+            layout="@layout/layout_profile_logged_out"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_profile"
+            bind:viewModel="@{viewModel}" />
+
+        <include
+            android:id="@+id/layout_logged_in"
+            layout="@layout/layout_profile_logged_in"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_profile"
+            bind:viewModel="@{viewModel}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

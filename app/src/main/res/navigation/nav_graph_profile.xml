@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_profile"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.adesso.movee.scene.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/to_login"
+            app:destination="@id/loginFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.adesso.movee.scene.login.LoginFragment"
+        tools:layout="@layout/fragment_login">
+
+        <argument
+            android:name="@string/arg_hide_bottom_nav"
+            android:defaultValue="true" />
+
+        <action
+            android:id="@+id/to_home"
+            app:destination="@id/nav_graph_all"
+            app:popUpTo="@id/nav_graph_all"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+
+</navigation>

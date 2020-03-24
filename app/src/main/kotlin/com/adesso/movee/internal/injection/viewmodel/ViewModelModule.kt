@@ -2,11 +2,13 @@ package com.adesso.movee.internal.injection.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.adesso.movee.scene.login.LoginViewModel
 import com.adesso.movee.scene.main.MainViewModel
 import com.adesso.movee.scene.splash.SplashViewModel
 import com.adesso.movee.scene.movie.MovieViewModel
 import com.adesso.movee.scene.moviedetail.MovieDetailViewModel
 import com.adesso.movee.scene.persondetail.PersonDetailViewModel
+import com.adesso.movee.scene.profile.ProfileViewModel
 import com.adesso.movee.scene.search.SearchViewModel
 import com.adesso.movee.scene.tvshow.TvShowViewModel
 import com.adesso.movee.scene.tvshowdetail.TvShowDetailViewModel
@@ -59,4 +61,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindsSearchViewModel(viewModel: SearchViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun bindsProfileViewModel(viewModel: ProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    abstract fun bindsLoginViewModel(viewModel: LoginViewModel): ViewModel
 }

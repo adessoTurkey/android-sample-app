@@ -3,6 +3,7 @@ package com.adesso.movee.scene.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -28,6 +29,7 @@ class MainActivity : BaseBindingActivity<MainViewModel, ActivityMainBinding>() {
 
         observeNavigation()
         setupBottomNavigationView()
+        listenDestinationChanges()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -53,6 +55,20 @@ class MainActivity : BaseBindingActivity<MainViewModel, ActivityMainBinding>() {
             is NavigationCommand.Popup -> showPopup(command.model, command.callback)
             is NavigationCommand.Back -> navController.navigateUp()
         }
+    }
+
+    private fun listenDestinationChanges() {
+        navController.addOnDestinationChangedListener { _, _, args ->
+            val visibility = if (shouldHideBottomNav(args)) View.GONE else View.VISIBLE
+
+            if (binder.mainBottomNav.visibility != visibility) {
+                binder.mainBottomNav.visibility = visibility
+            }
+        }
+    }
+
+    private fun shouldHideBottomNav(args: Bundle?): Boolean {
+        return args?.getBoolean(getString(R.string.arg_hide_bottom_nav)) == true
     }
 
     companion object {
