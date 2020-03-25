@@ -4,12 +4,12 @@
     <item
         android:id="@+id/nav_graph_movie"
         android:icon="@drawable/ic_tab_bar_movie"
-        android:title="@string/movies" />
+        android:title="@string/movie_message_movies" />
 
     <item
         android:id="@+id/nav_graph_tv_show"
         android:icon="@drawable/ic_tab_bar_tv_show"
-        android:title="@string/tv_series" />
+        android:title="@string/tv_show_message_tv_series" />
 
     <item
         android:id="@+id/nav_graph_search"

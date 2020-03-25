@@ -85,10 +85,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:etv_collapseLines="5"
-                    app:etv_collapsedText="@string/see_full_bio"
+                    app:etv_collapsedText="@string/person_detail_message_see_full_bio"
                     app:etv_content="@{viewModel.personDetails.biography}"
                     app:etv_contentTextAppearance="@style/TextField.PersonBio"
-                    app:etv_expandedText="@string/see_less"
+                    app:etv_expandedText="@string/person_detail_message_see_less"
                     app:etv_toggleTextAppearance="@style/TextField.PersonBioToggle"
                     app:layout_constraintTop_toTopOf="parent" />
 

@@ -28,7 +28,7 @@ class MovieViewModel @Inject constructor(
 
     private val _popularMovies = MutableLiveData<List<MovieUiModel>>()
     private val _toolbarTitle = MutableLiveData<String>()
-    private val _toolbarSubtitle = MutableLiveData(getString(R.string.popular))
+    private val _toolbarSubtitle = MutableLiveData(getString(R.string.movie_message_popular))
     private val _nowPlayingMovies = MutableLiveData<List<MovieUiModel>>()
     val popularMovies: LiveData<List<MovieUiModel>> get() = _popularMovies
     val showHeader = TripleCombinedLiveData(
@@ -82,8 +82,8 @@ class MovieViewModel @Inject constructor(
 
     fun appbarStateChanged(state: AppBarStateChangeListener.State) {
         when (state) {
-            COLLAPSED -> postToolbarTitle(R.string.popular_movies)
-            EXPANDED, IDLE -> postToolbarTitle(R.string.movies)
+            COLLAPSED -> postToolbarTitle(R.string.movie_message_popular_movies)
+            EXPANDED, IDLE -> postToolbarTitle(R.string.movie_message_movies)
         }
     }
 

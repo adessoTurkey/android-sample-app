@@ -16,38 +16,38 @@
     <string name="error_message_timeout">İstek zaman aşımına uğradı</string>
 
     <!-- Movie -->
-    <string name="popular_movies">Popular Movies</string>
-    <string name="movies">Movies</string>
-    <string name="popular">Popular</string>
+    <string name="movie_message_popular_movies">Popular Movies</string>
+    <string name="movie_message_movies">Movies</string>
+    <string name="movie_message_popular">Popular</string>
 
     <!-- TV Show -->
-    <string name="top_rated">Top Rated</string>
-    <string name="tv_series">TV Series</string>
-    <string name="top_rated_series">Top Rated Series</string>
+    <string name="tv_show_message_top_rated">Top Rated</string>
+    <string name="tv_show_message_tv_series">TV Series</string>
+    <string name="tv_show_message_top_rated_series">Top Rated Series</string>
 
     <!-- Show Detail -->
-    <string name="not_specified">Not Specified</string>
-    <string name="min_formatted">%d min</string>
+    <string name="show_detail_message_not_specified">Not Specified</string>
+    <string name="show_detail_message_min_formatted">%d min</string>
 
     <!-- Tv Show Detail -->
-    <string name="creators">Creators:</string>
-    <plurals name="seasons">
+    <string name="tv_show_detail_message_creators">Creators:</string>
+    <plurals name="tv_show_detail_message_seasons">
         <item quantity="one">%d season</item>
         <item quantity="other">%d seasons</item>
     </plurals>
     <string name="cast">Cast</string>
 
     <!-- Movie Detail -->
-    <string name="director">Director:</string>
-    <string name="writers">Writers:</string>
-    <string name="stars">Stars:</string>
+    <string name="movie_detail_message_director">Director:</string>
+    <string name="movie_detail_message_writers">Writers:</string>
+    <string name="movie_detail_message_stars">Stars:</string>
 
     <!-- Person Detail -->
-    <string name="born_date">Born: %s</string>
-    <string name="born_place">Born: in %s</string>
-    <string name="born_date_and_place">Born: %1s in %2s</string>
-    <string name="see_full_bio">See full bio >></string>
-    <string name="see_less">See less >></string>
+    <string name="person_detail_message_born_date">Born: %s</string>
+    <string name="person_detail_message_born_place">Born: in %s</string>
+    <string name="person_detail_message_born_date_and_place">Born: %1s in %2s</string>
+    <string name="person_detail_message_see_full_bio">See full bio >></string>
+    <string name="person_detail_message_see_less">See less >></string>
 
     <!-- Search -->
     <string name="search_message_search">Search</string>

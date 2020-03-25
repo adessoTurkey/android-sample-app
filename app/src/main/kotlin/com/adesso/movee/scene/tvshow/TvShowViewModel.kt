@@ -27,7 +27,7 @@ class TvShowViewModel @Inject constructor(
 
     private val _topRatedTvShows = MutableLiveData<List<TvShowUiModel>>()
     private val _toolbarTitle = MutableLiveData<String>()
-    private val _toolbarSubtitle = MutableLiveData(getString(R.string.top_rated))
+    private val _toolbarSubtitle = MutableLiveData(getString(R.string.tv_show_message_top_rated))
     private val _nowPlayingTvShows = MutableLiveData<List<TvShowUiModel>>()
     val topRatedTvShows: LiveData<List<TvShowUiModel>> get() = _topRatedTvShows
     val showHeader = TripleCombinedLiveData(
@@ -77,8 +77,8 @@ class TvShowViewModel @Inject constructor(
 
     fun onAppBarStateChanged(state: AppBarStateChangeListener.State) {
         val titleRes = when (state) {
-            COLLAPSED -> R.string.top_rated_series
-            EXPANDED, IDLE -> R.string.tv_series
+            COLLAPSED -> R.string.tv_show_message_top_rated_series
+            EXPANDED, IDLE -> R.string.tv_show_message_tv_series
         }
 
         postToolbarTitle(getString(titleRes))
