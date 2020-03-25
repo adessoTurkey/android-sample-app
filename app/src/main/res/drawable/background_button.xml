@@ -6,7 +6,7 @@
 
             <solid android:color="@color/colorPrimaryDark" />
 
-            <corners android:radius="@dimen/button_radius" />
+            <corners android:radius="@dimen/radius_button" />
 
         </shape>
     </item>
@@ -16,7 +16,7 @@
 
             <solid android:color="@color/soft_grey" />
 
-            <corners android:radius="@dimen/button_radius" />
+            <corners android:radius="@dimen/radius_button" />
 
         </shape>
     </item>
@@ -26,7 +26,7 @@
 
             <solid android:color="@color/colorPrimaryDark" />
 
-            <corners android:radius="@dimen/button_radius" />
+            <corners android:radius="@dimen/radius_button" />
 
         </shape>
     </item>
@@ -36,7 +36,7 @@
 
             <solid android:color="@color/colorPrimaryDark" />
 
-            <corners android:radius="@dimen/button_radius" />
+            <corners android:radius="@dimen/radius_button" />
 
         </shape>
     </item>
@@ -47,7 +47,7 @@
 
             <solid android:color="@color/vibrant_blue" />
 
-            <corners android:radius="@dimen/button_radius" />
+            <corners android:radius="@dimen/radius_button" />
 
         </shape>
     </item>
