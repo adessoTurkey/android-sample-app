@@ -2,7 +2,7 @@ ext {
 
     compiler = [
             java  : JavaVersion.VERSION_1_8,
-            kotlin: '1.3.61'
+            kotlin: '1.3.70'
     ]
 
     android = [
@@ -12,105 +12,115 @@ ext {
     ]
 
     build = [
-            apiKey       : System.getenv("API_KEY_TMDB"),
+            apiKey: System.getenv("API_KEY_TMDB"),
     ]
 
     application = [
             id                       : 'com.adesso.movee',
-            versionCode              : 1,
+            versionCode              : 2,
             versionName              : "0.1.0",
             testInstrumentationRunner: "android.support.test.runner.AndroidJUnitRunner"
     ]
 
-    // Libraries
-    daggerVersion = '2.21'
-    retrofitVersion = '2.6.0'
-    okHttpVersion = '3.9.+'
-    moshiVersion = '1.8.0'
-    moshiLazyAdapterVersion = '2.1'
-    lifecycleVersion = '1.1.0'
-    materialVersion = '1.0.0'
-    roomVersion = '1.1.1'
-    navigationVersion = '2.2.0-rc02'
-    constraintLayoutVersion = '2.0.0-beta3'
-    androidKtxVersion = '0.1'
-    kotlinxCoroutinesVersion = '1.3.2'
-    glideVersion = '4.5.0'
-    stethoVersion = '1.5.1'
-    ok2curlClientVersion = '0.5.0'
-    chuckerVersion = "3.0.1"
-    lottieVersion = '3.2.2'
-    preferenceVersion = '1.1.0'
-    viewPager2Version = '1.0.0'
-
-    // Testing
-    jUnitVersion = '4.12'
-    mockitoVersion = '2.13.+'
-    espressoVersion = '3.0.+'
-
-    // app dependencies
-    androidxDependencies = [
-            "androidx.core:core-ktx:${androidKtxVersion}",
-            "androidx.navigation:navigation-fragment-ktx:$navigationVersion",
-            "androidx.navigation:navigation-ui-ktx:$navigationVersion",
-            "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
-            "androidx.viewpager2:viewpager2:$viewPager2Version",
-            "androidx.preference:preference-ktx:$preferenceVersion",
+    gradle = [
+            gradle: "3.6.1",
     ]
 
-    commonKaptDependencies = [
-            "android.arch.lifecycle:compiler:$lifecycleVersion",
-            "com.google.dagger:dagger-compiler:${daggerVersion}",
-            "com.google.dagger:dagger-android-processor:${daggerVersion}",
+    version = [
+            dagger          : '2.21',
+            retrofit        : '2.6.0',
+            okhttp          : '3.9.+',
+            moshi           : '1.8.0',
+            moshiLazyAdapter: '2.1',
+            constraintLayout: '2.0.0-beta3',
+            navigation      : '2.2.0-rc02',
+            lifecycle       : '1.1.0',
+            androidKtx      : '0.1',
+            coroutines      : '1.3.2',
+            espresso        : '3.0.+',
+            chucker         : '3.0.1',
+            gson            : '2.8.2',
+            glide           : '4.8.0',
+            ok2curl         : '0.5.0',
+            room            : '1.1.1',
+            jUnit           : '4.12',
+            mockito         : '2.13.+',
+            lottie          : '3.2.2',
+            material        : '1.0.0',
+            preference      : '1.1.0',
+            viewPager2      : '1.0.0',
+            timber          : '4.7.1',
     ]
 
-    commonDependencies = [
-            "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$compiler.kotlin",
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinxCoroutinesVersion}",
-            "org.jetbrains.kotlin:kotlin-reflect:$compiler.kotlin",
-            "com.github.bumptech.glide:glide:${glideVersion}",
-            "com.airbnb.android:lottie:${lottieVersion}",
+    dependency = [
+            kotlinn = [
+                    "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$compiler.kotlin",
+                    "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version.coroutines",
+                    "org.jetbrains.kotlin:kotlin-reflect:$compiler.kotlin",
+            ],
+
+            androidx = [
+                    "androidx.core:core-ktx:$version.androidKtx",
+                    "androidx.navigation:navigation-fragment-ktx:$version.navigation",
+                    "androidx.navigation:navigation-ui-ktx:$version.navigation",
+                    "androidx.constraintlayout:constraintlayout:$version.constraintLayout",
+                    "androidx.viewpager2:viewpager2:$version.viewPager2",
+                    "androidx.preference:preference-ktx:$version.preference",
+            ],
+
+            arch = [
+                    "android.arch.lifecycle:runtime:$version.lifecycle",
+                    "android.arch.lifecycle:extensions:$version.lifecycle",
+                    "android.arch.lifecycle:reactivestreams:$version.lifecycle",
+                    "android.arch.persistence.room:runtime:$version.room",
+            ],
+
+            dagger = [
+                    "com.google.dagger:dagger:$version.dagger",
+                    "com.google.dagger:dagger-android-support:$version.dagger",
+            ],
+
+            common = [
+                    "com.github.bumptech.glide:glide:$version.glide",
+                    "com.airbnb.android:lottie:$version.lottie",
+                    "com.jakewharton.timber:timber:$version.timber",
+            ],
+
+            commonKapt = [
+                    "android.arch.lifecycle:compiler:$version.lifecycle",
+                    "com.google.dagger:dagger-compiler:$version.dagger",
+                    "com.google.dagger:dagger-android-processor:$version.dagger",
+            ],
+
+            network = [
+                    "com.squareup.retrofit2:retrofit:$version.retrofit",
+                    "com.squareup.okhttp3:logging-interceptor:$version.okhttp",
+                    "com.squareup.retrofit2:converter-moshi:$version.retrofit",
+                    "com.squareup.moshi:moshi-kotlin:$version.moshi",
+                    "com.squareup.moshi:moshi-adapters:$version.moshi",
+                    "com.serjltt.moshi:moshi-lazy-adapters:$version.moshiLazyAdapter",
+                    "com.github.mrmike:ok2curl:$version.ok2curl",
+            ],
+
+            commonTest = [
+                    "junit:junit:$version.jUnit",
+            ],
+
+            material = [
+                    "com.google.android.material:material:$version.material",
+            ],
+
+            commonInstrumentationTest = [
+                    "com.android.support.test.espresso:espresso-core:$version.espresso",
+            ],
+
+            commonDebug = [
+                    "com.github.ChuckerTeam.Chucker:library:$version.chucker",
+            ],
+
+            commonRelease = [
+                    "com.github.ChuckerTeam.Chucker:library-no-op:$version.chucker",
+            ],
     ]
 
-    networkDependencies = [
-            "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
-            "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
-            "com.squareup.moshi:moshi-kotlin:$moshiVersion",
-            "com.serjltt.moshi:moshi-lazy-adapters:$moshiLazyAdapterVersion",
-            "com.squareup.moshi:moshi-adapters:$moshiVersion",
-            "com.github.mrmike:ok2curl:$ok2curlClientVersion",
-    ]
-
-    archDependencies = [
-            "android.arch.lifecycle:runtime:$lifecycleVersion",
-            "android.arch.lifecycle:extensions:$lifecycleVersion",
-            "android.arch.lifecycle:reactivestreams:$lifecycleVersion",
-            "android.arch.persistence.room:runtime:$roomVersion",
-    ]
-
-    daggerDependencies = [
-            "com.google.dagger:dagger:${daggerVersion}",
-            "com.google.dagger:dagger-android-support:${daggerVersion}",
-    ]
-
-    commonTestDependencies = [
-            "junit:junit:$jUnitVersion",
-    ]
-
-    materialDependencies = [
-            "com.google.android.material:material:$materialVersion",
-    ]
-
-    commonInstrumentationTestDependencies = [
-            "com.android.support.test.espresso:espresso-core:$espressoVersion",
-    ]
-
-    commonDebugDependencies = [
-            "com.github.ChuckerTeam.Chucker:library:$chuckerVersion",
-    ]
-
-    commonReleaseDependencies = [
-            "com.github.ChuckerTeam.Chucker:library-no-op:$chuckerVersion",
-    ]
 }

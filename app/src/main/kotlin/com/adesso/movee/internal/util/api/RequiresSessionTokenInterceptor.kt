@@ -27,7 +27,7 @@ class RequiresSessionTokenInterceptor @Inject constructor(
                     QUERY_PARAMETER_SESSION,
                     loginLocalDataSource.getSessionToken()
                         ?: throw Failure.UnAuthError(
-                            applicationContext.getString(R.string.error_message_unauthorized)
+                            applicationContext.getString(R.string.common_error_unauthorized)
                         )
                 )
                 .build()

@@ -41,28 +41,28 @@ abstract class BaseAndroidViewModel(application: Application) : AndroidViewModel
         val (title, message) = when (failure) {
             is Failure.NoConnectivityError -> Pair(
                 "",
-                getString(R.string.error_message_network_connection)
+                getString(R.string.common_error_network_connection)
             )
-            is Failure.UnknownHostError -> Pair("", getString(R.string.error_message_unknown_host))
+            is Failure.UnknownHostError -> Pair("", getString(R.string.common_error_unknown_host))
             is Failure.ServerError -> Pair("", failure.message)
             is Failure.JsonError, is Failure.EmptyResponse -> Pair(
                 "",
-                getString(R.string.error_message_invalid_response)
+                getString(R.string.common_error_invalid_response)
             )
             is Failure.FormValidationError -> Pair(
-                getString(R.string.popup_error_title_form_validation), failure.message
-                    ?: getString(R.string.error_message_invalid_form)
+                getString(R.string.common_title_popup_form_validation), failure.message
+                    ?: getString(R.string.common_error_invalid_form)
             )
-            is Failure.IoError -> Pair("", getString(R.string.error_message_can_not_save_data))
+            is Failure.IoError -> Pair("", getString(R.string.common_error_can_not_save_data))
             is Failure.UnknownError -> Pair(
                 "",
-                failure.exception.localizedMessage ?: getString(R.string.error_unknown)
+                failure.exception.localizedMessage ?: getString(R.string.common_error_unknown)
             )
             is Failure.HttpError -> Pair(
                 "",
-                getString(R.string.error_message_http, failure.code.toString())
+                getString(R.string.common_error_http, failure.code.toString())
             )
-            is Failure.TimeOutError -> Pair("", getString(R.string.error_message_timeout))
+            is Failure.TimeOutError -> Pair("", getString(R.string.common_error_timeout))
             else -> Pair("", failure.message ?: failure.toString())
         }
 

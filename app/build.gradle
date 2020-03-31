@@ -7,7 +7,6 @@ apply from: "$rootDir/ktlint.gradle"
 
 android {
     def ext = rootProject.extensions.ext
-
     compileSdkVersion ext.android.compileSdk
 
     defaultConfig {
@@ -19,24 +18,64 @@ android {
         testInstrumentationRunner ext.application.testInstrumentationRunner
         vectorDrawables.useSupportLibrary true
 
-        buildConfigField "String", "BASE_URL", BASE_URL
+        buildConfigField "String", "BASE_URL", BASE_URL_DEV
         buildConfigField "String", "API_KEY", "\"" + ext.build.apiKey + "\""
+        buildConfigField 'Boolean', "ENABLE_MOCK", "false"
+        buildConfigField 'Boolean', "ENABLE_LOG", "true"
+    }
+
+    signingConfigs {
+        release {
+            setProperty(
+                    "archivesBaseName",
+                    "movee-v$android.defaultConfig.versionName-$android.defaultConfig.versionCode"
+            )
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        dev {
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "Movee [dev]"
+        }
+
+        mock {
+            applicationIdSuffix ".mock"
+            resValue "string", "app_name", "Movee [mock]"
+            buildConfigField 'Boolean', "ENABLE_MOCK", "true"
+        }
+
+        qa {
+            applicationIdSuffix ".qa"
+            resValue "string", "app_name", "Movee [qa]"
+        }
+
+        prd {
+            resValue "string", "variant", "prod"
+            resValue "string", "app_name", "Movee"
+            buildConfigField "String", "BASE_URL", BASE_URL_PRD
+            buildConfigField "String", "API_KEY", "\"" + ext.build.apiKey + "\""
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            buildConfigField 'Boolean', "ENABLE_LOG", "false"
         }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility compiler.java
+        targetCompatibility compiler.java
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = compiler.java
     }
 
     dataBinding {
@@ -61,16 +100,24 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    kapt commonKaptDependencies
-    implementation androidxDependencies
-    implementation commonDependencies
-    implementation archDependencies
-    implementation networkDependencies
-    implementation daggerDependencies
-    debugImplementation commonDebugDependencies
-    releaseImplementation commonReleaseDependencies
+    implementation kotlinn
+    implementation androidx
+    implementation common
+    implementation arch
+    implementation network
+    implementation dagger
 
-    testImplementation commonTestDependencies
-    androidTestImplementation commonInstrumentationTestDependencies
+    kapt commonKapt
+    debugImplementation commonDebug
+    releaseImplementation commonRelease
+    testImplementation commonTest
+    androidTestImplementation commonInstrumentationTest
 }
 
+android.variantFilter { variant ->
+    if (variant.buildType.name.equals('release') &&
+            variant.getFlavors().get(0).name.equals('mock')) {
+
+        variant.setIgnore(true)
+    }
+}

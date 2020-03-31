@@ -1,56 +1,63 @@
 <resources>
 
-    <string name="app_name">Movee</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
+    <!-- region common -->
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">Cancel</string>
 
-    <!-- ERROR MESSAGES  -->
-    <string name="error_message_invalid_response">Invalid server response</string>
-    <string name="error_message_invalid_form">Invalid form</string>
-    <string name="error_message_network_connection">No internet connection</string>
-    <string name="error_message_unknown_host">Server not responding</string>
-    <string name="error_message_can_not_save_data">We could not save your data</string>
-    <string name="error_unknown">Unknown error</string>
-    <string name="popup_error_title_form_validation" />
-    <string name="error_message_http">An error occurred please try again later \n (%1$s)</string>
-    <string name="error_message_timeout">Request timed out</string>
-    <string name="error_message_unauthorized">Only logged in users can perform this operation</string>
+    <string name="common_error_invalid_response">Invalid server response</string>
+    <string name="common_error_invalid_form">Invalid form</string>
+    <string name="common_error_network_connection">No internet connection</string>
+    <string name="common_error_unknown_host">Server not responding</string>
+    <string name="common_error_can_not_save_data">We could not save your data</string>
+    <string name="common_error_unknown">Unknown error</string>
+    <string name="common_title_popup_form_validation" />
+    <string name="common_error_http">An error occurred please try again later \n (%1$s)</string>
+    <string name="common_error_timeout">Request timed out</string>
+    <string name="common_error_unauthorized">Only logged in users can perform this operation</string>
 
-    <!-- Movie -->
+    <string name="common_text_cast">Cast</string>
+    <!-- endregion -->
+
+    <!-- region Movie -->
     <string name="movie_message_popular_movies">Popular Movies</string>
     <string name="movie_message_movies">Movies</string>
     <string name="movie_message_popular">Popular</string>
+    <!-- endregion -->
 
-    <!-- TV Show -->
+    <!-- region TV Show -->
     <string name="tv_show_message_top_rated">Top Rated</string>
     <string name="tv_show_message_tv_series">TV Series</string>
     <string name="tv_show_message_top_rated_series">Top Rated Series</string>
+    <!-- endregion -->
 
-    <!-- Show Detail -->
+    <!-- region Show Detail -->
     <string name="show_detail_message_not_specified">Not Specified</string>
     <string name="show_detail_message_min_formatted">%d min</string>
+    <!-- endregion -->
 
-    <!-- Tv Show Detail -->
+    <!-- region Tv Show Detail -->
     <string name="tv_show_detail_message_creators">Creators:</string>
     <plurals name="tv_show_detail_message_seasons">
         <item quantity="one">%d season</item>
         <item quantity="other">%d seasons</item>
     </plurals>
-    <string name="cast">Cast</string>
+    <!-- endregion -->
 
-    <!-- Movie Detail -->
+    <!-- region Movie Detail -->
     <string name="movie_detail_message_director">Director:</string>
     <string name="movie_detail_message_writers">Writers:</string>
     <string name="movie_detail_message_stars">Stars:</string>
+    <!-- endregion -->
 
-    <!-- Person Detail -->
+    <!-- region Person Detail -->
     <string name="person_detail_message_born_date">Born: %s</string>
     <string name="person_detail_message_born_place">Born: in %s</string>
     <string name="person_detail_message_born_date_and_place">Born: %1s in %2s</string>
     <string name="person_detail_message_see_full_bio">See full bio >></string>
     <string name="person_detail_message_see_less">See less >></string>
+    <!-- endregion -->
 
-    <!-- Search -->
+    <!-- region Search -->
     <string name="search_message_search">Search</string>
     <string name="search_message_movies_or_series">Movies or Series</string>
     <string name="search_message_movie">Movie</string>
@@ -60,17 +67,20 @@
     <string name="search_message_writer">Writer</string>
     <string name="search_message_crew">Crew</string>
     <string name="search_message_empty_search_result">Your search didn’t have any results</string>
+    <!-- endregion -->
 
-    <!-- Profile -->
+    <!-- region Profile -->
     <string name="profile_message_profile">Profile</string>
     <string name="profile_message_hello">Hello,</string>
     <string name="profile_message_login">Login</string>
+    <!-- endregion -->
 
-    <!-- Login -->
+    <!-- region Login -->
     <string name="login_hint_username">Username</string>
     <string name="login_hint_password">Password</string>
     <string name="login_message_forgot_password">Forgot Password?</string>
     <string name="login_message_login">Login</string>
     <string name="login_message_register">Don\'t have an account? Register now</string>
+    <!-- endregion -->
 
 </resources>

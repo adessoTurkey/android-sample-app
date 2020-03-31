@@ -12,11 +12,8 @@ How to set an environment variable in [Mac](https://medium.com/@himanshuagarwal1
 
 ### Code style
 
-We use [ktlint] for style consistency and thus our gradle builds depends on ``ktlint`` task to succeed, if it fails don't worry you can easily fix it with following gradle task:
-
-`` ./gradlew ktlintFormat ``
-
-You can spot the errors with following gradle task:
+We use [ktlint] for style consistency and thus our gradle builds depends on ``ktlint`` and ``ktlintFormat`` tasks. It is a built-in ktlint formatter which runs at the beginning of compilation, but sometimes this great task can't do its job properly.
+In this point you can spot the errors with following gradle task:
 
 `` ./gradlew ktlint ``
 

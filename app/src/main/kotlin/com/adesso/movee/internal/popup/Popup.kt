@@ -70,11 +70,11 @@ class Popup(
         val model: PopupUiModel = argsModel
         with(model) {
             if (cancelButtonText == null) {
-                cancelButtonText = context.resources.getString(R.string.cancel)
+                cancelButtonText = context.resources.getString(R.string.common_cancel)
             }
 
             if (confirmButtonText == null) {
-                confirmButtonText = context.resources.getString(R.string.ok)
+                confirmButtonText = context.resources.getString(R.string.common_ok)
             }
         }
 

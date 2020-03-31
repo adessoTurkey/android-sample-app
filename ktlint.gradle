@@ -25,3 +25,4 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
 }
 
 preBuild.dependsOn(ktlint)
+ktlint.dependsOn(ktlintFormat)
