@@ -8,7 +8,7 @@ interface ShowDetailUiModel : ShowUiModel {
 
     fun runtime(context: Context): String {
         return runtime?.let { runtime ->
-            context.getString(R.string.min_formatted, runtime)
-        } ?: context.getString(R.string.not_specified)
+            context.getString(R.string.show_detail_message_min_formatted, runtime)
+        } ?: context.getString(R.string.show_detail_message_not_specified)
     }
 }

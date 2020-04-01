@@ -105,6 +105,12 @@ abstract class BaseAndroidViewModel(application: Application) : AndroidViewModel
         }
     }
 
+    protected suspend fun <T> onBackgroundThread(block: suspend CoroutineScope.() -> T): T {
+        return withContext(bgScope.coroutineContext) {
+            block.invoke(this)
+        }
+    }
+
     protected fun getString(@StringRes resId: Int): String {
         return getApplication<Application>().getString(resId)
     }

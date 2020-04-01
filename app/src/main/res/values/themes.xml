@@ -7,11 +7,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="buttonStyle">@style/Button</item>
     </style>
 
     <style name="AppTheme.Splash">
         <item name="colorPrimaryDark">@color/transparent</item>
         <item name="android:background">@drawable/background_splash</item>
     </style>
-    
+
+    <style name="LoginTextInputTheme">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:backgroundTint">#4cabb4bd</item>
+    </style>
+
 </resources>

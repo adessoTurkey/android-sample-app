@@ -22,7 +22,7 @@ data class TvShowDetailUiModel(
 
     fun seasons(context: Context): String {
         return context.resources.getQuantityString(
-            R.plurals.seasons,
+            R.plurals.tv_show_detail_message_seasons,
             seasonCount,
             seasonCount
         )

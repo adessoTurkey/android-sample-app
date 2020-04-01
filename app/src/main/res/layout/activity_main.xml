@@ -33,7 +33,7 @@
             android:background="@drawable/border_top"
             app:itemIconSize="@dimen/size_bottom_bar_icon"
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/menu_main_bottom_nav" />
+            app:menu="@menu/main_bottom_nav" />
 
     </LinearLayout>
 

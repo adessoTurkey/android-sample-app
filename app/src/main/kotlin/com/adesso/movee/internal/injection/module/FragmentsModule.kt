@@ -1,7 +1,9 @@
 package com.adesso.movee.internal.injection.module
 
+import com.adesso.movee.internal.injection.scope.LoginScope
 import com.adesso.movee.internal.injection.scope.MovieDetailScope
 import com.adesso.movee.internal.injection.scope.MovieScope
+import com.adesso.movee.internal.injection.scope.ProfileScope
 import com.adesso.movee.internal.injection.scope.SearchScope
 import com.adesso.movee.internal.injection.scope.TvShowDetailScope
 import com.adesso.movee.internal.injection.scope.TvShowScope
@@ -16,8 +18,12 @@ import com.adesso.movee.scene.tvshow.TvShowModule
 import com.adesso.movee.scene.tvshowdetail.TvShowDetailFragment
 import com.adesso.movee.scene.tvshowdetail.TvShowDetailModule
 import com.adesso.movee.internal.injection.scope.PersonDetailScope
+import com.adesso.movee.scene.login.LoginFragment
+import com.adesso.movee.scene.login.LoginModule
 import com.adesso.movee.scene.persondetail.PersonDetailFragment
 import com.adesso.movee.scene.persondetail.PersonDetailModule
+import com.adesso.movee.scene.profile.ProfileFragment
+import com.adesso.movee.scene.profile.ProfileModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -47,4 +53,12 @@ internal abstract class FragmentsModule {
     @SearchScope
     @ContributesAndroidInjector(modules = [SearchModule::class])
     abstract fun contributeSearchFragment(): SearchFragment
+
+    @ProfileScope
+    @ContributesAndroidInjector(modules = [ProfileModule::class])
+    abstract fun contributeProfileFragment(): ProfileFragment
+
+    @LoginScope
+    @ContributesAndroidInjector(modules = [LoginModule::class])
+    abstract fun contributeLoginFragment(): LoginFragment
 }

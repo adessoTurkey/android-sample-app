@@ -37,8 +37,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_view_popup_icon"
-            android:layout_width="@dimen/popup_size"
-            android:layout_height="@dimen/popup_size"
+            android:layout_width="@dimen/size_popup"
+            android:layout_height="@dimen/size_popup"
             app:layout_constraintBottom_toBottomOf="@+id/image_view_popup"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"

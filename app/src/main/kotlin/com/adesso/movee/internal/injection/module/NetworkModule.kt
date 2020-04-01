@@ -3,6 +3,7 @@ package com.adesso.movee.internal.injection.module
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.adesso.movee.BuildConfig
+import com.adesso.movee.data.remote.api.LoginService
 import com.adesso.movee.data.remote.api.MovieService
 import com.adesso.movee.data.remote.api.TvShowService
 import com.adesso.movee.internal.util.NetworkHandler
@@ -11,6 +12,8 @@ import com.adesso.movee.internal.util.api.ErrorHandlingInterceptor
 import com.adesso.movee.internal.util.api.RetryAfterInterceptor
 import com.adesso.movee.data.remote.api.PersonService
 import com.adesso.movee.data.remote.api.SearchService
+import com.adesso.movee.data.remote.api.UserService
+import com.adesso.movee.internal.util.api.RequiresSessionTokenInterceptor
 import com.moczul.ok2curl.CurlInterceptor
 import com.moczul.ok2curl.logger.Loggable
 import com.squareup.moshi.Moshi
@@ -73,6 +76,7 @@ internal class NetworkModule {
         cache: Cache,
         loggingInterceptor: HttpLoggingInterceptor,
         curlInterceptor: CurlInterceptor,
+        sessionTokenInterceptor: RequiresSessionTokenInterceptor,
         moshi: Moshi
     ): OkHttpClient {
 
@@ -83,6 +87,7 @@ internal class NetworkModule {
             .addInterceptor(ChuckerInterceptor(context))
             .addInterceptor(loggingInterceptor)
             .addInterceptor(curlInterceptor)
+            .addInterceptor(sessionTokenInterceptor)
             .addInterceptor(ErrorHandlingInterceptor(NetworkHandler(context), moshi))
             .addInterceptor(RetryAfterInterceptor())
             .cache(cache)
@@ -122,5 +127,17 @@ internal class NetworkModule {
     @Singleton
     fun provideSearchService(retrofit: Retrofit): SearchService {
         return retrofit.create(SearchService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginService(retrofit: Retrofit): LoginService {
+        return retrofit.create(LoginService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
     }
 }
