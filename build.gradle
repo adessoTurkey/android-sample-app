@@ -24,17 +24,20 @@ allprojects {
     }
 
     afterEvaluate { project ->
-        def propsFile = rootProject.file('keystore.properties')
-        def configName = 'release'
+        def buildRelease = 'release'
+        def isReleaseBuild = getCurrentVariant() == buildRelease
 
-        if (project.hasProperty("android") && android.signingConfigs.hasProperty(configName)) {
+        if (isReleaseBuild &&
+                project.hasProperty("android") &&
+                android.signingConfigs.hasProperty(buildRelease)) {
             try {
+                def propsFile = rootProject.file('keystore.properties')
                 def props = new Properties()
                 props.load(new FileInputStream(propsFile))
-                android.signingConfigs[configName].storeFile = file(props['RELEASE.STORE_FILE'])
-                android.signingConfigs[configName].storePassword = props['RELEASE.STORE_PASSWORD']
-                android.signingConfigs[configName].keyAlias = props['RELEASE.KEY_ALIAS']
-                android.signingConfigs[configName].keyPassword = props['RELEASE.KEY_PASSWORD']
+                android.signingConfigs[buildRelease].storeFile = file(props['RELEASE.STORE_FILE'])
+                android.signingConfigs[buildRelease].storePassword = props['RELEASE.STORE_PASSWORD']
+                android.signingConfigs[buildRelease].keyAlias = props['RELEASE.KEY_ALIAS']
+                android.signingConfigs[buildRelease].keyPassword = props['RELEASE.KEY_PASSWORD']
             } catch (ignored) {
                 throw new InvalidUserDataException(
                         "You should define\n" +
@@ -59,3 +62,26 @@ gradle.startParameter.taskNames.each {
 }
 
 gradle.startParameter.taskNames = expandedTaskList.flatten()
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+def getCurrentVariant() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern
+
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if (matcher.find()) {
+        return matcher.group(2).toLowerCase()
+    } else {
+        return ""
+    }
+}
