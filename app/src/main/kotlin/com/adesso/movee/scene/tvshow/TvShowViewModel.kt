@@ -16,8 +16,8 @@ import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.uimodel.ShowHeaderUiModel
 import com.adesso.movee.uimodel.ShowUiModel
 import com.adesso.movee.uimodel.TvShowUiModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class TvShowViewModel @Inject constructor(
     private val fetchTopRatedTvShowsUseCase: FetchTopRatedTvShowsUseCase,

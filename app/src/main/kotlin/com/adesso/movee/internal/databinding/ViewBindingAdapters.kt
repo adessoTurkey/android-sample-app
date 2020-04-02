@@ -10,13 +10,13 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseListAdapter
 import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.internal.extension.loadImage
 import com.adesso.movee.internal.extension.setOnDrawableEndClickListener
 import com.adesso.movee.internal.util.GridLayoutSpaceItemDecoration
+import com.airbnb.lottie.LottieAnimationView
 
 @BindingAdapter("lottieFile")
 fun setLottieFile(view: LottieAnimationView, resource: String) {

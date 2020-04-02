@@ -1,33 +1,33 @@
 package com.adesso.movee.internal.injection.module
 
 import android.content.Context
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.adesso.movee.BuildConfig
 import com.adesso.movee.data.remote.api.LoginService
 import com.adesso.movee.data.remote.api.MovieService
+import com.adesso.movee.data.remote.api.PersonService
+import com.adesso.movee.data.remote.api.SearchService
 import com.adesso.movee.data.remote.api.TvShowService
+import com.adesso.movee.data.remote.api.UserService
 import com.adesso.movee.internal.util.NetworkHandler
 import com.adesso.movee.internal.util.api.ApiKeyInterceptor
 import com.adesso.movee.internal.util.api.ErrorHandlingInterceptor
-import com.adesso.movee.internal.util.api.RetryAfterInterceptor
-import com.adesso.movee.data.remote.api.PersonService
-import com.adesso.movee.data.remote.api.SearchService
-import com.adesso.movee.data.remote.api.UserService
 import com.adesso.movee.internal.util.api.RequiresSessionTokenInterceptor
+import com.adesso.movee.internal.util.api.RetryAfterInterceptor
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.moczul.ok2curl.CurlInterceptor
 import com.moczul.ok2curl.logger.Loggable
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
+import java.io.File
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.io.File
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 @Module
 internal class NetworkModule {

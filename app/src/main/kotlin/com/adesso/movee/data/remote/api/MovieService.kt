@@ -2,8 +2,8 @@ package com.adesso.movee.data.remote.api
 
 import com.adesso.movee.data.remote.model.movie.MovieCreditsResponseModel
 import com.adesso.movee.data.remote.model.movie.MovieDetailResponseModel
-import com.adesso.movee.data.remote.model.movie.NowPlayingMovieResponseModel
 import com.adesso.movee.data.remote.model.movie.MovieGenreResponseModel
+import com.adesso.movee.data.remote.model.movie.NowPlayingMovieResponseModel
 import com.adesso.movee.data.remote.model.movie.PopularMovieResponseModel
 import retrofit2.http.GET
 import retrofit2.http.Path

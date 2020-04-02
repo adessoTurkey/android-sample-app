@@ -4,9 +4,9 @@ import com.adesso.movee.data.remote.BaseRemoteDataSource
 import com.adesso.movee.data.remote.api.TvShowService
 import com.adesso.movee.data.remote.model.tv.NowPlayingTvShowResponseModel
 import com.adesso.movee.data.remote.model.tv.TopRatedTvShowResponseModel
+import com.adesso.movee.data.remote.model.tv.TvShowCreditsResponseModel
 import com.adesso.movee.data.remote.model.tv.TvShowDetailResponseModel
 import com.adesso.movee.data.remote.model.tv.TvShowGenreResponseModel
-import com.adesso.movee.data.remote.model.tv.TvShowCreditsResponseModel
 import javax.inject.Inject
 
 class TvShowRemoteDataSource @Inject constructor(

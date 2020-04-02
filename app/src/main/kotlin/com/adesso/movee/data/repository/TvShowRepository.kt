@@ -4,10 +4,10 @@ import com.adesso.movee.data.local.datasource.TvShowLocalDataSource
 import com.adesso.movee.data.remote.datasource.TvShowRemoteDataSource
 import com.adesso.movee.uimodel.TvShowGenreUiModel
 import com.adesso.movee.uimodel.TvShowUiModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 
 @Singleton
 class TvShowRepository @Inject constructor(

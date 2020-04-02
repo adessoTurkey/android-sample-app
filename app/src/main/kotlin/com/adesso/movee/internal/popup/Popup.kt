@@ -60,7 +60,8 @@ class Popup(
         setCancelable(model.cancelable)
         window?.run {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val width = (Resources.getSystem().displayMetrics.widthPixels * WIDTH_PERCENTAGE).toInt()
+            val width =
+                (Resources.getSystem().displayMetrics.widthPixels * WIDTH_PERCENTAGE).toInt()
             setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
             setGravity(Gravity.CENTER)
         }

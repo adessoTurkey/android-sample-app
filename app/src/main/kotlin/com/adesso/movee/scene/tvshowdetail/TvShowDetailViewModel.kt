@@ -7,11 +7,11 @@ import androidx.lifecycle.Transformations
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchTvShowCreditsUseCase
 import com.adesso.movee.domain.FetchTvShowDetailUseCase
-import com.adesso.movee.uimodel.TvShowDetailUiModel
 import com.adesso.movee.uimodel.TvShowCastUiModel
 import com.adesso.movee.uimodel.TvShowCreditUiModel
-import kotlinx.coroutines.launch
+import com.adesso.movee.uimodel.TvShowDetailUiModel
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class TvShowDetailViewModel @Inject constructor(
     private val fetchTvShowDetailUseCase: FetchTvShowDetailUseCase,

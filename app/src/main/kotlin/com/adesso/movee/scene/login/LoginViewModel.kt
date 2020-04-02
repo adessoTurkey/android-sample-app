@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.LoginUseCase
 import com.adesso.movee.internal.util.Event
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,

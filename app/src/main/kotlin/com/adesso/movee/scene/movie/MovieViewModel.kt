@@ -14,11 +14,11 @@ import com.adesso.movee.internal.util.AppBarStateChangeListener.State.EXPANDED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.IDLE
 import com.adesso.movee.internal.util.TripleCombinedLiveData
 import com.adesso.movee.internal.util.UseCase
-import com.adesso.movee.uimodel.ShowHeaderUiModel
 import com.adesso.movee.uimodel.MovieUiModel
+import com.adesso.movee.uimodel.ShowHeaderUiModel
 import com.adesso.movee.uimodel.ShowUiModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class MovieViewModel @Inject constructor(
     private val fetchPopularMoviesUseCase: FetchPopularMoviesUseCase,

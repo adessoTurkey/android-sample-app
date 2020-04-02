@@ -15,7 +15,8 @@ interface LoginService {
     suspend fun createRequestToken(): RequestTokenResponseModel
 
     @POST(LOGIN)
-    suspend fun createRequestTokenWithLogin(@Body requestModel: LoginRequestModel): LoginResponseModel
+    suspend fun createRequestTokenWithLogin(@Body requestModel: LoginRequestModel):
+        LoginResponseModel
 
     @POST(SESSION)
     suspend fun createSession(@Body requestModel: SessionRequestModel): SessionResponseModel

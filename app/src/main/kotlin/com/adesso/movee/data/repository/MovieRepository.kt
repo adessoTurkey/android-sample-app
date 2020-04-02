@@ -4,10 +4,10 @@ import com.adesso.movee.data.local.datasource.MovieLocalDataSource
 import com.adesso.movee.data.remote.datasource.MovieRemoteDataSource
 import com.adesso.movee.uimodel.MovieGenreUiModel
 import com.adesso.movee.uimodel.MovieUiModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 
 @Singleton
 class MovieRepository @Inject constructor(

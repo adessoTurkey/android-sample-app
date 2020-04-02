@@ -10,8 +10,8 @@ import com.adesso.movee.internal.util.AppBarStateChangeListener.State.COLLAPSED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.EXPANDED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.IDLE
 import com.adesso.movee.uimodel.PersonDetailUiModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class PersonDetailViewModel @Inject constructor(
     private val fetchPersonDetailsUseCase: FetchPersonDetailsUseCase,

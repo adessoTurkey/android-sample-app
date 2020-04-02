@@ -20,7 +20,11 @@ data class PersonDetailUiModel(
     fun bornInfo(context: Context): String {
         return when {
             birthday != null && placeOfBirth.isNullOrBlank().not() -> {
-                context.getString(R.string.person_detail_message_born_date_and_place, dateString, placeOfBirth)
+                context.getString(
+                    R.string.person_detail_message_born_date_and_place,
+                    dateString,
+                    placeOfBirth
+                )
             }
             birthday != null -> {
                 context.getString(R.string.person_detail_message_born_date, dateString)

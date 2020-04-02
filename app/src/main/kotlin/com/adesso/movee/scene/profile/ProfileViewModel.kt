@@ -10,8 +10,8 @@ import com.adesso.movee.domain.GetLoginStateUseCase
 import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.uimodel.LoginState
 import com.adesso.movee.uimodel.UserDetailUiModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class ProfileViewModel @Inject constructor(
     private val fetchUserDetailsUseCase: FetchUserDetailsUseCase,
