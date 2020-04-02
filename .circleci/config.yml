@@ -10,7 +10,6 @@ jobs:
       JVM_OPTS: -Xmx4g
     steps:
       - checkout
-#      - run: echo "$SIGNING_STORE_FILE_BASE64" | base64 --decode > movee.keystore
       - run: echo "RELEASE.KEY_ALIAS=$SIGNING_KEY_ALIAS" >> keystore.properties
       - run: echo "RELEASE.KEY_PASSWORD=$SIGNING_KEY_PASSWORD" >> keystore.properties
       - run: echo "RELEASE.STORE_FILE=$SIGNING_STORE_FILE" >> keystore.properties
@@ -18,11 +17,17 @@ jobs:
       - restore_cache:
           key: gradle-{{ checksum "build.gradle" }}
       - run:
+          name: Run Detekt
+          command: ./gradlew detekt
+      - run:
           name: Run Ktlint
           command: ./gradlew ktlint
       - run:
           name: Run Lint
           command: ./gradlew lintDevDebug
+      - run:
+          name: Run Spotless
+          command: ./gradlew spotlessCheck
       - run:
           name: Run Unit Tests
           command: ./gradlew testDevDebugUnitTest

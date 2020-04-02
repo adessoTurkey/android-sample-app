@@ -2,7 +2,7 @@ ext {
 
     compiler = [
             java  : JavaVersion.VERSION_1_8,
-            kotlin: '1.3.70'
+            kotlin: '1.3.71'
     ]
 
     android = [
@@ -17,7 +17,7 @@ ext {
 
     application = [
             id                       : 'com.adesso.movee',
-            versionCode              : 2,
+            versionCode              : 3,
             versionName              : "0.1.0",
             testInstrumentationRunner: "android.support.test.runner.AndroidJUnitRunner"
     ]
@@ -50,6 +50,8 @@ ext {
             preference      : '1.1.0',
             viewPager2      : '1.0.0',
             timber          : '4.7.1',
+            spotless        : '3.27.1',
+            detekt          : '1.7.3',
     ]
 
     dependency = [
