@@ -12,13 +12,7 @@ import com.adesso.movee.uimodel.PersonMultiSearchUiModel
 import com.adesso.movee.uimodel.TvShowMultiSearchUiModel
 import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class SearchViewModel @Inject constructor(
@@ -26,31 +20,22 @@ class SearchViewModel @Inject constructor(
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val multiSearchQueryChannel = Channel<String>(capacity = Channel.CONFLATED)
     private val _multiSearchResults = MutableLiveData<List<MultiSearchUiModel>>()
     private val _shouldShowEmptyResultView = MutableLiveData<Boolean>()
     val multiSearchResults: LiveData<List<MultiSearchUiModel>> = _multiSearchResults
     val shouldShowEmptyResultView: LiveData<Boolean> get() = _shouldShowEmptyResultView
+    private var multiSearchJob: Job? = null
 
-    init {
-        consumeMultiSearchQueryChannel()
-    }
-
-    private fun consumeMultiSearchQueryChannel() {
-        bgScope.launch {
-            multiSearchQueryChannel
-                .consumeAsFlow()
-                .map { it.trim() }
-                .filter { it.length > MIN_SEARCHABLE_LENGTH }
-                .debounce(DURATION_MS_INPUT_TIMEOUT)
-                .mapLatest {
-                    multiSearchUseCase.run(MultiSearchUseCase.Params(it))
+    fun onTextChange(text: String?) {
+        val query = text?.trim() ?: return
+        if (query.length > MIN_SEARCHABLE_LENGTH) {
+            multiSearchJob?.cancel()
+            multiSearchJob = bgScope.launch {
+                val searchResult = multiSearchUseCase.run(MultiSearchUseCase.Params(query))
+                onUIThread {
+                    searchResult.either(::handleSearchFailure, ::postMultiSearchResult)
                 }
-                .collect {
-                    onUIThread {
-                        it.either(::handleSearchFailure, ::postMultiSearchResult)
-                    }
-                }
+            }
         }
     }
 
@@ -67,14 +52,6 @@ class SearchViewModel @Inject constructor(
         _shouldShowEmptyResultView.value = multiSearchUiModels.isEmpty()
     }
 
-    fun onQueryChange(search: String?) {
-        search?.let {
-            uiScope.launch {
-                multiSearchQueryChannel.send(it)
-            }
-        }
-    }
-
     fun onMultiSearchClick(multiSearch: MultiSearchUiModel) {
         navigateToSearchItem(multiSearch)
     }
@@ -87,6 +64,8 @@ class SearchViewModel @Inject constructor(
         }
         navigate(direction)
     }
+
+    fun getSearchDebounce() = DURATION_MS_INPUT_TIMEOUT
 
     companion object {
         private const val MIN_SEARCHABLE_LENGTH = 2

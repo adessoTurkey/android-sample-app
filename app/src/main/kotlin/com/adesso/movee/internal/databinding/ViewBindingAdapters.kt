@@ -17,6 +17,11 @@ import com.adesso.movee.internal.extension.loadImage
 import com.adesso.movee.internal.extension.setOnDrawableEndClickListener
 import com.adesso.movee.internal.util.GridLayoutSpaceItemDecoration
 import com.airbnb.lottie.LottieAnimationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @BindingAdapter("lottieFile")
 fun setLottieFile(view: LottieAnimationView, resource: String) {
@@ -104,6 +109,24 @@ fun setClearable(
 
         setOnDrawableEndClickListener {
             text = null
+        }
+    }
+}
+
+interface TextChangeCallback {
+    fun onTextChange(text: String?)
+}
+
+@BindingAdapter("onTextChangeDebounce", "debounce")
+fun setOnTextChangeDebounce(view: EditText, callback: TextChangeCallback, debounce: Long) {
+    require(debounce > 0) { "Debounce must be positive debounce: $debounce" }
+
+    var job: Job? = null
+    view.doAfterTextChanged { editable ->
+        job?.cancel()
+        job = GlobalScope.launch(Dispatchers.Main) {
+            delay(debounce)
+            callback.onTextChange(editable?.toString())
         }
     }
 }
