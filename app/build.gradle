@@ -3,7 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs'
-apply from: "$rootDir/ktlint.gradle"
+apply from: "$rootDir/config/git-hooks.gradle.kts"
+apply from: "$rootDir/config/detekt.gradle"
+apply from: "$rootDir/config/ktlint.gradle"
+apply from: "$rootDir/config/spotless.gradle"
 
 android {
     def ext = rootProject.extensions.ext

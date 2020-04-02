@@ -10,14 +10,35 @@ To run the application you need to supply an API key from [TMBD](https://develop
 
 How to set an environment variable in [Mac](https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255) / [Windows](https://www.architectryan.com/2018/08/31/how-to-change-environment-variables-on-windows-10/)
 
-### Code style
+### Code style [*](https://github.com/VMadalin/kotlin-sample-app)
 
-We use [ktlint] for style consistency and thus our gradle builds depends on ``ktlint`` and ``ktlintFormat`` tasks. It is a built-in ktlint formatter which runs at the beginning of compilation, but sometimes this great task can't do its job properly.
-In this point you can spot the errors with following gradle task:
+To maintain the style and quality of the code, are used the bellow static analysis tools. All of them use properly configuration and you find them in the project root directory `config/.{toolName}`.
 
-`` ./gradlew ktlint ``
+| Tools                     | Config file                            | Check command             | Fix command               |
+|---------------------------|---------------------------------------:|---------------------------|---------------------------|
+| [detekt][detekt]          | [.detekt.yml](/config/.detekt.yml)     | `./gradlew detekt`        | -                         |
+| [ktlint][ktlint]          | -                                      | `./gradlew ktlint`        | `./gradlew ktlintFormat`  |
+| [spotless][spotless]      | -                                      | `./gradlew spotlessCheck` | `./gradlew spotlessApply` |
+| [lint][lint]              | [.lint.xml](/config/.lint.xml)         | `./gradlew lint`          | -                         |
 
-If you want to know more about naming convention, code style and more please look at our [android-guideline](https://github.com/adessoTurkey/android-guideline) repository.
+All these tools are integrated in [pre-commit git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), in order
+ensure that all static analysis and tests passes before you can commit your changes. To skip them for specific commit add this option at your git command:
+
+```properties
+git commit --no-verify
+```
+
+It's highly recommended to fix broken code styles. There is [a gradle task](/build.gradle#L53) which execute `ktlintFormat` and `spotlessApply` for you:
+
+```properties
+./gradlew reformat
+```
+
+
+The pre-commit git hooks have exactly the same checks as [CircleCI](https://circleci.com/) and are defined in this [script](/config/scripts/git-hooks/pre-commit.sh). This step ensures that all commits comply with the established rules. However the continuous integration will ultimately be validated that the changes are correct.
+
+
+If you want to know more about naming convention, code style and more please look at our [Android guideline](https://github.com/adessoTurkey/android-guideline) repository.
 
 ## Architecture
 
@@ -36,6 +57,8 @@ If you want to know more about naming convention, code style and more please loo
 
 ## Tech Stack
 
+#### Dependencies
+
 - **[Navigation Component](https://developer.android.com/jetpack/androidx/releases/navigation):** Consistent navigation between views
 - **[LiveData](https://developer.android.com/topic/libraries/architecture/livedata):** Lifecycle aware observable and data holder
 - **[ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel):** Holds UI data across configuration changes
@@ -46,8 +69,13 @@ If you want to know more about naming convention, code style and more please loo
 - **[Lottie](https://github.com/airbnb/lottie-android):** JSON based animations
 - **[Retrofit](https://github.com/square/retrofit):** Type safe HTTP client
 - **[Moshi](https://github.com/square/moshi):** JSON serializer/deserializer
-- **[Ktlint][ktlint]:** Kotlin linter
 
+#### Plugins
+
+- **[Detekt][detekt]:** Static code analysis for Kotlin
+- **[Spotless][spotless]:** Keep your code spotless
+- **[Ktlint][ktlint]:** Kotlin linter
+- **[Lint][lint]:** Static program analysis tools
 
 ## License
 
@@ -67,4 +95,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
+[detekt]: https://github.com/arturbosch/detekt
 [ktlint]: https://github.com/pinterest/ktlint
+[spotless]: https://github.com/diffplug/spotless       
+[lint]: https://developer.android.com/studio/write/lint

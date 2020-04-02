@@ -7,9 +7,12 @@ buildscript {
     dependencies {
         apply from: 'config/dependencies.gradle'
         apply from: 'config/dependencies.gradle', to: it
+        apply from: "$rootDir/config/git-hooks.gradle.kts"
         classpath "com.android.tools.build:gradle:$it.gradle.gradle"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$it.compiler.kotlin"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$it.version.navigation"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:$it.version.spotless"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$version.detekt"
     }
 }
 
@@ -40,12 +43,19 @@ allprojects {
                                 "'RELEASE.KEY_ALIAS\n" +
                                 "'and " +
                                 "'RELEASE.KEY_PASSWORD'" +
-                                " in keystore.properties. *Rename and update keystore.properties.bk if exists.")
+                                " in keystore.properties. *Rename and update keystore.properties.sample if exists.")
             }
         }
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+def buildAliases = [
+        'reformat': ['ktlintFormat', 'spotlessApply'],
+]
+def expandedTaskList = []
+
+gradle.startParameter.taskNames.each {
+    expandedTaskList << (buildAliases[it] ? buildAliases[it] : it)
 }
+
+gradle.startParameter.taskNames = expandedTaskList.flatten()
