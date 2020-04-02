@@ -10,12 +10,11 @@ jobs:
       JVM_OPTS: -Xmx4g
     steps:
       - checkout
-      - run: echo "fabric.key=$FABRIC_KEY" >> local.properties
-      - run: echo "fabric.secret=$FABRIC_SECRET" >> local.properties
-      - run: echo "signing.key.alias=$SIGNING_KEY_ALIAS" >> local.properties
-      - run: echo "signing.key.password=$SIGNING_KEY_PASSWORD" >> local.properties
-      - run: echo "signing.store.file=$SIGNING_STORE_FILE" >> local.properties
-      - run: echo "signing.store.password=$SIGNING_STORE_PASSWORD" >> local.properties
+#      - run: echo "$SIGNING_STORE_FILE_BASE64" | base64 --decode > movee.keystore
+      - run: echo "RELEASE.KEY_ALIAS=$SIGNING_KEY_ALIAS" >> keystore.properties
+      - run: echo "RELEASE.KEY_PASSWORD=$SIGNING_KEY_PASSWORD" >> keystore.properties
+      - run: echo "RELEASE.STORE_FILE=$SIGNING_STORE_FILE" >> keystore.properties
+      - run: echo "RELEASE.STORE_PASSWORD=$SIGNING_STORE_PASSWORD" >> keystore.properties
       - restore_cache:
           key: gradle-{{ checksum "build.gradle" }}
       - run:
@@ -23,10 +22,10 @@ jobs:
           command: ./gradlew ktlint
       - run:
           name: Run Lint
-          command: ./gradlew lintDebug
+          command: ./gradlew lintDevDebug
       - run:
           name: Run Unit Tests
-          command: ./gradlew testDebugUnitTest
+          command: ./gradlew testDevDebugUnitTest
       - store_artifacts:
           path: build/dependencyUpdates
       - save_cache:
