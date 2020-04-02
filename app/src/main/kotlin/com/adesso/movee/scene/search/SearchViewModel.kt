@@ -10,6 +10,7 @@ import com.adesso.movee.uimodel.MovieMultiSearchUiModel
 import com.adesso.movee.uimodel.MultiSearchUiModel
 import com.adesso.movee.uimodel.PersonMultiSearchUiModel
 import com.adesso.movee.uimodel.TvShowMultiSearchUiModel
+import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     private val multiSearchUseCase: MultiSearchUseCase,

@@ -4,9 +4,9 @@ import android.content.Context
 import com.adesso.movee.R
 import com.adesso.movee.data.local.datasource.LoginLocalDataSource
 import com.adesso.movee.internal.util.Failure
+import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
 const val HEADER_REQUIRE_SESSION_TOKEN =
     "${RequiresSessionTokenInterceptor.HEADER_KEY}: ${RequiresSessionTokenInterceptor.HEADER_VALUE}"

@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.adesso.movee.scene.login.LoginViewModel
 import com.adesso.movee.scene.main.MainViewModel
-import com.adesso.movee.scene.splash.SplashViewModel
 import com.adesso.movee.scene.movie.MovieViewModel
 import com.adesso.movee.scene.moviedetail.MovieDetailViewModel
 import com.adesso.movee.scene.persondetail.PersonDetailViewModel
 import com.adesso.movee.scene.profile.ProfileViewModel
 import com.adesso.movee.scene.search.SearchViewModel
+import com.adesso.movee.scene.splash.SplashViewModel
 import com.adesso.movee.scene.tvshow.TvShowViewModel
 import com.adesso.movee.scene.tvshowdetail.TvShowDetailViewModel
 import dagger.Binds

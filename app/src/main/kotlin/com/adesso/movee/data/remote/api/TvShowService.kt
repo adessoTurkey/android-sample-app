@@ -1,10 +1,10 @@
 package com.adesso.movee.data.remote.api
 
-import com.adesso.movee.data.remote.model.tv.TvShowDetailResponseModel
 import com.adesso.movee.data.remote.model.tv.NowPlayingTvShowResponseModel
 import com.adesso.movee.data.remote.model.tv.TopRatedTvShowResponseModel
-import com.adesso.movee.data.remote.model.tv.TvShowGenreResponseModel
 import com.adesso.movee.data.remote.model.tv.TvShowCreditsResponseModel
+import com.adesso.movee.data.remote.model.tv.TvShowDetailResponseModel
+import com.adesso.movee.data.remote.model.tv.TvShowGenreResponseModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 

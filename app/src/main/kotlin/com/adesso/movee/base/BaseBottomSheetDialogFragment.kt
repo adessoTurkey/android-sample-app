@@ -71,7 +71,8 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
         return requireParentFragment().viewModels { viewModelFactory }
     }
 
-    protected inline fun <reified VM : ViewModel> navGraphViewModels(@IdRes navGraphId: Int): Lazy<VM> {
+    protected inline fun <reified VM : ViewModel> navGraphViewModels(@IdRes navGraphId: Int):
+        Lazy<VM> {
         return navGraphViewModels(navGraphId) { viewModelFactory }
     }
 

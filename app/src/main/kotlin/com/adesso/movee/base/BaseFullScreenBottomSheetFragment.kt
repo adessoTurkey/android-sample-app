@@ -19,7 +19,8 @@ abstract class BaseFullScreenBottomSheetFragment<VM : BaseAndroidViewModel, B : 
         return dialog.apply {
             setOnShowListener { dialogInterface ->
                 val bottomSheetDialog = dialogInterface as BottomSheetDialog
-                val bottomSheet = dialogInterface.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout
+                val bottomSheet =
+                    dialogInterface.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout
                 bottomSheetDialog.window?.setDimAmount(0f)
                 setupFullHeight(bottomSheetDialog)
                 BottomSheetBehavior.from(bottomSheet).apply {
@@ -42,7 +43,8 @@ abstract class BaseFullScreenBottomSheetFragment<VM : BaseAndroidViewModel, B : 
     }
 
     private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
-        val bottomSheet = bottomSheetDialog.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout
+        val bottomSheet =
+            bottomSheetDialog.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout
         val layoutParams = bottomSheet.layoutParams
         val windowHeight = getWindowHeight()
         layoutParams?.let {

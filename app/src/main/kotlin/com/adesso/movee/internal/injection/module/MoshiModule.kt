@@ -39,7 +39,8 @@ internal class MoshiModule {
     }
 
     @Provides
-    fun provideMultiSearchItemJsonAdapter(): PolymorphicJsonAdapterFactory<MultiSearchItemResponseModel> {
+    fun provideMultiSearchItemJsonAdapter():
+        PolymorphicJsonAdapterFactory<MultiSearchItemResponseModel> {
         return PolymorphicJsonAdapterFactory.of(
                 MultiSearchItemResponseModel::class.java,
                 MultiSearchItemResponseModel.MEDIA_TYPE

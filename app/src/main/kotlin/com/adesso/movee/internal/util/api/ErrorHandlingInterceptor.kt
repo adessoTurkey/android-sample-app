@@ -4,12 +4,12 @@ import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.internal.util.NetworkHandler
 import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
-import okhttp3.Interceptor
-import okhttp3.Response
-import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import okhttp3.Interceptor
+import okhttp3.Response
+import retrofit2.HttpException
 
 class ErrorHandlingInterceptor(
     private val networkHandler: NetworkHandler,

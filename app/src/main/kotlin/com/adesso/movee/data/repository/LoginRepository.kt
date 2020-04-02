@@ -16,18 +16,21 @@ class LoginRepository @Inject constructor(
 ) {
 
     fun getLoginState() =
-        if (localDataSource.getSessionToken().isNullOrBlank()) LoginState.LOGGED_OUT else LoginState.LOGGED_IN
+        if (localDataSource.getSessionToken()
+                .isNullOrBlank()
+        ) LoginState.LOGGED_OUT else LoginState.LOGGED_IN
 
     suspend fun login(loginParams: LoginUseCase.Params) {
         val requestTokenResponse = remoteDataSource.createRequestToken()
 
-        val loginRequestTokenResponse = remoteDataSource.createRequestTokenWithLogin(
-            LoginRequestModel(
-                username = loginParams.username,
-                password = loginParams.password,
-                requestToken = requestTokenResponse.requestToken
+        val loginRequestTokenResponse =
+            remoteDataSource.createRequestTokenWithLogin(
+                LoginRequestModel(
+                    username = loginParams.username,
+                    password = loginParams.password,
+                    requestToken = requestTokenResponse.requestToken
+                )
             )
-        )
 
         val sessionResponse = remoteDataSource.createSession(
             SessionRequestModel(
