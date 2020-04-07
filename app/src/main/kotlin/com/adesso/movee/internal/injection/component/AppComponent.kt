@@ -4,6 +4,7 @@ import com.adesso.movee.internal.injection.DaggerApplication
 import com.adesso.movee.internal.injection.module.ActivitiesModule
 import com.adesso.movee.internal.injection.module.AppModule
 import com.adesso.movee.internal.injection.module.CacheModule
+import com.adesso.movee.internal.injection.module.CoroutineModule
 import com.adesso.movee.internal.injection.module.FragmentsModule
 import com.adesso.movee.internal.injection.module.NetworkModule
 import com.adesso.movee.internal.injection.viewmodel.ViewModelModule
@@ -21,7 +22,8 @@ import javax.inject.Singleton
         AppModule::class,
         NetworkModule::class,
         CacheModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        CoroutineModule::class
     ]
 )
 internal interface AppComponent : AndroidInjector<DaggerApplication> {

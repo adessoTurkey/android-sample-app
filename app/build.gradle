@@ -98,6 +98,12 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -113,6 +119,7 @@ dependencies {
     kapt commonKapt
     debugImplementation commonDebug
     releaseImplementation commonRelease
+
     testImplementation commonTest
     androidTestImplementation commonInstrumentationTest
 }
