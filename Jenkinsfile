@@ -1,30 +1,48 @@
-def appName = ['dev':'Movee', 'qa':'Movee', 'prd':'Movee-Prod', ]
+def appName = ['dev': 'Movee', 'qa': 'Movee', 'prd': 'Movee-Prod',]
 
 pipeline {
-    agent {
-        any
-    }
+    agent any
+
     environment {
-        GITHUB_USER='adessoTurkey'
-        GITHUB_REPO='Movee'
+        GITHUB_USER = 'adessoTurkey'
+        GITHUB_REPO = 'Movee'
         GITHUB_API_TOKEN = credentials('f67cd5f9-11ce-455e-a48d-a8d048ddc777')
         APPCENTER_API_TOKEN = credentials('82e52672-f736-429e-94c0-3e43cd209e85')
+        TEAMS_WEBHOOK_URL = credentials('d1905c64-b187-4fc1-95bd-783b58679171')
+        KEYSTORE_PATH = credentials('44782c53-3489-49d2-a84d-262041cc9ead')
     }
+
     triggers {
-        pollSCM('H/10 * * * *')
+        pollSCM('H/15 * * * *')
     }
 
     stages {
+        stage('Copy Credentials') {
+            steps {
+                fileOperations([
+                        folderCopyOperation(
+                                sourceFolderPath: '/Users/xcodeserver/keystores/adessoturkey/movee',
+                                destinationFolderPath: '.'
+                        )
+                ])
+            }
+        }
         stage('Checkout') {
-            checkout scm
+            steps {
+                checkout scm
+            }
         }
 
         stage('Clean') {
-            sh "./gradlew clean"
+            steps {
+                sh "./gradlew clean"
+            }
         }
 
         stage('Static Analysis') {
-            sh './gradlew detekt ktlint lintDebug spotlessCheck'
+            steps {
+                sh './gradlew detekt ktlint lintDevDebug spotlessCheck'
+            }
         }
 
         stage('Unit Test') {
@@ -39,7 +57,9 @@ pipeline {
         }
 
         stage('Assemble') {
-            sh './gradlew assembleDevRelease'
+            steps {
+                sh './gradlew assembleDevRelease'
+            }
         }
 
         stage('Publish') {
@@ -47,24 +67,38 @@ pipeline {
                 branch 'develop/*'
             }
             steps {
-                pathToApp = 'app/build/outputs/apk/dev/release/*.apk'
-                uploadToAppCenter(appName.dev, pathToApp)
+                uploadToAppCenterArchiveArtifacts(
+                        appName.dev,
+                        'app/build/outputs/apk/dev/release/*.apk'
+                )
             }
         }
     }
 
     post {
         always {
-            echo "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was ${currentBuild.currentResult}"
-            cleanWs()
+            notifyMicrosoftTeams()
+            deleteDir()
         }
     }
 }
 
-def uploadToAppCenter(appName, pathToApp) {
-    appCenter apiToken: APPCENTER_API_TOKEN,
+def uploadToAppCenterArchiveArtifacts(appName, pathToApp) {
+    archiveArtifacts(pathToApp)
+
+    appCenter apiToken: env.APPCENTER_API_TOKEN,
             ownerName: 'adesso-Turkey',
             appName: appName,
             pathToApp: pathToApp,
             distributionGroups: 'adesso'
+}
+
+def notifyMicrosoftTeams() {
+    message = "Job: ${env.JOB_NAME} " +
+            "with build number ${env.BUILD_NUMBER} " +
+            "was ${currentBuild.currentResult}"
+    echo message
+    office365ConnectorSend webhookUrl: env.TEAMS_WEBHOOK_URL,
+            message: message,
+            status: currentBuild.currentResult
 }
