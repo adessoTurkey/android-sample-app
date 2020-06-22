@@ -13,7 +13,6 @@ jobs:
     name: Run Pull Request Checks
     runs-on: ubuntu-18.04
 
-
     steps:
       - uses: actions/checkout@v1
       - name: set up JDK 1.8
