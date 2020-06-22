@@ -3,6 +3,7 @@ package com.adesso.movee.scene.moviedetail
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchMovieCreditsUseCase
 import com.adesso.movee.domain.FetchMovieDetailUseCase
@@ -41,13 +42,10 @@ class MovieDetailViewModel @Inject constructor(
 
     fun fetchMovieCredits(id: Long) {
         if (_movieCredits.value == null) {
-            bgScope.launch {
+            viewModelScope.launch {
                 val movieCreditsResult =
                     fetchMovieCreditsUseCase.run(FetchMovieCreditsUseCase.Params(id))
-
-                onUIThread {
-                    movieCreditsResult.either(::handleFailure, ::postMovieCredits)
-                }
+                movieCreditsResult.either(::handleFailure, ::postMovieCredits)
             }
         }
     }
