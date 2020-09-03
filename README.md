@@ -1,4 +1,4 @@
-![GitHub Actions](https://github.com/adessoTurkey/android-boilerplate/workflows/PR%20Checks/badge.svg) [![CircleCI](https://circleci.com/gh/adessoTurkey/android-boilerplate.svg?style=shield)](https://circleci.com/gh/adessoTurkey/android-boilerplate)
+![GitHub Actions](https://github.com/adessoTurkey/android-sample-app/workflows/PR%20Checks/badge.svg) [![CircleCI](https://circleci.com/gh/adessoTurkey/android-sample-app.svg?style=shield)](https://circleci.com/gh/adessoTurkey/android-sample-app)
 
 ## Development
 
