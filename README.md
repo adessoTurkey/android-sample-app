@@ -53,7 +53,7 @@ If you want to know more about naming convention, code style and more please loo
 
 **Repository:** Single source of data. Responsible to get data from one or more data sources
 
-<img src="https://raw.githubusercontent.com/adessoTurkey/android-boilerplate/develop/images/architecture-diagram.png" width="500" />
+<img src="https://raw.githubusercontent.com/adessoTurkey/android-sample-app/develop/images/architecture-diagram.png" width="500" />
 
 ## Tech Stack
 
