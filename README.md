@@ -69,6 +69,7 @@ If you want to know more about naming convention, code style and more please loo
 - **[Lottie](https://github.com/airbnb/lottie-android):** JSON based animations
 - **[Retrofit](https://github.com/square/retrofit):** Type safe HTTP client
 - **[Moshi](https://github.com/square/moshi):** JSON serializer/deserializer
+- **[Room](https://developer.android.com/topic/libraries/architecture/room):** Object mapping for SQLite
 
 #### Plugins
 
