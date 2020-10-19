@@ -1,9 +1,8 @@
 package com.adesso.movee.data.remote.model.tv
 
+import com.adesso.movee.data.local.database.entity.TvShowEntity
 import com.adesso.movee.data.remote.BaseResponseModel
 import com.adesso.movee.internal.util.Image
-import com.adesso.movee.uimodel.TvShowGenreUiModel
-import com.adesso.movee.uimodel.TvShowUiModel
 import com.squareup.moshi.Json
 import java.util.Date
 
@@ -19,11 +18,11 @@ data class TvShowResponseModel(
     @Json(name = "first_air_date") val releaseDate: Date?
 ) : BaseResponseModel() {
 
-    fun toUiModel(genres: List<TvShowGenreUiModel>) = TvShowUiModel(
+    fun toEntity() = TvShowEntity(
         id = id,
         title = title,
         overview = overview,
-        genres = genres,
+        genreIds = genreIds,
         posterPath = posterPath,
         backdropPath = backdropPath,
         popularity = popularity,

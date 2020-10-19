@@ -1,9 +1,8 @@
 package com.adesso.movee.data.remote.model.movie
 
+import com.adesso.movee.data.local.database.entity.MovieEntity
 import com.adesso.movee.data.remote.BaseResponseModel
 import com.adesso.movee.internal.util.Image
-import com.adesso.movee.uimodel.MovieGenreUiModel
-import com.adesso.movee.uimodel.MovieUiModel
 import com.squareup.moshi.Json
 import java.util.Date
 
@@ -20,11 +19,11 @@ data class MovieResponseModel(
     @Json(name = "release_date") val releaseDate: Date?
 ) : BaseResponseModel() {
 
-    fun toUiModel(genres: List<MovieGenreUiModel>) = MovieUiModel(
+    fun toEntity() = MovieEntity(
         id = id,
         title = title,
         overview = overview,
-        genres = genres,
+        genreIds = genreIds,
         posterPath = posterPath,
         backdropPath = backdropPath,
         popularity = popularity,
