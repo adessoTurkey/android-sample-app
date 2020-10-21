@@ -2,9 +2,9 @@ package com.adesso.movee.data.repository
 
 import com.adesso.movee.data.local.database.entity.NowPlayingTvShowIdEntity
 import com.adesso.movee.data.local.database.entity.TopRatedTvShowIdEntity
+import com.adesso.movee.data.local.database.entity.TvShowGenreEntity
 import com.adesso.movee.data.local.datasource.TvShowLocalDataSource
 import com.adesso.movee.data.remote.datasource.TvShowRemoteDataSource
-import com.adesso.movee.uimodel.TvShowGenreUiModel
 import com.adesso.movee.uimodel.TvShowUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,11 +19,18 @@ class TvShowRepository @Inject constructor(
 
     suspend fun fetchTopRatedTvShows(): List<TvShowUiModel> = coroutineScope {
         val deferredTopRatedTvShowResponse = async { remoteDataSource.fetchTopRatedTvShows() }
-        val genres = fetchTvShowGenres()
+        checkTvShowGenres()
 
         deferredTopRatedTvShowResponse.await()
             .tvShowList
-            .map { tvShowModel -> tvShowModel.toEntity() }
+            .map { tvShowModel ->
+                tvShowModel.genreIds.map {
+                    localDataSource.insertTvShowGenreCrossRef(
+                        tvShowModel.toTvShowGenreCrossRefEntity(it)
+                    )
+                }
+                tvShowModel.toEntity()
+            }
             .also { tvShowEntityList ->
                 localDataSource.insertTvShows(tvShowEntityList)
                 localDataSource.insertTopRatedTvShowIds(
@@ -35,47 +42,42 @@ class TvShowRepository @Inject constructor(
 
         val tvShowIds = localDataSource.getTopRatedTvShowIds()
         localDataSource
-            .getTvShowsByIds(tvShowIds)
-            .map { tvShowEntity ->
-                tvShowEntity.toUiModel(filterGenreList(genres, tvShowEntity.genreIds))
+            .getTvShowsWithGenres(tvShowIds)
+            .map { tvShowWithGenres ->
+                tvShowWithGenres.toUiModel()
             }
     }
 
-    private fun filterGenreList(
-        genreList: List<TvShowGenreUiModel>,
-        genreIds: List<Long>
-    ): List<TvShowGenreUiModel> {
-        val genres = mutableListOf<TvShowGenreUiModel>()
-
-        genreIds.forEach { genreId ->
-
-            genreList.firstOrNull { genre ->
-                genre.id == genreId
-            }?.let { genres.add(it) }
-        }
-        return genres
+    private suspend fun checkTvShowGenres() {
+        if (!doTvShowGenresExist()) fetchTvShowGenres()
     }
 
-    suspend fun fetchTvShowGenres(): List<TvShowGenreUiModel> {
-        var localGenres = localDataSource.fetchGenres()
+    private suspend fun doTvShowGenresExist(): Boolean {
+        return localDataSource.doTvShowGenresExist()
+    }
 
-        if (localGenres.isNullOrEmpty()) {
-            localGenres = remoteDataSource.fetchTvShowGenres()
-                .genres
-                .map { it.toCacheModel() }
-                .also { localDataSource.insertGenres(it) }
-        }
-
-        return localGenres.map { it.toUiModel() }
+    private suspend fun fetchTvShowGenres() {
+        remoteDataSource
+            .fetchTvShowGenres()
+            .genres
+            .map { TvShowGenreEntity(it.id, it.name) }
+            .also { localDataSource.insertGenres(it) }
     }
 
     suspend fun fetchNowPlayingTvShows(): List<TvShowUiModel> = coroutineScope {
         val deferredNowPlayingTvShowResponse = async { remoteDataSource.fetchNowPlayingTvShows() }
-        val genres = fetchTvShowGenres()
+        checkTvShowGenres()
 
         deferredNowPlayingTvShowResponse.await()
             .tvShowList
-            .map { tvShowModel -> tvShowModel.toEntity() }
+            .map { tvShowModel ->
+                tvShowModel.genreIds.map {
+                    localDataSource.insertTvShowGenreCrossRef(
+                        tvShowModel.toTvShowGenreCrossRefEntity(it)
+                    )
+                }
+                tvShowModel.toEntity()
+            }
             .also { tvShowEntityList ->
                 localDataSource.insertTvShows(tvShowEntityList)
                 localDataSource.insertNowPlayingTvShowIds(
@@ -89,9 +91,9 @@ class TvShowRepository @Inject constructor(
 
         val tvShowIds = localDataSource.getNowPlayingTvShowIds()
         localDataSource
-            .getTvShowsByIds(tvShowIds)
-            .map { tvShowEntity ->
-                tvShowEntity.toUiModel(filterGenreList(genres, tvShowEntity.genreIds))
+            .getTvShowsWithGenres(tvShowIds)
+            .map { tvShowWithGenres ->
+                tvShowWithGenres.toUiModel()
             }
     }
 
