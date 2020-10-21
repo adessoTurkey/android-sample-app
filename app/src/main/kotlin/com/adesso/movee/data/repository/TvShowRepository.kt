@@ -23,14 +23,14 @@ class TvShowRepository @Inject constructor(
 
         deferredTopRatedTvShowResponse.await()
             .tvShowList
-            .onEach { tvShowModel ->
+            .map { tvShowModel ->
                 tvShowModel.genreIds.map {
                     localDataSource.insertTvShowGenreCrossRef(
                         tvShowModel.toTvShowGenreCrossRefEntity(it)
                     )
                 }
+                tvShowModel.toEntity()
             }
-            .map { tvShowModel -> tvShowModel.toEntity() }
             .also { tvShowEntityList ->
                 localDataSource.insertTvShows(tvShowEntityList)
                 localDataSource.insertTopRatedTvShowIds(
@@ -70,14 +70,14 @@ class TvShowRepository @Inject constructor(
 
         deferredNowPlayingTvShowResponse.await()
             .tvShowList
-            .onEach { tvShowModel ->
+            .map { tvShowModel ->
                 tvShowModel.genreIds.map {
                     localDataSource.insertTvShowGenreCrossRef(
                         tvShowModel.toTvShowGenreCrossRefEntity(it)
                     )
                 }
+                tvShowModel.toEntity()
             }
-            .map { tvShowModel -> tvShowModel.toEntity() }
             .also { tvShowEntityList ->
                 localDataSource.insertTvShows(tvShowEntityList)
                 localDataSource.insertNowPlayingTvShowIds(

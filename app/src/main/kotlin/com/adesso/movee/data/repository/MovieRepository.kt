@@ -23,14 +23,14 @@ class MovieRepository @Inject constructor(
 
         deferredPopularMovieResponse.await()
             .movieList
-            .onEach { movieModel ->
+            .map { movieModel ->
                 movieModel.genreIds.map {
                     localDataSource.insertMovieGenreCrossRef(
                         movieModel.toMovieGenreCrossRefEntity(it)
                     )
                 }
+                movieModel.toMovieEntity()
             }
-            .map { movieModel -> movieModel.toMovieEntity() }
             .also { movieEntityList ->
                 localDataSource.insertMovies(movieEntityList)
                 localDataSource.insertPopularMovieIds(
@@ -70,14 +70,14 @@ class MovieRepository @Inject constructor(
 
         deferredNowPlayingMovieResponse.await()
             .movieList
-            .onEach { movieModel ->
+            .map { movieModel ->
                 movieModel.genreIds.map {
                     localDataSource.insertMovieGenreCrossRef(
                         movieModel.toMovieGenreCrossRefEntity(it)
                     )
                 }
+                movieModel.toMovieEntity()
             }
-            .map { movieModel -> movieModel.toMovieEntity() }
             .also { movieEntityList ->
                 localDataSource.insertMovies(movieEntityList)
                 localDataSource.insertNowPlayingMovieIds(
