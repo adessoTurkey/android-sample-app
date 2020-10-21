@@ -1,5 +1,7 @@
 package com.adesso.movee.data.repository
 
+import com.adesso.movee.data.local.database.entity.NowPlayingMovieIdEntity
+import com.adesso.movee.data.local.database.entity.PopularMovieIdEntity
 import com.adesso.movee.data.local.datasource.MovieLocalDataSource
 import com.adesso.movee.data.remote.datasource.MovieRemoteDataSource
 import com.adesso.movee.uimodel.MovieGenreUiModel
@@ -21,8 +23,21 @@ class MovieRepository @Inject constructor(
 
         deferredPopularMovieResponse.await()
             .movieList
-            .map { movieModel ->
-                movieModel.toUiModel(filterGenreList(genres, movieModel.genreIds))
+            .map { movieModel -> movieModel.toEntity() }
+            .also { movieEntityList ->
+                localDataSource.insertMovies(movieEntityList)
+                localDataSource.insertPopularMovieIds(
+                    movieEntityList.map {
+                        PopularMovieIdEntity(it.id)
+                    }
+                )
+            }
+
+        val movieIds = localDataSource.getPopularMovieIds()
+        localDataSource
+            .getMoviesByIds(movieIds)
+            .map { movieEntity ->
+                movieEntity.toUiModel(filterGenreList(genres, movieEntity.genreIds))
             }
     }
 
@@ -56,8 +71,23 @@ class MovieRepository @Inject constructor(
 
         deferredPopularMovieResponse.await()
             .movieList
-            .map { movieModel ->
-                movieModel.toUiModel(filterGenreList(genres, movieModel.genreIds))
+            .map { movieModel -> movieModel.toEntity() }
+            .also { movieEntityList ->
+                localDataSource.insertMovies(movieEntityList)
+                localDataSource.insertNowPlayingMovieIds(
+                    movieEntityList.map {
+                        NowPlayingMovieIdEntity(
+                            it.id
+                        )
+                    }
+                )
+            }
+
+        val movieIds = localDataSource.getNowPlayingMovieIds()
+        localDataSource
+            .getMoviesByIds(movieIds)
+            .map { movieEntity ->
+                movieEntity.toUiModel(filterGenreList(genres, movieEntity.genreIds))
             }
     }
 

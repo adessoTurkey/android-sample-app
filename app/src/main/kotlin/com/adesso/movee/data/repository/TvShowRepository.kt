@@ -1,5 +1,7 @@
 package com.adesso.movee.data.repository
 
+import com.adesso.movee.data.local.database.entity.NowPlayingTvShowIdEntity
+import com.adesso.movee.data.local.database.entity.TopRatedTvShowIdEntity
 import com.adesso.movee.data.local.datasource.TvShowLocalDataSource
 import com.adesso.movee.data.remote.datasource.TvShowRemoteDataSource
 import com.adesso.movee.uimodel.TvShowGenreUiModel
@@ -21,8 +23,21 @@ class TvShowRepository @Inject constructor(
 
         deferredTopRatedTvShowResponse.await()
             .tvShowList
-            .map { tvShowModel ->
-                tvShowModel.toUiModel(filterGenreList(genres, tvShowModel.genreIds))
+            .map { tvShowModel -> tvShowModel.toEntity() }
+            .also { tvShowEntityList ->
+                localDataSource.insertTvShows(tvShowEntityList)
+                localDataSource.insertTopRatedTvShowIds(
+                    tvShowEntityList.map {
+                        TopRatedTvShowIdEntity(it.id)
+                    }
+                )
+            }
+
+        val tvShowIds = localDataSource.getTopRatedTvShowIds()
+        localDataSource
+            .getTvShowsByIds(tvShowIds)
+            .map { tvShowEntity ->
+                tvShowEntity.toUiModel(filterGenreList(genres, tvShowEntity.genreIds))
             }
     }
 
@@ -60,8 +75,23 @@ class TvShowRepository @Inject constructor(
 
         deferredNowPlayingTvShowResponse.await()
             .tvShowList
-            .map { tvShowModel ->
-                tvShowModel.toUiModel(filterGenreList(genres, tvShowModel.genreIds))
+            .map { tvShowModel -> tvShowModel.toEntity() }
+            .also { tvShowEntityList ->
+                localDataSource.insertTvShows(tvShowEntityList)
+                localDataSource.insertNowPlayingTvShowIds(
+                    tvShowEntityList.map {
+                        NowPlayingTvShowIdEntity(
+                            it.id
+                        )
+                    }
+                )
+            }
+
+        val tvShowIds = localDataSource.getNowPlayingTvShowIds()
+        localDataSource
+            .getTvShowsByIds(tvShowIds)
+            .map { tvShowEntity ->
+                tvShowEntity.toUiModel(filterGenreList(genres, tvShowEntity.genreIds))
             }
     }
 

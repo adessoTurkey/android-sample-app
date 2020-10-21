@@ -42,7 +42,7 @@ ext {
             gson            : '2.8.2',
             glide           : '4.8.0',
             ok2curl         : '0.5.0',
-            room            : '1.1.1',
+            room            : '2.2.5',
             jUnit           : '4.12',
             mockito         : '2.13.+',
             lottie          : '3.2.2',
@@ -68,13 +68,14 @@ ext {
                     "androidx.constraintlayout:constraintlayout:$version.constraintLayout",
                     "androidx.viewpager2:viewpager2:$version.viewPager2",
                     "androidx.preference:preference-ktx:$version.preference",
+                    "androidx.room:room-runtime:$version.room",
+                    "androidx.room:room-ktx:$version.room",
             ],
 
             arch = [
                     "android.arch.lifecycle:runtime:$version.lifecycle",
                     "android.arch.lifecycle:extensions:$version.lifecycle",
                     "android.arch.lifecycle:reactivestreams:$version.lifecycle",
-                    "android.arch.persistence.room:runtime:$version.room",
             ],
 
             dagger = [
@@ -92,6 +93,7 @@ ext {
                     "android.arch.lifecycle:compiler:$version.lifecycle",
                     "com.google.dagger:dagger-compiler:$version.dagger",
                     "com.google.dagger:dagger-android-processor:$version.dagger",
+                    "androidx.room:room-compiler:$version.room",
             ],
 
             network = [
