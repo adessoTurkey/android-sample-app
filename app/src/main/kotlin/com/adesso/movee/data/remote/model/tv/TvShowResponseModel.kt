@@ -1,6 +1,7 @@
 package com.adesso.movee.data.remote.model.tv
 
 import com.adesso.movee.data.local.database.entity.TvShowEntity
+import com.adesso.movee.data.local.database.entity.TvShowGenreCrossRefEntity
 import com.adesso.movee.data.remote.BaseResponseModel
 import com.adesso.movee.internal.util.Image
 import com.squareup.moshi.Json
@@ -28,5 +29,10 @@ data class TvShowResponseModel(
         popularity = popularity,
         average = average,
         releaseDate = releaseDate
+    )
+
+    fun toTvShowGenreCrossRefEntity(genreId: Long) = TvShowGenreCrossRefEntity(
+        id = id,
+        genreId = genreId
     )
 }

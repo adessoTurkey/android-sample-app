@@ -1,10 +1,10 @@
 package com.adesso.movee.data.repository
 
+import com.adesso.movee.data.local.database.entity.MovieGenreEntity
 import com.adesso.movee.data.local.database.entity.NowPlayingMovieIdEntity
 import com.adesso.movee.data.local.database.entity.PopularMovieIdEntity
 import com.adesso.movee.data.local.datasource.MovieLocalDataSource
 import com.adesso.movee.data.remote.datasource.MovieRemoteDataSource
-import com.adesso.movee.uimodel.MovieGenreUiModel
 import com.adesso.movee.uimodel.MovieUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,11 +19,18 @@ class MovieRepository @Inject constructor(
 
     suspend fun fetchPopularMovies(): List<MovieUiModel> = coroutineScope {
         val deferredPopularMovieResponse = async { remoteDataSource.fetchPopularMovies() }
-        val genres = fetchMovieGenres()
+        checkMovieGenres()
 
         deferredPopularMovieResponse.await()
             .movieList
-            .map { movieModel -> movieModel.toEntity() }
+            .onEach { movieModel ->
+                movieModel.genreIds.map {
+                    localDataSource.insertMovieGenreCrossRef(
+                        movieModel.toMovieGenreCrossRefEntity(it)
+                    )
+                }
+            }
+            .map { movieModel -> movieModel.toMovieEntity() }
             .also { movieEntityList ->
                 localDataSource.insertMovies(movieEntityList)
                 localDataSource.insertPopularMovieIds(
@@ -35,43 +42,42 @@ class MovieRepository @Inject constructor(
 
         val movieIds = localDataSource.getPopularMovieIds()
         localDataSource
-            .getMoviesByIds(movieIds)
-            .map { movieEntity ->
-                movieEntity.toUiModel(filterGenreList(genres, movieEntity.genreIds))
+            .getMoviesWithGenres(movieIds)
+            .map { movieWithGenres ->
+                movieWithGenres.toUiModel()
             }
     }
 
-    private fun filterGenreList(
-        genreList: List<MovieGenreUiModel>,
-        genreIds: List<Long>
-    ): List<MovieGenreUiModel> {
-        return genreIds.map { genreId ->
-            genreList.first { genre ->
-                genre.id == genreId
-            }
-        }
+    private suspend fun checkMovieGenres() {
+        if (!doMovieGenresExist()) fetchMovieGenres()
     }
 
-    suspend fun fetchMovieGenres(): List<MovieGenreUiModel> {
-        var localGenres = localDataSource.fetchGenres()
+    private suspend fun doMovieGenresExist(): Boolean {
+        return localDataSource.doMovieGenresExist()
+    }
 
-        if (localGenres.isNullOrEmpty()) {
-            localGenres = remoteDataSource.fetchMovieGenres()
-                .genres
-                .map { it.toCacheModel() }
-                .also { localDataSource.insertGenres(it) }
-        }
-
-        return localGenres.map { it.toUiModel() }
+    private suspend fun fetchMovieGenres() {
+        remoteDataSource
+            .fetchMovieGenres()
+            .genres
+            .map { MovieGenreEntity(it.id, it.name) }
+            .also { localDataSource.insertGenres(it) }
     }
 
     suspend fun fetchNowPlayingMovies(): List<MovieUiModel> = coroutineScope {
-        val deferredPopularMovieResponse = async { remoteDataSource.fetchNowPlayingMovies() }
-        val genres = fetchMovieGenres()
+        val deferredNowPlayingMovieResponse = async { remoteDataSource.fetchNowPlayingMovies() }
+        checkMovieGenres()
 
-        deferredPopularMovieResponse.await()
+        deferredNowPlayingMovieResponse.await()
             .movieList
-            .map { movieModel -> movieModel.toEntity() }
+            .onEach { movieModel ->
+                movieModel.genreIds.map {
+                    localDataSource.insertMovieGenreCrossRef(
+                        movieModel.toMovieGenreCrossRefEntity(it)
+                    )
+                }
+            }
+            .map { movieModel -> movieModel.toMovieEntity() }
             .also { movieEntityList ->
                 localDataSource.insertMovies(movieEntityList)
                 localDataSource.insertNowPlayingMovieIds(
@@ -85,9 +91,9 @@ class MovieRepository @Inject constructor(
 
         val movieIds = localDataSource.getNowPlayingMovieIds()
         localDataSource
-            .getMoviesByIds(movieIds)
-            .map { movieEntity ->
-                movieEntity.toUiModel(filterGenreList(genres, movieEntity.genreIds))
+            .getMoviesWithGenres(movieIds)
+            .map { movieWithGenres ->
+                movieWithGenres.toUiModel()
             }
     }
 

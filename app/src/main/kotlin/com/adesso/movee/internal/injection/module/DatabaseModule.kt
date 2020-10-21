@@ -4,11 +4,15 @@ import android.app.Application
 import androidx.room.Room
 import com.adesso.movee.data.local.database.MainDatabase
 import com.adesso.movee.data.local.database.dao.MovieDao
+import com.adesso.movee.data.local.database.dao.MovieGenreCrossRefDao
+import com.adesso.movee.data.local.database.dao.MovieGenreDao
 import com.adesso.movee.data.local.database.dao.NowPlayingMovieIdDao
 import com.adesso.movee.data.local.database.dao.NowPlayingTvShowIdDao
 import com.adesso.movee.data.local.database.dao.PopularMovieIdDao
 import com.adesso.movee.data.local.database.dao.TopRatedTvShowIdDao
 import com.adesso.movee.data.local.database.dao.TvShowDao
+import com.adesso.movee.data.local.database.dao.TvShowGenreCrossRefDao
+import com.adesso.movee.data.local.database.dao.TvShowGenreDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -27,7 +31,9 @@ internal class DatabaseModule {
             application.applicationContext,
             MainDatabase::class.java,
             DATABASE_NAME
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
@@ -50,6 +56,18 @@ internal class DatabaseModule {
 
     @Provides
     @Singleton
+    internal fun provideMovieGenreDao(mainDatabase: MainDatabase): MovieGenreDao {
+        return mainDatabase.movieGenreDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideMovieGenreCrossRefDao(mainDatabase: MainDatabase): MovieGenreCrossRefDao {
+        return mainDatabase.movieGenreCrossRefDao()
+    }
+
+    @Provides
+    @Singleton
     internal fun provideTvShowDao(mainDatabase: MainDatabase): TvShowDao {
         return mainDatabase.tvShowDao()
     }
@@ -64,5 +82,17 @@ internal class DatabaseModule {
     @Singleton
     internal fun provideNowPlayingTvShowIdDao(mainDatabase: MainDatabase): NowPlayingTvShowIdDao {
         return mainDatabase.nowPlayingTvShowIdDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideTvShowGenreDao(mainDatabase: MainDatabase): TvShowGenreDao {
+        return mainDatabase.tvShowGenreDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideTvShowGenreCrossRefDao(mainDatabase: MainDatabase): TvShowGenreCrossRefDao {
+        return mainDatabase.tvShowGenreCrossRefDao()
     }
 }
