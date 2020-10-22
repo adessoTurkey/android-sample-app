@@ -9,14 +9,14 @@ import com.adesso.movee.internal.injection.module.FragmentsModule
 import com.adesso.movee.internal.injection.module.NetworkModule
 import com.adesso.movee.internal.injection.viewmodel.ViewModelModule
 import dagger.Component
+import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
-        AndroidSupportInjectionModule::class,
+        AndroidInjectionModule::class,
         ActivitiesModule::class,
         FragmentsModule::class,
         AppModule::class,
@@ -28,6 +28,6 @@ import javax.inject.Singleton
 )
 internal interface AppComponent : AndroidInjector<DaggerApplication> {
 
-    @Component.Builder
-    abstract class Builder : AndroidInjector.Builder<DaggerApplication>()
+    @Component.Factory
+    abstract class Factory : AndroidInjector.Factory<DaggerApplication>
 }

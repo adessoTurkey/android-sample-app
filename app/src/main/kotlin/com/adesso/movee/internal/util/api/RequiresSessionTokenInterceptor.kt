@@ -22,7 +22,7 @@ class RequiresSessionTokenInterceptor @Inject constructor(
         var request = chain.request()
 
         if (request.header(HEADER_KEY)?.toBoolean() == true) {
-            val url = request.url().newBuilder()
+            val url = request.url.newBuilder()
                 .addQueryParameter(
                     QUERY_PARAMETER_SESSION,
                     loginLocalDataSource.getSessionToken()

@@ -50,7 +50,8 @@ abstract class BaseAndroidViewModel(application: Application) : AndroidViewModel
                 getString(R.string.common_error_invalid_response)
             )
             is Failure.FormValidationError -> Pair(
-                getString(R.string.common_title_popup_form_validation), failure.message
+                getString(R.string.common_title_popup_form_validation),
+                failure.message
                     ?: getString(R.string.common_error_invalid_form)
             )
             is Failure.IoError -> Pair("", getString(R.string.common_error_can_not_save_data))

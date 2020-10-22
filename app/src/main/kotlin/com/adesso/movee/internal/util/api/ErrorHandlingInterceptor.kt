@@ -35,22 +35,22 @@ class ErrorHandlingInterceptor(
 
         if (response.isSuccessful) {
 
-            if (response.body() == null) {
+            if (response.body == null) {
                 throw Failure.EmptyResponse
             }
             return response
         } else {
-            val responseJson = response.body()?.string()
+            val responseJson = response.body?.string()
                 ?: throw Failure.ApiError(
-                    code = response.code(),
-                    message = response.message() ?: UNKNOWN_ERROR
+                    code = response.code,
+                    message = response.message ?: UNKNOWN_ERROR
                 )
             val apiError = moshi
                 .adapter<ApiError>(ApiError::class.java)
                 .fromJson(responseJson)
 
             throw Failure.ApiError(
-                code = apiError?.code ?: response.code(),
+                code = apiError?.code ?: response.code,
                 message = apiError?.message ?: UNKNOWN_ERROR
             )
         }

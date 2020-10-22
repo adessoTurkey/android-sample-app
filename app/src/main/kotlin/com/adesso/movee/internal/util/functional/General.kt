@@ -3,7 +3,7 @@ package com.adesso.movee.internal.util.functional
 import androidx.lifecycle.MutableLiveData
 
 fun <T> lazyThreadSafetyNone(initializer: () -> T):
-        Lazy<T> = lazy(LazyThreadSafetyMode.NONE, initializer)
+    Lazy<T> = lazy(LazyThreadSafetyMode.NONE, initializer)
 
 inline fun <T : Any> guardLet(vararg elements: T?, closure: () -> Nothing): List<T> {
     return if (elements.all { it != null }) {

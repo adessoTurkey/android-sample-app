@@ -10,12 +10,10 @@ import androidx.annotation.LayoutRes
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -30,16 +28,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
 abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
-    BottomSheetDialogFragment(), HasSupportFragmentInjector {
+    BottomSheetDialogFragment(), HasAndroidInjector {
 
     @Inject
-    lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -55,7 +53,7 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
     protected open val viewModel by lazyThreadSafetyNone {
         val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
             .actualTypeArguments[0] as Class<VM>
-        return@lazyThreadSafetyNone ViewModelProviders.of(this, viewModelFactory)
+        return@lazyThreadSafetyNone ViewModelProvider(this, viewModelFactory)
             .get(persistentViewModelClass)
     }
 
@@ -73,17 +71,15 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
 
     protected inline fun <reified VM : ViewModel> navGraphViewModels(@IdRes navGraphId: Int):
         Lazy<VM> {
-        return navGraphViewModels(navGraphId) { viewModelFactory }
-    }
+            return navGraphViewModels(navGraphId) { viewModelFactory }
+        }
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return childFragmentInjector
-    }
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

@@ -101,7 +101,7 @@ internal class NetworkModule {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .callFactory { client.get().newCall(it) }
+            .callFactory(client.get())
             .build()
     }
 
