@@ -88,7 +88,6 @@ ext {
             ],
 
             commonKapt = [
-                    "android.arch.lifecycle:compiler:$version.lifecycle",
                     "com.google.dagger:dagger-compiler:$version.dagger",
                     "com.google.dagger:dagger-android-processor:$version.dagger",
                     "androidx.room:room-compiler:$version.room",

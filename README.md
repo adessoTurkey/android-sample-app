@@ -22,14 +22,14 @@ To maintain the style and quality of the code, are used the bellow static analys
 | [lint][lint]                      | [.lint.xml](/config/.lint.xml)         | `./gradlew lint`             | -                         |
 | [gradle versions plugin][gvPlugin]| -                                      | `./gradlew dependencyUpdates`| -                         |
 
-All these tools are integrated in [pre-commit git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), in order
-ensure that all static analysis and tests passes before you can commit your changes. To skip them for specific commit add this option at your git command:
+All these tools, except [Gradle Versions Plugin][gvPlugin], are integrated in [pre-commit git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), in order
+ensure that all static analysis and tests passes before you can commit your changes. [Gradle Versions Plugin][gvPlugin] can be run optionally. To skip them for specific commit add this option at your git command:
 
 ```properties
 git commit --no-verify
 ```
 
-It's highly recommended to fix broken code styles. There is [a gradle task](/build.gradle#L53) which execute `ktlintFormat` and `spotlessApply` for you:
+It's highly recommended to fix broken code styles. There is [a gradle task](/build.gradle#L57) which execute `ktlintFormat` and `spotlessApply` for you:
 
 ```properties
 ./gradlew reformat
