@@ -17,7 +17,7 @@ class LoginRepository @Inject constructor(
 
     fun getLoginState() =
         if (localDataSource.getSessionToken()
-                .isNullOrBlank()
+            .isNullOrBlank()
         ) LoginState.LOGGED_OUT else LoginState.LOGGED_IN
 
     suspend fun login(loginParams: LoginUseCase.Params) {

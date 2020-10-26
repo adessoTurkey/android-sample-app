@@ -14,21 +14,22 @@ How to set an environment variable in [Mac](https://medium.com/@himanshuagarwal1
 
 To maintain the style and quality of the code, are used the bellow static analysis tools. All of them use properly configuration and you find them in the project root directory `config/.{toolName}`.
 
-| Tools                     | Config file                            | Check command             | Fix command               |
-|---------------------------|---------------------------------------:|---------------------------|---------------------------|
-| [detekt][detekt]          | [.detekt.yml](/config/.detekt.yml)     | `./gradlew detekt`        | -                         |
-| [ktlint][ktlint]          | -                                      | `./gradlew ktlint`        | `./gradlew ktlintFormat`  |
-| [spotless][spotless]      | -                                      | `./gradlew spotlessCheck` | `./gradlew spotlessApply` |
-| [lint][lint]              | [.lint.xml](/config/.lint.xml)         | `./gradlew lint`          | -                         |
+| Tools                             | Config file                            | Check command                | Fix command               |
+|-----------------------------------|---------------------------------------:|------------------------------|---------------------------|
+| [detekt][detekt]                  | [.detekt.yml](/config/.detekt.yml)     | `./gradlew detekt`           | -                         |
+| [ktlint][ktlint]                  | -                                      | `./gradlew ktlint`           | `./gradlew ktlintFormat`  |
+| [spotless][spotless]              | -                                      | `./gradlew spotlessCheck`    | `./gradlew spotlessApply` |
+| [lint][lint]                      | [.lint.xml](/config/.lint.xml)         | `./gradlew lint`             | -                         |
+| [gradle versions plugin][gvPlugin]| -                                      | `./gradlew dependencyUpdates`| -                         |
 
-All these tools are integrated in [pre-commit git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), in order
-ensure that all static analysis and tests passes before you can commit your changes. To skip them for specific commit add this option at your git command:
+All these tools, except [Gradle Versions Plugin][gvPlugin], are integrated in [pre-commit git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks), in order
+ensure that all static analysis and tests passes before you can commit your changes. [Gradle Versions Plugin][gvPlugin] can be run optionally. To skip them for specific commit add this option at your git command:
 
 ```properties
 git commit --no-verify
 ```
 
-It's highly recommended to fix broken code styles. There is [a gradle task](/build.gradle#L53) which execute `ktlintFormat` and `spotlessApply` for you:
+It's highly recommended to fix broken code styles. There is [a gradle task](/build.gradle#L57) which execute `ktlintFormat` and `spotlessApply` for you:
 
 ```properties
 ./gradlew reformat
@@ -77,6 +78,7 @@ If you want to know more about naming convention, code style and more please loo
 - **[Spotless][spotless]:** Keep your code spotless
 - **[Ktlint][ktlint]:** Kotlin linter
 - **[Lint][lint]:** Static program analysis tools
+- **[Gradle Versions Plugin][gvPlugin]:** Dependency version controller
 
 ## License
 
@@ -100,3 +102,4 @@ limitations under the License.
 [ktlint]: https://github.com/pinterest/ktlint
 [spotless]: https://github.com/diffplug/spotless       
 [lint]: https://developer.android.com/studio/write/lint
+[gvPlugin]: https://github.com/ben-manes/gradle-versions-plugin

@@ -1,7 +1,6 @@
 package com.adesso.movee.base
 
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.adesso.movee.internal.util.functional.lazyThreadSafetyNone
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.reflect.ParameterizedType
@@ -16,7 +15,7 @@ abstract class BaseActivity<VM : BaseAndroidViewModel> : DaggerAppCompatActivity
     protected val viewModel by lazyThreadSafetyNone {
         val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
             .actualTypeArguments[0] as Class<VM>
-        return@lazyThreadSafetyNone ViewModelProviders.of(this, viewModelFactory)
+        return@lazyThreadSafetyNone ViewModelProvider(this, viewModelFactory)
             .get(persistentViewModelClass)
     }
 }

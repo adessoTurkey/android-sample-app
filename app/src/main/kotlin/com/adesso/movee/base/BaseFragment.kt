@@ -13,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -36,6 +35,7 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     protected lateinit var binder: B
+
     @get:LayoutRes
     abstract val layoutId: Int
 
@@ -45,7 +45,7 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
     protected open val viewModel by lazyThreadSafetyNone {
         val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
             .actualTypeArguments[0] as Class<VM>
-        return@lazyThreadSafetyNone ViewModelProviders.of(this, viewModelFactory)
+        return@lazyThreadSafetyNone ViewModelProvider(this, viewModelFactory)
             .get(persistentViewModelClass)
     }
 
@@ -63,8 +63,8 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
 
     protected inline fun <reified VM : ViewModel> navGraphViewModels(@IdRes navGraphId: Int):
         Lazy<VM> {
-        return navGraphViewModels(navGraphId) { viewModelFactory }
-    }
+            return navGraphViewModels(navGraphId) { viewModelFactory }
+        }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
