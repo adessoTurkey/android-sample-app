@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
@@ -18,7 +19,6 @@ import com.adesso.movee.uimodel.MovieUiModel
 import com.adesso.movee.uimodel.ShowHeaderUiModel
 import com.adesso.movee.uimodel.ShowUiModel
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 class MovieViewModel @Inject constructor(
     private val fetchPopularMoviesUseCase: FetchPopularMoviesUseCase,
@@ -49,12 +49,8 @@ class MovieViewModel @Inject constructor(
     }
 
     private fun fetchNowPlayingMovies() {
-        bgScope.launch {
-            val nowPlayingMoviesResult = fetchNowPlayingMoviesUseCase.run(UseCase.None)
-
-            onUIThread {
-                nowPlayingMoviesResult.either(::handleFailure, ::postNowPlayingMovieList)
-            }
+        fetchNowPlayingMoviesUseCase.invoke(viewModelScope, UseCase.None) {
+            it.either(::handleFailure, ::postNowPlayingMovieList)
         }
     }
 
@@ -63,12 +59,8 @@ class MovieViewModel @Inject constructor(
     }
 
     private fun fetchPopularMovies() {
-        bgScope.launch {
-            val popularMoviesResult = fetchPopularMoviesUseCase.run(UseCase.None)
-
-            onUIThread {
-                popularMoviesResult.either(::handleFailure, ::postPopularMovieList)
-            }
+        fetchPopularMoviesUseCase.invoke(viewModelScope, UseCase.None) {
+            it.either(::handleFailure, ::postPopularMovieList)
         }
     }
 

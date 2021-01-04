@@ -3,13 +3,13 @@ package com.adesso.movee.scene.moviedetail
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchMovieCreditsUseCase
 import com.adesso.movee.domain.FetchMovieDetailUseCase
 import com.adesso.movee.uimodel.MovieCreditUiModel
 import com.adesso.movee.uimodel.MovieDetailUiModel
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 class MovieDetailViewModel @Inject constructor(
     private val fetchMovieDetailUseCase: FetchMovieDetailUseCase,
@@ -24,13 +24,8 @@ class MovieDetailViewModel @Inject constructor(
 
     fun fetchMovieDetails(id: Long) {
         if (_movieDetails.value == null) {
-            bgScope.launch {
-                val movieDetailResult =
-                    fetchMovieDetailUseCase.run(FetchMovieDetailUseCase.Params(id))
-
-                onUIThread {
-                    movieDetailResult.either(::handleFailure, ::postMovieDetail)
-                }
+            fetchMovieDetailUseCase.invoke(viewModelScope, FetchMovieDetailUseCase.Params(id)) {
+                it.either(::handleFailure, ::postMovieDetail)
             }
         }
     }
@@ -41,13 +36,8 @@ class MovieDetailViewModel @Inject constructor(
 
     fun fetchMovieCredits(id: Long) {
         if (_movieCredits.value == null) {
-            bgScope.launch {
-                val movieCreditsResult =
-                    fetchMovieCreditsUseCase.run(FetchMovieCreditsUseCase.Params(id))
-
-                onUIThread {
-                    movieCreditsResult.either(::handleFailure, ::postMovieCredits)
-                }
+            fetchMovieCreditsUseCase.invoke(viewModelScope, FetchMovieCreditsUseCase.Params(id)) {
+                it.either(::handleFailure, ::postMovieCredits)
             }
         }
     }

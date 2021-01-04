@@ -3,6 +3,7 @@ package com.adesso.movee.scene.persondetail
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchPersonDetailsUseCase
 import com.adesso.movee.internal.util.AppBarStateChangeListener
@@ -11,7 +12,6 @@ import com.adesso.movee.internal.util.AppBarStateChangeListener.State.EXPANDED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.IDLE
 import com.adesso.movee.uimodel.PersonDetailUiModel
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 class PersonDetailViewModel @Inject constructor(
     private val fetchPersonDetailsUseCase: FetchPersonDetailsUseCase,
@@ -25,13 +25,11 @@ class PersonDetailViewModel @Inject constructor(
 
     fun fetchPersonDetails(personId: Long) {
         if (_personDetails.value == null) {
-            bgScope.launch {
-                val personDetailResult =
-                    fetchPersonDetailsUseCase.run(FetchPersonDetailsUseCase.Params(personId))
-
-                onUIThread {
-                    personDetailResult.either(::handleFailure, ::postPersonDetails)
-                }
+            fetchPersonDetailsUseCase.invoke(
+                viewModelScope,
+                FetchPersonDetailsUseCase.Params(personId)
+            ) {
+                it.either(::handleFailure, ::postPersonDetails)
             }
         }
     }

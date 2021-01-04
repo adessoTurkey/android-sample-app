@@ -4,11 +4,11 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.LoginUseCase
 import com.adesso.movee.internal.util.Event
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
@@ -28,19 +28,13 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onLoginClick() {
-        uiScope.launch {
-            val username = username.value ?: return@launch
-            val password = password.value ?: return@launch
+        _loginInProgress.value = true
 
-            _loginInProgress.value = true
-
-            val loginResult = onBackgroundThread {
-                loginUseCase.run(LoginUseCase.Params(username, password))
-            }
-
-            loginResult.either(::handleFailure, ::navigateHome)
-
+        val username = username.value ?: return
+        val password = password.value ?: return
+        loginUseCase.invoke(viewModelScope, LoginUseCase.Params(username, password)) {
             _loginInProgress.value = false
+            it.either(::handleFailure, ::navigateHome)
         }
     }
 
