@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchUserDetailsUseCase
 import com.adesso.movee.domain.GetLoginStateUseCase
@@ -11,7 +12,6 @@ import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.uimodel.LoginState
 import com.adesso.movee.uimodel.UserDetailUiModel
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 class ProfileViewModel @Inject constructor(
     private val fetchUserDetailsUseCase: FetchUserDetailsUseCase,
@@ -32,12 +32,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getLoginState() {
-        bgScope.launch {
-            val loginStateResult = getLoginStateUseCase.run(UseCase.None)
-
-            onUIThread {
-                loginStateResult.either(::handleFailure, ::handleLoginStateSuccess)
-            }
+        getLoginStateUseCase.invoke(viewModelScope, UseCase.None) {
+            it.either(::handleFailure, ::handleLoginStateSuccess)
         }
     }
 
@@ -58,12 +54,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun fetchUserDetails() {
-        bgScope.launch {
-            val userDetailsResult = fetchUserDetailsUseCase.run(UseCase.None)
-
-            onUIThread {
-                userDetailsResult.either(::handleFailure, ::postUserDetails)
-            }
+        fetchUserDetailsUseCase.invoke(viewModelScope, UseCase.None) {
+            it.either(::handleFailure, ::postUserDetails)
         }
     }
 

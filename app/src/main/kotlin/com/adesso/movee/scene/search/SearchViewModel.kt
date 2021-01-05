@@ -3,6 +3,7 @@ package com.adesso.movee.scene.search
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.MultiSearchUseCase
 import com.adesso.movee.internal.util.Failure
@@ -13,7 +14,6 @@ import com.adesso.movee.uimodel.TvShowMultiSearchUiModel
 import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class SearchViewModel @Inject constructor(
     private val multiSearchUseCase: MultiSearchUseCase,
@@ -31,11 +31,12 @@ class SearchViewModel @Inject constructor(
         val query = text?.trim() ?: return
         if (query.length > MIN_SEARCHABLE_LENGTH) {
             multiSearchJob?.cancel()
-            multiSearchJob = bgScope.launch {
-                val searchResult = multiSearchUseCase.run(MultiSearchUseCase.Params(query))
-                onUIThread {
-                    searchResult.either(::handleSearchFailure, ::postMultiSearchResult)
-                }
+
+            multiSearchUseCase.invoke(
+                viewModelScope,
+                MultiSearchUseCase.Params(query)
+            ) {
+                it.either(::handleSearchFailure, ::postMultiSearchResult)
             }
         }
     }
