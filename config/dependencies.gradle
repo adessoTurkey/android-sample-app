@@ -2,7 +2,8 @@ ext {
 
     compiler = [
             java  : JavaVersion.VERSION_1_8,
-            kotlin: '1.5.10'
+            kotlin: '1.4.32',
+            compose: '1.0.0-beta07'
     ]
 
     android = [
@@ -74,6 +75,15 @@ ext {
                     "androidx.lifecycle:lifecycle-viewmodel-ktx:$version.lifecycle",
                     "androidx.lifecycle:lifecycle-livedata-ktx:$version.lifecycle",
                     "androidx.lifecycle:lifecycle-common-java8:$version.lifecycle",
+                    "androidx.compose.ui:ui:$compiler.compose",
+                    "androidx.compose.ui:ui-tooling:$compiler.compose",
+                    "androidx.compose.foundation:foundation:$compiler.compose",
+                    "androidx.compose.material:material:$compiler.compose",
+                    "androidx.compose.material:material-icons-core:$compiler.compose",
+                    "androidx.compose.material:material-icons-extended:$compiler.compose",
+                    "androidx.compose.runtime:runtime:$compiler.compose",
+                    "androidx.compose.runtime:runtime-livedata:$compiler.compose",
+                    "androidx.compose.runtime:runtime-rxjava2:$compiler.compose",
             ],
 
             dagger = [
@@ -113,6 +123,7 @@ ext {
 
             commonInstrumentationTest = [
                     "com.android.support.test.espresso:espresso-core:$version.espresso",
+                    "androidx.compose.ui:ui-test-junit4:$compiler.compose"
             ],
 
             commonDebug = [
