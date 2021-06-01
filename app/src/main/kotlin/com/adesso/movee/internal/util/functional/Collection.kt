@@ -5,7 +5,7 @@ fun <T> zip(vararg lists: List<T>): List<List<T>> {
 }
 
 private inline fun <T, V> zip(vararg lists: List<T>, transform: (List<T>) -> V): List<V> {
-    val minSize = lists.map(List<T>::size).min() ?: return emptyList()
+    val minSize = lists.map(List<T>::size).minOrNull() ?: return emptyList()
     val list = ArrayList<V>(minSize)
 
     val iterators = lists.map { it.iterator() }

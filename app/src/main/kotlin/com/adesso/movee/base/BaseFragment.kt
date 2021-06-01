@@ -63,8 +63,8 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
 
     protected inline fun <reified VM : ViewModel> navGraphViewModels(@IdRes navGraphId: Int):
         Lazy<VM> {
-            return navGraphViewModels(navGraphId) { viewModelFactory }
-        }
+        return navGraphViewModels(navGraphId) { viewModelFactory }
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

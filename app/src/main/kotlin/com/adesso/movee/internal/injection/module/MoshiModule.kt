@@ -41,23 +41,23 @@ internal class MoshiModule {
     @Provides
     fun provideMultiSearchItemJsonAdapter():
         PolymorphicJsonAdapterFactory<MultiSearchItemResponseModel> {
-            return PolymorphicJsonAdapterFactory.of(
-                MultiSearchItemResponseModel::class.java,
-                MultiSearchItemResponseModel.MEDIA_TYPE
+        return PolymorphicJsonAdapterFactory.of(
+            MultiSearchItemResponseModel::class.java,
+            MultiSearchItemResponseModel.MEDIA_TYPE
+        )
+            .withSubtype(
+                MovieMultiSearchResponseModel::class.java,
+                MultiSearchItemResponseModel.MEDIA_TYPE_MOVIE
             )
-                .withSubtype(
-                    MovieMultiSearchResponseModel::class.java,
-                    MultiSearchItemResponseModel.MEDIA_TYPE_MOVIE
-                )
-                .withSubtype(
-                    TvShowMultiSearchResponseModel::class.java,
-                    MultiSearchItemResponseModel.MEDIA_TYPE_TV
-                )
-                .withSubtype(
-                    PersonMultiSearchResponseModel::class.java,
-                    MultiSearchItemResponseModel.MEDIA_TYPE_PERSON
-                )
-        }
+            .withSubtype(
+                TvShowMultiSearchResponseModel::class.java,
+                MultiSearchItemResponseModel.MEDIA_TYPE_TV
+            )
+            .withSubtype(
+                PersonMultiSearchResponseModel::class.java,
+                MultiSearchItemResponseModel.MEDIA_TYPE_PERSON
+            )
+    }
 
     @Provides
     fun provideProductJsonAdapter(): PolymorphicJsonAdapterFactory<ProductResponseModel> {

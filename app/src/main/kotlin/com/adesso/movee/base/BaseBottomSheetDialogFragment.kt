@@ -71,8 +71,8 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
 
     protected inline fun <reified VM : ViewModel> navGraphViewModels(@IdRes navGraphId: Int):
         Lazy<VM> {
-            return navGraphViewModels(navGraphId) { viewModelFactory }
-        }
+        return navGraphViewModels(navGraphId) { viewModelFactory }
+    }
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
