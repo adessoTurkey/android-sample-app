@@ -1,4 +1,4 @@
-package com.root.security.impl;
+package com.root.security.impl
 
 import android.content.Context
 import android.content.Intent
@@ -47,7 +47,7 @@ internal class PlaySecurityProvider private constructor(private val context: Con
                 override fun onProviderInstallFailed(errorCode: Int, recoveryInten: Intent?) {
                     callback?.onFail()
                 }
-
-            })
+            }
+        )
     }
 }

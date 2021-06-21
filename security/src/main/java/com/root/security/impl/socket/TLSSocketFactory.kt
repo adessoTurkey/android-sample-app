@@ -1,4 +1,4 @@
-package com.root.security.impl.socket;
+package com.root.security.impl.socket
 
 import java.net.InetAddress
 import java.net.Socket

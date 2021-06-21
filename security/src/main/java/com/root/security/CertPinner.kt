@@ -1,8 +1,8 @@
 package com.root.security
 
-import okhttp3.OkHttpClient
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
+import okhttp3.OkHttpClient
 
 /**
  * @author haci

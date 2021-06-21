@@ -1,9 +1,10 @@
-package com.root.security.utility;
+package com.root.security.utility
 
-import okhttp3.OkHttpClient
 import java.security.cert.X509Certificate
-import javax.net.ssl.*
-
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.X509TrustManager
+import okhttp3.OkHttpClient
 
 /**
  * @author haci
@@ -40,5 +41,4 @@ object UnsafeOkHttpClient {
 
         override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
     })
-
 }

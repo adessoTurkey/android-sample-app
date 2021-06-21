@@ -1,4 +1,4 @@
-package com.root.security.impl;
+package com.root.security.impl
 
 import android.os.Build
 import androidx.annotation.RequiresApi

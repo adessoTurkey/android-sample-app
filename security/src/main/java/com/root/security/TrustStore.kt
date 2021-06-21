@@ -22,5 +22,4 @@ interface TrustStore {
      * Trust managers
      */
     fun getTrustManagers(): List<X509TrustManager>
-
 }

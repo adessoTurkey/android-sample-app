@@ -1,7 +1,10 @@
-package com.root.security.sample;
+package com.root.security.sample
 
 import android.app.Activity
-import com.root.security.*
+import com.root.security.AdessoSecurityProvider
+import com.root.security.PublicKeyPinner
+import com.root.security.SocketProvider
+import com.root.security.TrustStore
 import com.root.security.utility.CertificateUtility
 import okhttp3.OkHttpClient
 
@@ -12,7 +15,7 @@ import okhttp3.OkHttpClient
  * Adesso Security Module.
  * created on 21.06.2021
  */
-class SampleUsage: Activity() {
+class SampleUsage : Activity() {
 
     fun blabla() {
 

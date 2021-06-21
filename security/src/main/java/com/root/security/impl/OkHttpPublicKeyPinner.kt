@@ -1,10 +1,10 @@
-package com.root.security.impl;
+package com.root.security.impl
 
 import android.util.Base64
 import com.root.security.PublicKeyPinner
-import okhttp3.CertificatePinner
 import java.security.MessageDigest
 import java.security.cert.Certificate
+import okhttp3.CertificatePinner
 
 /**
  * @author haci

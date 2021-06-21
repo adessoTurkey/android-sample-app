@@ -1,7 +1,6 @@
-package com.root.security;
+package com.root.security
 
 import android.content.Context
-import com.root.security.impl.*
 import com.root.security.impl.OkHttpCertificatePinner
 import com.root.security.impl.OkHttpPublicKeyPinner
 import com.root.security.impl.PlaySecurityProvider

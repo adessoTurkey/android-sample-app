@@ -1,9 +1,9 @@
-package com.root.security.impl;
+package com.root.security.impl
 
 import com.root.security.CertPinner
-import okhttp3.OkHttpClient
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
+import okhttp3.OkHttpClient
 
 /**
  * @author haci
@@ -25,5 +25,4 @@ internal class OkHttpCertificatePinner : CertPinner {
     ) {
         okHttpBuilder.sslSocketFactory(socketFactory, trustManager)
     }
-
 }

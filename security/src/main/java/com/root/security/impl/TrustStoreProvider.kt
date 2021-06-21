@@ -1,4 +1,4 @@
-package com.root.security.impl;
+package com.root.security.impl
 
 import com.root.security.TrustStore
 import java.security.KeyStore
@@ -47,5 +47,4 @@ internal class TrustStoreProvider private constructor() : TrustStore {
         }
         return managers
     }
-
 }

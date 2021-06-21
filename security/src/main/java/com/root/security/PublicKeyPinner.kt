@@ -1,7 +1,7 @@
 package com.root.security
 
-import okhttp3.CertificatePinner
 import java.security.cert.Certificate
+import okhttp3.CertificatePinner
 
 /**
  * @author haci

@@ -1,7 +1,11 @@
-package com.root.security.utility;
+package com.root.security.utility
 
 import android.content.Context
-import java.io.*
+import java.io.BufferedInputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.InputStream
 import java.security.cert.Certificate
 import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
@@ -58,10 +62,10 @@ object CertificateUtility {
         val assets = context.assets
         val fileNames = assets.list("")
             ?.filter {
-                it.contains(Extension.CER.extension)
-                        || it.contains(Extension.DER.extension)
-                        || it.contains(Extension.CRT.extension)
-                        || it.contains(Extension.PEM.extension)
+                it.contains(Extension.CER.extension) ||
+                    it.contains(Extension.DER.extension) ||
+                    it.contains(Extension.CRT.extension) ||
+                    it.contains(Extension.PEM.extension)
             }
         val certificates = mutableListOf<Certificate>()
         fileNames?.forEach {
