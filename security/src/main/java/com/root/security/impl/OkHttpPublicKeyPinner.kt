@@ -26,7 +26,7 @@ import okhttp3.CertificatePinner
  *
  * created on 20.06.2021
  */
-internal class OkHttpPublicKeyPinner : PublicKeyPinner {
+internal class OkHttpPublicKeyPinner private constructor(): PublicKeyPinner {
 
     companion object {
         fun getDefault(): PublicKeyPinner = OkHttpPublicKeyPinner()

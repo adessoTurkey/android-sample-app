@@ -25,8 +25,8 @@ internal class TrustStoreProvider private constructor() : TrustStore {
     }
 
     private val keyManagerAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
-    private val keyStoreType = TrustManagerFactory.getDefaultAlgorithm()
     private val trustManager = TrustManagerFactory.getInstance(keyManagerAlgorithm)
+    private val keyStoreType = KeyStore.getDefaultType()
     private val keyStore = KeyStore.getInstance(keyStoreType)
 
     init {

@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient
  * Adesso Security Module.
  * created on 20.06.2021
  */
-internal class OkHttpCertificatePinner : CertPinner {
+internal class OkHttpCertificatePinner private constructor(): CertPinner {
 
     companion object {
         fun getDefault(): CertPinner = OkHttpCertificatePinner()

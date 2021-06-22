@@ -14,7 +14,7 @@ import javax.net.ssl.SSLSocketFactory
  * Adesso Security Module.
  * created on 20.06.2021
  */
-internal class SocketFactoryProvider : SocketProvider {
+internal class SocketFactoryProvider private constructor(): SocketProvider {
 
     companion object {
         fun getDefault(): SocketProvider = SocketFactoryProvider()
