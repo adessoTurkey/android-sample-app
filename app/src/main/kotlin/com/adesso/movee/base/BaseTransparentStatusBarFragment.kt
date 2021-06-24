@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.adesso.movee.R
 
 abstract class BaseTransparentStatusBarFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
@@ -16,6 +17,8 @@ abstract class BaseTransparentStatusBarFragment<VM : BaseAndroidViewModel, B : V
         super.onCreate(savedInstanceState)
 
         activity?.window?.let { window ->
+            ViewTreeLifecycleOwner.set(window.decorView, this)
+
             systemUiBeforeChange = window.decorView.systemUiVisibility
             window.decorView.systemUiVisibility = systemUiBeforeChange or SYSTEM_UI_TRANSPARENT
 

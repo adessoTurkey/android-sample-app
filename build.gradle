@@ -9,7 +9,7 @@ buildscript {
         apply from: 'config/dependencies.gradle', to: it
         apply from: "$rootDir/config/git-hooks.gradle.kts"
         classpath "com.android.tools.build:gradle:$it.gradle.gradle"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$it.compiler.kotlin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$it.version.navigation"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$it.version.spotless"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$version.detekt"

@@ -6,10 +6,6 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.adesso.movee.scene.login.LoginViewModel" />
-
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -17,96 +13,10 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_login_background">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image_view_movee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_login_image_view_movee"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_movee" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_layout_username"
-                style="@style/TextInputLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_login_image_view_movee"
-                app:layout_constraintTop_toBottomOf="@id/image_view_movee">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/EditTextLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/login_hint_username"
-                    android:inputType="textNoSuggestions"
-                    android:text="@={viewModel.username}" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_layout_password"
-                style="@style/TextInputLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/text_input_layout_username"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/white">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/EditTextLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/login_hint_password"
-                    android:inputType="textPassword"
-                    android:text="@={viewModel.password}" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_view_forgot_password"
-                style="@style/TextField.White.Login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_large"
-                android:onClick="@{() -> viewModel.onForgotPasswordClick()}"
-                android:text="@string/login_message_forgot_password"
-                app:layout_constraintEnd_toEndOf="@id/text_input_layout_password"
-                app:layout_constraintTop_toBottomOf="@id/text_input_layout_password" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_login"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_xxl"
-                android:layout_marginEnd="@dimen/margin_xxl"
-                android:enabled="@{!viewModel.loginInProgress}"
-                android:onClick="@{() -> viewModel.onLoginClick()}"
-                android:text="@string/login_message_login"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_forgot_password" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextField.White.Login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_extra_large"
-                android:layout_marginBottom="@dimen/margin_xxl"
-                android:onClick="@{() -> viewModel.onRegisterClick()}"
-                android:text="@string/login_message_register"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_login" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent" />
 
     </androidx.core.widget.NestedScrollView>
 
