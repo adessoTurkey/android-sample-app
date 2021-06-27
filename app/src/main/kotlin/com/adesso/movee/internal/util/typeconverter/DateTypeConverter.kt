@@ -12,7 +12,9 @@ class DateTypeConverter {
     @TypeConverter
     fun fromString(value: String?): Date? {
         return try {
-            dateFormat.parse(value)
+            value?.let {
+                dateFormat.parse(it)
+            }
         } catch (e: ParseException) {
             null
         }
@@ -20,7 +22,11 @@ class DateTypeConverter {
 
     @TypeConverter
     fun dateToString(date: Date?): String? {
-        return dateFormat.format(date)
+        date?.let {
+            return dateFormat.format(it)
+        } ?: run {
+            return null
+        }
     }
 
     companion object {
