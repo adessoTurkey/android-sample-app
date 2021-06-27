@@ -1,6 +1,5 @@
 package com.root.security
 
-import android.annotation.TargetApi
 import android.os.Build
 import javax.net.ssl.SSLSocketFactory
 
@@ -31,7 +30,6 @@ interface SocketProvider {
      * Default TLS Socket factory to create safe connections
      * greater than > 19
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     fun getFactory(): SSLSocketFactory
 
     /**

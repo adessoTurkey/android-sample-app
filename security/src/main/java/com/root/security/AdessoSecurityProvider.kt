@@ -38,7 +38,7 @@ object AdessoSecurityProvider {
     fun getOkHttpPublicKeyPinner() = OkHttpPublicKeyPinner.getDefault()
 
     /**
-     * Generate public key pinner
+     * Generate certificate pinner
      */
     fun getOkHttpCertPinner() = OkHttpCertificatePinner.getDefault()
 
