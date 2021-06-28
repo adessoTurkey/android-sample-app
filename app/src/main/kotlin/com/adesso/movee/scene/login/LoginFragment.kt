@@ -3,13 +3,13 @@ package com.adesso.movee.scene.login
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -33,8 +33,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -158,23 +156,15 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
                         .fillMaxWidth()
                 )
 
-                ClickableText(
-                    text = AnnotatedString(
-                        text = stringResource(
-                            R.string.login_message_forgot_password
-                        ),
-                        spanStyle = SpanStyle(
-                            fontSize = 12.sp,
-                            color = Color.White
-                        )
-                    ),
+                Text(
+                    text = stringResource(R.string.login_message_forgot_password),
+                    fontSize = 12.sp,
+                    color = Color.White,
                     modifier = Modifier
                         .padding(top = dimensionResource(id = R.dimen.margin_large))
                         .align(Alignment.End)
-                        .padding(horizontal = dimensionResource(R.dimen.margin_xxl)),
-                    onClick = {
-                        viewModel.onForgotPasswordClick()
-                    }
+                        .padding(horizontal = dimensionResource(R.dimen.margin_xxl))
+                        .clickable { viewModel.onForgotPasswordClick() }
                 )
 
                 ConstraintLayout(
@@ -214,14 +204,10 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
                         )
                     }
 
-                    ClickableText(
-                        text = AnnotatedString(
-                            text = stringResource(R.string.login_message_register),
-                            spanStyle = SpanStyle(
-                                fontSize = 12.sp,
-                                color = Color.White
-                            )
-                        ),
+                    Text(
+                        text = stringResource(R.string.login_message_register),
+                        fontSize = 12.sp,
+                        color = Color.White,
                         modifier = Modifier
                             .wrapContentWidth()
                             .constrainAs(text) {
@@ -229,10 +215,8 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
                                 end.linkTo(parent.end)
                                 top.linkTo(button.bottom, margin = 24.dp)
                                 bottom.linkTo(parent.bottom, margin = 32.dp)
-                            },
-                        onClick = {
-                            viewModel.onRegisterClick()
-                        }
+                            }
+                            .clickable { viewModel.onRegisterClick() }
                     )
                 }
             }
