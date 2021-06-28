@@ -112,6 +112,8 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
                 value = username,
                 onValueChange = { newValue -> viewModel.username.postValue(newValue) },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                singleLine = true,
+                maxLines = 1,
                 placeholder = { Text(stringResource(R.string.login_hint_username)) },
                 colors = textFieldColors(
                     textColor = Color.White,
@@ -143,7 +145,7 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Next
+                    imeAction = ImeAction.Done
                 ),
                 colors = textFieldColors(
                     textColor = Color.White,
