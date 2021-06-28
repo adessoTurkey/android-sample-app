@@ -4,13 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -27,7 +24,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -44,6 +40,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseTransparentStatusBarFragment
 import com.adesso.movee.databinding.FragmentLoginBinding
@@ -57,11 +54,11 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
     override fun initialize() {
         super.initialize()
 
-        binder.composeView.setContent {
-            Login()
-        }
-
         viewModel.navigateUri.observeNonNull(viewLifecycleOwner, ::handleNavigateUriEvent)
+
+        binder.composeView.setContent {
+            LoginComposable()
+        }
     }
 
     private fun handleNavigateUriEvent(event: Event<Uri>) {
@@ -72,157 +69,165 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
     }
 
     @Composable
-    fun Login(loginViewModel: LoginViewModel = viewModel) {
+    fun LoginComposable(loginViewModel: LoginViewModel = viewModel) {
 
-        Box(modifier = Modifier.fillMaxSize()) {
+        ConstraintLayout(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            val (
+                moveeIcon,
+                textFieldUsername,
+                textFieldPassword,
+                textForgotPassword,
+                buttonLogin,
+                textRegister
+            ) = createRefs()
+
+            val glContentStart =
+                createGuidelineFromStart(dimensionResource(id = R.dimen.margin_xxl))
+            val glContentEnd = createGuidelineFromEnd(dimensionResource(id = R.dimen.margin_xxl))
+
             Image(
                 painter = painterResource(R.drawable.ic_login_background),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.matchParentSize()
+                modifier = Modifier.fillMaxSize()
             )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+
+            Image(
+                painter = painterResource(R.drawable.ic_movee),
+                contentDescription = "",
                 modifier = Modifier
-                    .matchParentSize()
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_movee),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .padding(
-                            top =
-                            dimensionResource(id = R.dimen.margin_login_image_view_movee)
-                        )
-                )
+                    .constrainAs(moveeIcon) {
+                        top.linkTo(parent.top, margin = 100.dp)
+                        centerHorizontallyTo(parent)
+                    }
+            )
 
-                val username by loginViewModel.username.observeAsState("")
+            val username by loginViewModel.username.observeAsState("")
 
-                TextField(
-                    value = username,
-                    onValueChange = { newValue -> viewModel.username.postValue(newValue) },
-                    modifier = Modifier
-                        .padding(
-                            top = dimensionResource(id = R.dimen.margin_login_image_view_movee)
-                        )
-                        .padding(horizontal = dimensionResource(R.dimen.margin_xxl))
-                        .fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    placeholder = { Text(stringResource(R.string.login_hint_username)) },
-                    colors = textFieldColors(
-                        textColor = Color.White,
-                        placeholderColor = Color.White,
-                        backgroundColor = Color(
-                            color = android.graphics.Color.parseColor("#4cabb4bd")
-                        )
+            TextField(
+                value = username,
+                onValueChange = { newValue -> viewModel.username.postValue(newValue) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                placeholder = { Text(stringResource(R.string.login_hint_username)) },
+                colors = textFieldColors(
+                    textColor = Color.White,
+                    placeholderColor = Color.White,
+                    backgroundColor = Color(
+                        color = android.graphics.Color.parseColor("#4cabb4bd")
                     )
-                )
+                ),
+                modifier = Modifier
+                    .constrainAs(textFieldUsername) {
+                        top.linkTo(moveeIcon.bottom, margin = 100.dp)
+                        start.linkTo(glContentStart)
+                        end.linkTo(glContentEnd)
+                        width = Dimension.fillToConstraints
+                    }
+            )
 
-                val password by viewModel.password.observeAsState("")
-                var passwordVisibility by remember { mutableStateOf(false) }
+            val password by viewModel.password.observeAsState("")
+            var passwordVisibility by remember { mutableStateOf(false) }
 
-                TextField(
-                    value = password,
-                    onValueChange = { newValue -> viewModel.password.postValue(newValue) },
-                    placeholder = { Text(stringResource(R.string.login_hint_password)) },
-                    visualTransformation = if (passwordVisibility) {
-                        VisualTransformation.None
-                    } else {
-                        PasswordVisualTransformation()
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Next
-                    ),
-                    colors = textFieldColors(
-                        textColor = Color.White,
-                        placeholderColor = Color.White,
-                        backgroundColor = Color(
-                            color = android.graphics.Color.parseColor("#4cabb4bd")
-                        )
-                    ),
-                    trailingIcon = {
-                        val image = if (passwordVisibility)
-                            Icons.Filled.Visibility
-                        else Icons.Filled.VisibilityOff
+            TextField(
+                value = password,
+                onValueChange = { newValue -> viewModel.password.postValue(newValue) },
+                placeholder = { Text(stringResource(R.string.login_hint_password)) },
+                visualTransformation = if (passwordVisibility) {
+                    VisualTransformation.None
+                } else {
+                    PasswordVisualTransformation()
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Next
+                ),
+                colors = textFieldColors(
+                    textColor = Color.White,
+                    placeholderColor = Color.White,
+                    backgroundColor = Color(
+                        color = android.graphics.Color.parseColor("#4cabb4bd")
+                    )
+                ),
+                trailingIcon = {
+                    val image = if (passwordVisibility)
+                        Icons.Filled.Visibility
+                    else Icons.Filled.VisibilityOff
 
-                        IconButton(
-                            onClick = {
-                                passwordVisibility = !passwordVisibility
-                            }
-                        ) {
-                            Icon(imageVector = image, "", tint = Color.White)
+                    IconButton(
+                        onClick = {
+                            passwordVisibility = !passwordVisibility
                         }
-                    },
-                    modifier = Modifier
-                        .padding(horizontal = dimensionResource(R.dimen.margin_xxl))
-                        .fillMaxWidth()
+                    ) {
+                        Icon(imageVector = image, "", tint = Color.White)
+                    }
+                },
+                modifier = Modifier
+                    .constrainAs(textFieldPassword) {
+                        top.linkTo(textFieldUsername.bottom)
+                        start.linkTo(glContentStart)
+                        end.linkTo(glContentEnd)
+                        width = Dimension.fillToConstraints
+                    }
+            )
+
+            Text(
+                text = stringResource(R.string.login_message_forgot_password),
+                fontSize = 12.sp,
+                color = Color.White,
+                modifier = Modifier
+                    .constrainAs(textForgotPassword) {
+                        top.linkTo(textFieldPassword.bottom, 16.dp)
+                        end.linkTo(textFieldPassword.end)
+                    }
+                    .clickable { viewModel.onForgotPasswordClick() }
+            )
+
+            val loginInProgress by viewModel.loginInProgress.observeAsState()
+
+            Button(
+                enabled = loginInProgress?.not() ?: true,
+                onClick = { viewModel.onLoginClick() },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                modifier = Modifier
+                    .constrainAs(buttonLogin) {
+                        top.linkTo(textForgotPassword.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(glContentStart)
+                        end.linkTo(glContentEnd)
+                        width = Dimension.fillToConstraints
+                    }
+
+            ) {
+                val nunitoFontFamily = FontFamily(
+                    Font(R.font.nunito_bold, FontWeight.Normal)
                 )
 
                 Text(
-                    text = stringResource(R.string.login_message_forgot_password),
+                    stringResource(id = R.string.login_message_login),
+                    color = Color(
+                        color = android.graphics.Color.parseColor("#003dff")
+                    ),
                     fontSize = 12.sp,
-                    color = Color.White,
-                    modifier = Modifier
-                        .padding(top = dimensionResource(id = R.dimen.margin_large))
-                        .align(Alignment.End)
-                        .padding(horizontal = dimensionResource(R.dimen.margin_xxl))
-                        .clickable { viewModel.onForgotPasswordClick() }
+                    fontFamily = nunitoFontFamily
                 )
-
-                ConstraintLayout(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    // Create references for the composables to constrain
-                    val (button, text) = createRefs()
-
-                    val loginInProgress by viewModel.loginInProgress.observeAsState()
-
-                    Button(
-                        enabled = loginInProgress?.not() ?: true,
-                        onClick = { viewModel.onLoginClick() },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                        modifier = Modifier
-                            .padding(horizontal = dimensionResource(R.dimen.margin_xxl))
-                            .constrainAs(button) {
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                            }
-                            .fillMaxWidth()
-
-                    ) {
-                        val nunitoFontFamily = FontFamily(
-                            Font(R.font.nunito_bold, FontWeight.Normal)
-                        )
-
-                        Text(
-                            stringResource(id = R.string.login_message_login),
-                            color = Color(
-                                color = android.graphics.Color.parseColor("#003dff")
-                            ),
-                            fontSize = 12.sp,
-                            fontFamily = nunitoFontFamily
-                        )
-                    }
-
-                    Text(
-                        text = stringResource(R.string.login_message_register),
-                        fontSize = 12.sp,
-                        color = Color.White,
-                        modifier = Modifier
-                            .wrapContentWidth()
-                            .constrainAs(text) {
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                                top.linkTo(button.bottom, margin = 24.dp)
-                                bottom.linkTo(parent.bottom, margin = 32.dp)
-                            }
-                            .clickable { viewModel.onRegisterClick() }
-                    )
-                }
             }
+
+            Text(
+                text = stringResource(R.string.login_message_register),
+                fontSize = 12.sp,
+                color = Color.White,
+                modifier = Modifier
+                    .constrainAs(textRegister) {
+                        centerHorizontallyTo(parent)
+                        top.linkTo(buttonLogin.bottom, margin = 24.dp)
+                        bottom.linkTo(parent.bottom, margin = 32.dp)
+                    }
+                    .clickable { viewModel.onRegisterClick() }
+            )
         }
     }
 }
