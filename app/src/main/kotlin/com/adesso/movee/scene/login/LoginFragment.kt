@@ -4,7 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -20,6 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
@@ -125,7 +128,6 @@ fun Login(viewModel: LoginViewModel) {
                     val image = if (passwordVisibility)
                         Icons.Filled.Visibility
                     else Icons.Filled.VisibilityOff
-
                     IconButton(
                         onClick = {
                             passwordVisibility = !passwordVisibility
@@ -153,14 +155,19 @@ fun Login(viewModel: LoginViewModel) {
                 ),
             )
 
-            Text(
-                stringResource(id = R.string.login_message_forgot_password),
-                color = Color.White,
-                textAlign = TextAlign.End,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = dimensionResource(id = R.dimen.margin_large))
-            )
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+                Text(
+                    modifier = Modifier
+                        .clickable {
+                            viewModel.onForgotPasswordClick()
+                        }
+                        .padding(top = dimensionResource(id = R.dimen.margin_large)),
+                    text = stringResource(id = R.string.login_message_forgot_password),
+                    color = Color.White,
+                    textAlign = TextAlign.End
+                )
+            }
+
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom,
@@ -174,16 +181,23 @@ fun Login(viewModel: LoginViewModel) {
                     enabled = true,
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
                 ) {
-                    Text(text = stringResource(id = R.string.login_message_login), color = colorResource(id = R.color.vibrant_blue))
+                    Text(
+                        text = stringResource(id = R.string.login_message_login),
+                        color = colorResource(id = R.color.vibrant_blue)
+                    )
                 }
 
                 Text(
+                    modifier = Modifier
+                        .clickable {
+                            viewModel.onRegisterClick()
+                        }
+                        .padding(
+                            top = dimensionResource(id = R.dimen.margin_extra_large),
+                            bottom = dimensionResource(id = R.dimen.margin_xxl)
+                        ),
                     text = stringResource(id = R.string.login_message_register),
                     color = Color.White,
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.margin_extra_large),
-                        bottom = dimensionResource(id = R.dimen.margin_xxl)
-                    )
                 )
             }
 
