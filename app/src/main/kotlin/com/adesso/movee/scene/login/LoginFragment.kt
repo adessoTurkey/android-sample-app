@@ -37,7 +37,7 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
     override fun initialize() {
         super.initialize()
         binder.composeViewLogin.setContent {
-            Login()
+            Login(viewModel)
         }
         viewModel.navigateUri.observeNonNull(viewLifecycleOwner, ::handleNavigateUriEvent)
     }
@@ -49,144 +49,145 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
         }
     }
 
-    @Composable
-    fun Login() {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_login_background),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_movee),
-                    contentDescription = null,
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.margin_login_image_view_movee)
-                    )
-                )
-
-                val username by viewModel.username.observeAsState("")
-
-                TextField(
-                    value = username,
-                    onValueChange = { viewModel.username.postValue(it) },
-                    textStyle = TextStyle(color = Color.White),
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
-                        keyboardType = KeyboardType.Text
-                    ),
-                    placeholder = {
-                        Text(
-                            text = stringResource(id = R.string.login_hint_username),
-                            color = Color.White
-                        )
-                    },
-                    colors = TextFieldDefaults.textFieldColors(
-                        focusedIndicatorColor = Color.White,
-                        unfocusedIndicatorColor = colorResource(id = R.color.cadet_blue_alpha_30),
-                        backgroundColor = Color.Transparent,
-                        textColor = Color.White,
-                        cursorColor = Color.White
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = dimensionResource(id = R.dimen.margin_login_image_view_movee),
-                            start = dimensionResource(id = R.dimen.margin_xxl),
-                            end = dimensionResource(id = R.dimen.margin_xxl)
-                        ),
-                )
-
-                val password by viewModel.password.observeAsState("")
-                var passwordVisibility by remember { mutableStateOf(false) }
-
-                TextField(
-                    value = password,
-                    visualTransformation =
-                    if (passwordVisibility) VisualTransformation.None
-                    else PasswordVisualTransformation(),
-                    onValueChange = { viewModel.password.postValue(it) },
-                    textStyle = TextStyle(color = Color.White),
-                    trailingIcon = {
-                        val image = if (passwordVisibility)
-                            Icons.Filled.Visibility
-                        else Icons.Filled.VisibilityOff
-
-                        IconButton(
-                            onClick = {
-                                passwordVisibility = !passwordVisibility
-                            }
-                        ) {
-                            Icon(imageVector = image, null, tint = Color.White)
-                        }
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
-                        keyboardType = KeyboardType.Password
-                    ),
-                    placeholder = {
-                        Text(
-                            text = stringResource(id = R.string.login_hint_password),
-                            color = Color.White
-                        )
-                    },
-                    colors = TextFieldDefaults.textFieldColors(
-                        focusedIndicatorColor = Color.White,
-                        unfocusedIndicatorColor = colorResource(id = R.color.cadet_blue_alpha_30),
-                        backgroundColor = Color.Transparent,
-                        textColor = Color.White,
-                        cursorColor = Color.White
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = dimensionResource(id = R.dimen.margin_xxl),
-                            end = dimensionResource(id = R.dimen.margin_xxl)
-                        ),
-                )
-
-                Text(
-                    stringResource(id = R.string.login_message_forgot_password),
-                    color = Color.White,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = dimensionResource(id = R.dimen.margin_large),
-                            start = dimensionResource(id = R.dimen.margin_xxl),
-                            end = dimensionResource(id = R.dimen.margin_xxl)
-                        )
-                )
-
-                Button(
-                    onClick = {
-                        Toast.makeText(context, "Login button", Toast.LENGTH_LONG).show()
-                    },
-                    enabled = true,
-                    modifier = Modifier
-                        .padding(
-                            start = dimensionResource(id = R.dimen.margin_xxl),
-                            end = dimensionResource(id = R.dimen.margin_xxl),
-                        )
-
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.login_message_login),
-                        color = colorResource(id = R.color.vibrant_blue)
-                    )
-                }
-            }
-        }
-    }
-
     @Preview
     @Composable
     fun LoginPreview() {
-        Login()
+        Login(viewModel)
+    }
+}
+
+@Composable
+fun Login(viewModel: LoginViewModel) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_login_background),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    start = dimensionResource(id = R.dimen.margin_xxl),
+                    end = dimensionResource(id = R.dimen.margin_xxl)
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_movee),
+                contentDescription = null,
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.margin_login_image_view_movee)
+                )
+            )
+
+            val username by viewModel.username.observeAsState("")
+
+            TextField(
+                value = username,
+                onValueChange = { viewModel.username.postValue(it) },
+                textStyle = TextStyle(color = Color.White),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Text
+                ),
+                label = {
+                    Text(
+                        text = stringResource(id = R.string.login_hint_username),
+                        color = Color.White
+                    )
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = Color.White,
+                    unfocusedIndicatorColor = colorResource(id = R.color.cadet_blue_alpha_30),
+                    backgroundColor = Color.Transparent,
+                    textColor = Color.White,
+                    cursorColor = Color.White
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = dimensionResource(id = R.dimen.margin_login_image_view_movee)),
+            )
+
+            val password by viewModel.password.observeAsState("")
+            var passwordVisibility by remember { mutableStateOf(false) }
+
+            TextField(
+                value = password,
+                visualTransformation =
+                if (passwordVisibility) VisualTransformation.None
+                else PasswordVisualTransformation(),
+                onValueChange = { viewModel.password.postValue(it) },
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(color = Color.White),
+                trailingIcon = {
+                    val image = if (passwordVisibility)
+                        Icons.Filled.Visibility
+                    else Icons.Filled.VisibilityOff
+
+                    IconButton(
+                        onClick = {
+                            passwordVisibility = !passwordVisibility
+                        }
+                    ) {
+                        Icon(imageVector = image, null, tint = Color.White)
+                    }
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Password
+                ),
+                label = {
+                    Text(
+                        text = stringResource(id = R.string.login_hint_password),
+                        color = Color.White
+                    )
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = Color.White,
+                    unfocusedIndicatorColor = colorResource(id = R.color.cadet_blue_alpha_30),
+                    backgroundColor = Color.Transparent,
+                    textColor = Color.White,
+                    cursorColor = Color.White
+                ),
+            )
+
+            Text(
+                stringResource(id = R.string.login_message_forgot_password),
+                color = Color.White,
+                textAlign = TextAlign.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = dimensionResource(id = R.dimen.margin_large))
+            )
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(
+                    onClick = {
+                        viewModel.onLoginClick()
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = true,
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+                ) {
+                    Text(text = stringResource(id = R.string.login_message_login), color = colorResource(id = R.color.vibrant_blue))
+                }
+
+                Text(
+                    text = stringResource(id = R.string.login_message_register),
+                    color = Color.White,
+                    modifier = Modifier.padding(
+                        top = dimensionResource(id = R.dimen.margin_extra_large),
+                        bottom = dimensionResource(id = R.dimen.margin_xxl)
+                    )
+                )
+            }
+
+
+        }
     }
 }
