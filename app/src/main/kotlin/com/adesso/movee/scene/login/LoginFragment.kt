@@ -46,7 +46,7 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
 
         binder.composeView.setContent {
             MaterialTheme {
-                Movie(
+                LoginScreen(
                     viewModel,
                     onUserNameChange = {
                         viewModel.onUserNameChange(it)
@@ -68,7 +68,7 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
 }
 
 @Composable
-fun Movie(
+fun LoginScreen(
     viewModel: LoginViewModel,
     onUserNameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit
