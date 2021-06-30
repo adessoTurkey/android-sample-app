@@ -81,6 +81,8 @@
     <string name="login_message_forgot_password">Forgot Password?</string>
     <string name="login_message_login">Login</string>
     <string name="login_message_register">Don\'t have an account? Register now</string>
+    <string name="login_forgot_password_link">https://www.themoviedb.org/account/reset-password</string>
+    <string name="login_register_link">https://www.themoviedb.org/account/signup</string>
     <!-- endregion -->
 
 </resources>

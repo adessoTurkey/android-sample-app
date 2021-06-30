@@ -23,8 +23,16 @@ class LoginViewModel @Inject constructor(
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
-    fun onForgotPasswordClick() {
-        postNavigateUri(URL_FORGOT_PASSWORD)
+//    fun onForgotPasswordClick() {
+//        postNavigateUri(URL_FORGOT_PASSWORD)
+//    }
+
+    fun onUserNameChange(newUserName: String) {
+        username.value = newUserName
+    }
+
+    fun onPasswordChange(newPassword: String) {
+        password.value = newPassword
     }
 
     fun onLoginClick() {
@@ -48,13 +56,13 @@ class LoginViewModel @Inject constructor(
         navigate(LoginFragmentDirections.toHome())
     }
 
-    fun onRegisterClick() {
-        postNavigateUri(URL_REGISTER)
-    }
+//    fun onRegisterClick() {
+//        postNavigateUri(URL_REGISTER)
+//    }
 
-    private fun postNavigateUri(url: String) {
-        _navigateUri.value = Event(Uri.parse(url))
-    }
+//    private fun postNavigateUri(url: String) {
+//        _navigateUri.value = Event(Uri.parse(url))
+//    }
 
     companion object {
         private const val URL_REGISTER = "https://www.themoviedb.org/account/signup"

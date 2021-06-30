@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'androidx.navigation.safeargs'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 apply from: "$rootDir/config/git-hooks.gradle.kts"
 apply from: "$rootDir/config/detekt.gradle"
 apply from: "$rootDir/config/ktlint.gradle"
@@ -80,18 +80,25 @@ android {
 
     kotlinOptions {
         jvmTarget = compiler.java
+        useIR = true
     }
 
     buildFeatures {
         dataBinding true
+        compose true
     }
 
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/*'
     }
 
     kapt {
         correctErrorTypes true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = compiler.composeVersion
+        kotlinCompilerVersion = compiler.kotlin
     }
 
     sourceSets {

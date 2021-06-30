@@ -2,7 +2,8 @@ ext {
 
     compiler = [
             java  : JavaVersion.VERSION_1_8,
-            kotlin: '1.5.10'
+            kotlin: '1.5.10',
+            composeVersion : '1.0.0-beta09'
     ]
 
     android = [
@@ -64,6 +65,8 @@ ext {
 
             androidx = [
                     "androidx.core:core-ktx:$version.androidKtx",
+                    "androidx.activity:activity-ktx:$version.activityKtx",
+                    "androidx.fragment:fragment-ktx:$version.fragmentKtx",
                     "androidx.navigation:navigation-fragment-ktx:$version.navigation",
                     "androidx.navigation:navigation-ui-ktx:$version.navigation",
                     "androidx.constraintlayout:constraintlayout:$version.constraintLayout",
@@ -74,6 +77,14 @@ ext {
                     "androidx.lifecycle:lifecycle-viewmodel-ktx:$version.lifecycle",
                     "androidx.lifecycle:lifecycle-livedata-ktx:$version.lifecycle",
                     "androidx.lifecycle:lifecycle-common-java8:$version.lifecycle",
+                    "androidx.compose.ui:ui:$compiler.composeVersion",
+                    "androidx.compose.material:material:$compiler.composeVersion",
+                    "androidx.compose.ui:ui-tooling:$compiler.composeVersion",
+                    "androidx.compose.ui:ui-test-junit4:$compiler.composeVersion",
+                    "androidx.compose.material:material-icons-extended:$compiler.composeVersion",
+                    "androidx.compose.ui:ui-tooling:$compiler.composeVersion",
+                    "androidx.compose.runtime:runtime-livedata:$compiler.composeVersion",
+                    "androidx.compose.runtime:runtime-rxjava2:$compiler.composeVersion"
             ],
 
             dagger = [
