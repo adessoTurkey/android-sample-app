@@ -61,6 +61,10 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
 
 @Composable
 fun Login(viewModel: LoginViewModel) {
+    val username by viewModel.username.observeAsState("")
+    val password by viewModel.password.observeAsState("")
+    var passwordVisibility by remember { mutableStateOf(false) }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.ic_login_background),
@@ -84,9 +88,6 @@ fun Login(viewModel: LoginViewModel) {
                     top = dimensionResource(id = R.dimen.margin_login_image_view_movee)
                 )
             )
-
-            val username by viewModel.username.observeAsState("")
-
             TextField(
                 value = username,
                 onValueChange = { viewModel.username.postValue(it) },
@@ -112,10 +113,6 @@ fun Login(viewModel: LoginViewModel) {
                     .fillMaxWidth()
                     .padding(top = dimensionResource(id = R.dimen.margin_login_image_view_movee)),
             )
-
-            val password by viewModel.password.observeAsState("")
-            var passwordVisibility by remember { mutableStateOf(false) }
-
             TextField(
                 value = password,
                 visualTransformation =
@@ -154,7 +151,6 @@ fun Login(viewModel: LoginViewModel) {
                     cursorColor = Color.White
                 ),
             )
-
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
                 Text(
                     modifier = Modifier
@@ -167,7 +163,6 @@ fun Login(viewModel: LoginViewModel) {
                     textAlign = TextAlign.End
                 )
             }
-
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom,
@@ -186,7 +181,6 @@ fun Login(viewModel: LoginViewModel) {
                         color = colorResource(id = R.color.vibrant_blue)
                     )
                 }
-
                 Text(
                     modifier = Modifier
                         .clickable {
@@ -200,8 +194,6 @@ fun Login(viewModel: LoginViewModel) {
                     color = Color.White,
                 )
             }
-
-
         }
     }
 }
