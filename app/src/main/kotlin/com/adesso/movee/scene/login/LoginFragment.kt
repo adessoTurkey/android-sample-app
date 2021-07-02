@@ -46,15 +46,7 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
 
         binder.composeView.setContent {
             MaterialTheme {
-                LoginScreen(
-                    viewModel,
-                    onUserNameChange = {
-                        viewModel.onUserNameChange(it)
-                    }, onPasswordChange = {
-                        viewModel.onPasswordChange(it)
-                    }
-                )
-
+                LoginScreen(viewModel)
             }
         }
     }
@@ -69,9 +61,7 @@ class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentL
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel,
-    onUserNameChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit
+    viewModel: LoginViewModel
 ) {
     val name: String by viewModel.username.observeAsState("")
     val password: String by viewModel.password.observeAsState("")
@@ -100,7 +90,7 @@ fun LoginScreen(
 
         TextField(
             value = name,
-            onValueChange = onUserNameChange,
+            onValueChange = {viewModel.username.postValue(it)},
             label = {
                 Text(
                     text = stringResource(id = R.string.login_hint_username),
@@ -112,13 +102,14 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(top = dimensionResource(id = R.dimen.margin_login_image_view_movee)),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = Color.Transparent,
+                focusedIndicatorColor = Color.White
             ),
         )
 
         TextField(
             value = password,
-            onValueChange = onPasswordChange,
+            onValueChange = {viewModel.password.postValue(it)},
             modifier = Modifier
                 .fillMaxWidth(),
             label = {
@@ -129,7 +120,8 @@ fun LoginScreen(
             },
             textStyle = TextStyle(color = Color.White),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = Color.Transparent,
+                focusedIndicatorColor = Color.White
             ),
 
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),

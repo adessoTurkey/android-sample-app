@@ -27,14 +27,6 @@ class LoginViewModel @Inject constructor(
 //        postNavigateUri(URL_FORGOT_PASSWORD)
 //    }
 
-    fun onUserNameChange(newUserName: String) {
-        username.value = newUserName
-    }
-
-    fun onPasswordChange(newPassword: String) {
-        password.value = newPassword
-    }
-
     fun onLoginClick() {
         uiScope.launch {
             val username = username.value ?: return@launch
