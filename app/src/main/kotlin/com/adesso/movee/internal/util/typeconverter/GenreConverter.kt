@@ -5,8 +5,8 @@ import androidx.room.TypeConverter
 class GenreConverter {
 
     @TypeConverter
-    fun fromString(genreIds: String): List<Long> {
-        return genreIds.split(",").map { it.toLong() }
+    fun fromString(genreIds: String?): List<Long>? {
+        return genreIds?.split(",")?.map { it.toLong() }
     }
 
     @TypeConverter
