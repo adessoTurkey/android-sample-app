@@ -23,5 +23,5 @@
     <color name="text_color">@color/almost_black</color>
     <color name="text_color_60">@color/almost_black_60</color>
     <color name="charcoal_grey">#393a3b</color>
-
+    <color name="cadet_blue_alpha_30">#4CABB4BD</color>
 </resources>
