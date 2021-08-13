@@ -1,9 +1,6 @@
 package com.adesso.movee.uimodel
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import com.adesso.movee.R
 import com.adesso.movee.base.ListAdapterItem
 import java.io.Serializable
@@ -16,13 +13,12 @@ sealed class MultiSearchUiModel : ListAdapterItem, Serializable {
 
     abstract fun getImagePath(): String?
 
-    fun getTypeDrawable(context: Context): Drawable? {
-        val typeDrawableRes = when (this) {
+    fun getTypeDrawable(): Int {
+        return when (this) {
             is MovieMultiSearchUiModel -> R.drawable.ic_movie
             is TvShowMultiSearchUiModel -> R.drawable.ic_tv_show
             is PersonMultiSearchUiModel -> R.drawable.ic_person
         }
-        return ContextCompat.getDrawable(context, typeDrawableRes)
     }
 
     @StringRes

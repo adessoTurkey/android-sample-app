@@ -2,8 +2,8 @@ ext {
 
     compiler = [
             java   : JavaVersion.VERSION_1_8,
-            kotlin : '1.5.10',
-            compose: '1.0.0-beta09'
+            kotlin : '1.5.21',
+            compose: '1.0.1'
     ]
 
     android = [
@@ -89,7 +89,8 @@ ext {
                     "androidx.compose.material:material-icons-extended:$compiler.compose",
                     "androidx.compose.runtime:runtime:$compiler.compose",
                     "androidx.compose.runtime:runtime-livedata:$compiler.compose",
-                    "androidx.compose.runtime:runtime-rxjava2:$compiler.compose"
+                    "androidx.compose.runtime:runtime-rxjava2:$compiler.compose",
+                    "androidx.compose.ui:ui-util:$compiler.compose"
             ],
 
             dagger = [

@@ -80,6 +80,7 @@ fun Login(viewModel: LoginViewModel) {
                     end = dimensionResource(id = R.dimen.margin_xxl)
                 ),
             horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_movee),

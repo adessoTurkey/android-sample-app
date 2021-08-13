@@ -1,6 +1,9 @@
 package com.adesso.movee.scene.search
 
 import android.app.Application
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.adesso.movee.base.BaseAndroidViewModel
@@ -10,23 +13,26 @@ import com.adesso.movee.uimodel.MovieMultiSearchUiModel
 import com.adesso.movee.uimodel.MultiSearchUiModel
 import com.adesso.movee.uimodel.PersonMultiSearchUiModel
 import com.adesso.movee.uimodel.TvShowMultiSearchUiModel
-import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     private val multiSearchUseCase: MultiSearchUseCase,
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val _multiSearchResults = MutableLiveData<List<MultiSearchUiModel>>()
-    private val _shouldShowEmptyResultView = MutableLiveData<Boolean>()
-    val multiSearchResults: LiveData<List<MultiSearchUiModel>> = _multiSearchResults
-    val shouldShowEmptyResultView: LiveData<Boolean> get() = _shouldShowEmptyResultView
+    private val _results: MutableState<List<MultiSearchUiModel>> = mutableStateOf(listOf())
+    val results: State<List<MultiSearchUiModel>> = _results
+    val query = mutableStateOf("")
+    val isResultLoaded = mutableStateOf(false)
     private var multiSearchJob: Job? = null
     val searchDebounce = DURATION_MS_INPUT_TIMEOUT
 
+    init {
+        onTextChange(query.value)
+    }
     fun onTextChange(text: String?) {
         val query = text?.trim() ?: return
         if (query.length > MIN_SEARCHABLE_LENGTH) {
@@ -49,8 +55,8 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun postMultiSearchResult(multiSearchUiModels: List<MultiSearchUiModel>) {
-        _multiSearchResults.value = multiSearchUiModels
-        _shouldShowEmptyResultView.value = multiSearchUiModels.isEmpty()
+        _results.value = multiSearchUiModels
+        isResultLoaded.value = multiSearchUiModels.isEmpty()
     }
 
     fun onMultiSearchClick(multiSearch: MultiSearchUiModel) {
@@ -64,6 +70,11 @@ class SearchViewModel @Inject constructor(
             is PersonMultiSearchUiModel -> SearchFragmentDirections.toPersonDetail(multiSearch.id)
         }
         navigate(direction)
+    }
+
+    fun onQueryChanged(query: String){
+        this.query.value = query
+        
     }
 
     companion object {
