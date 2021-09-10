@@ -1,6 +1,7 @@
 package com.root.security.sample
 
 import android.app.Activity
+import android.os.Bundle
 import com.root.security.AdessoSecurityProvider
 import com.root.security.PublicKeyPinner
 import com.root.security.SocketProvider
@@ -17,8 +18,8 @@ import okhttp3.OkHttpClient
  */
 class SampleUsage : Activity() {
 
-    fun blabla() {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         val playSecurity = AdessoSecurityProvider.getDefaultSecurityProvider(this)
         val trustStore = AdessoSecurityProvider.getTrustStore()
         val socketProvider = AdessoSecurityProvider.getSocketProvider()
