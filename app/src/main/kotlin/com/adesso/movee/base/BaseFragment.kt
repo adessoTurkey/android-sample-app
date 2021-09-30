@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -82,6 +83,7 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
         binder = DataBindingUtil.inflate(inflater, layoutId, container, false)
         binder.lifecycleOwner = viewLifecycleOwner
         binder.setVariable(BR.viewModel, viewModel)
+        ViewTreeLifecycleOwner.set(requireActivity().window.decorView, this)
         initialize()
 
         return binder.root
