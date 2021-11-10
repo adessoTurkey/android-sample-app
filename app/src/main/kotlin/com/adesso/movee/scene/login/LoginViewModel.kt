@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.LoginUseCase
 import com.adesso.movee.internal.util.Event
+import com.adesso.movee.internal.util.event
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -53,7 +54,8 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun postNavigateUri(url: String) {
-        _navigateUri.value = Event(Uri.parse(url))
+        _navigateUri.value = url.event()
+        // _navigateUri.value = Event(Uri.parse(url))
     }
 
     companion object {
