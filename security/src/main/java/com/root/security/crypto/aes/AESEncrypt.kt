@@ -1,6 +1,5 @@
-package com.root.security.crypto
+package com.root.security.crypto.aes
 
-import android.util.Base64
 import java.security.InvalidAlgorithmParameterException
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
@@ -21,19 +20,12 @@ import javax.crypto.spec.IvParameterSpec
  *
  * created on 27.06.2021
  */
-class AESEncrypt(private val input: String) {
-
-    companion object {
-        private const val CRYPTO_ALGORITHM = "AES/CBC/PKCS5Padding"
-        private const val KEY_ALGORITHM = "AES"
-        private const val KEY_LENGTH = 256
-        private const val IV_LENGTH = 16
-    }
+class AESEncrypt(private val input: String, private val config: AesConfig) {
 
     fun encrypt(): ByteArray =
-        encrypt(input = input, key = generateKey(), iv = generateIv())
+        encrypt(input = input, key = getKey(), iv = getIv())
 
-    fun encode(cipherText: ByteArray): String = Base64.encodeToString(cipherText, 0)
+    fun encode(cipherText: ByteArray): String = config.specs.encodingType().encoder.encode(cipherText)
 
     @Throws(
         NoSuchPaddingException::class,
@@ -48,21 +40,28 @@ class AESEncrypt(private val input: String) {
         key: SecretKey,
         iv: IvParameterSpec
     ): ByteArray {
-        val cipher: Cipher = Cipher.getInstance(CRYPTO_ALGORITHM)
+        val cipher: Cipher = Cipher.getInstance(config.specs.algorithmName())
         cipher.init(Cipher.ENCRYPT_MODE, key, iv)
         return cipher.doFinal(input.toByteArray())
     }
 
     @Throws(NoSuchAlgorithmException::class)
-    private fun generateKey(): SecretKey {
-        val keyGenerator = KeyGenerator.getInstance(KEY_ALGORITHM)
-        keyGenerator.init(KEY_LENGTH)
-        return keyGenerator.generateKey()
+    private fun getKey(): SecretKey {
+        val keyGenerator = KeyGenerator.getInstance("AES")
+        keyGenerator.init(config.specs.keyLengthInBytes() * 8)
+        val secret = keyGenerator.generateKey()
+        config.exportKey?.let {
+            it.secretKey = secret.encoded
+        }
+        return secret
     }
 
-    private fun generateIv(): IvParameterSpec {
-        val iv = ByteArray(IV_LENGTH)
+    private fun getIv(): IvParameterSpec {
+        val iv = ByteArray(config.specs.ivLengthInBytes())
         SecureRandom().nextBytes(iv)
+        config.exportKey?.let {
+            it.iv = iv
+        }
         return IvParameterSpec(iv)
     }
 }

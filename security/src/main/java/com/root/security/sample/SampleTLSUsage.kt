@@ -16,7 +16,7 @@ import okhttp3.OkHttpClient
  * Adesso Security Module.
  * created on 21.06.2021
  */
-class SampleUsage : Activity() {
+class SampleTLSUsage : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
