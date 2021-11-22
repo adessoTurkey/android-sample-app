@@ -1,8 +1,8 @@
 package com.root.security
 
-import com.root.security.crypto.aes.ExportKey
-import com.root.security.dsl.aes
-import com.root.security.dsl.aesBytes
+import com.root.security.crypto.aes.AesKeySpecs
+import com.root.security.dsl.aesDecrypt
+import com.root.security.dsl.aesEncrypt
 import org.junit.Assert
 import org.junit.Test
 
@@ -18,27 +18,18 @@ class CryptoModuleTest {
     @Test
     fun test_Aes_256_Cbc_encryption() {
         // Given
-        val expected = "773e90ad7b3f7473fd2349747a1deb61"
         val plainText = "haci"
-
+        val keyData = AesKeySpecs()
         // When
-        val encrypted = aes(plainText)
-
-        // Then
-        Assert.assertEquals(expected, encrypted)
-    }
-
-    @Test
-    fun test_Aes_256_Cbc_exportKeySpecs() {
-        // Given
-        val plainText = "haci"
-
-        // When
-        val exported = ExportKey()
-        val decrypted = aesBytes(plainText) {
-            this.exportKey = exported
+        val cipherText = aesEncrypt(plainText) {
+            this.exportKey = keyData
         }
+
+        val decrypted = aesDecrypt(cipherText) {
+            this.importKey = keyData
+        }
+
         // Then
-//        Assert.assertEquals(expected, encrypted)
+        Assert.assertEquals(plainText, decrypted)
     }
 }

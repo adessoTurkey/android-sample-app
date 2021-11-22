@@ -7,7 +7,7 @@ package com.root.security.crypto.aes
  * Adesso Security Module.
  * created on 21.11.2021
  */
-class ImportKey(
+class AesKeySpecs(
     var secretKey: ByteArray? = null,
     var iv: ByteArray? = null,
     var authTag: ByteArray? = null

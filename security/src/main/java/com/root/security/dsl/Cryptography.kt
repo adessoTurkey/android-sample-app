@@ -9,22 +9,33 @@ import com.root.security.crypto.aes.AesConfig
  * @since 0.0.1
  * Adesso Security Module.
  *
- * val abc = aes("haci")
- * val bytes = aesBytes("haci")
- * val asd = aes("haci") { specs = AesAlgorithmSpecs, secretKey = bytes, iv = bytes }
- * val asd = aes("haci") { specs = AesAlgorithmSpecs, secretKey = bytes, iv = bytes }
+ * val abc = aesEncrypt("haci")
+ * val bytes = aesEncrypt("haci")
+ * val asd = aesEncrypt("haci") { specs = AesAlgorithmSpecs, secretKey = bytes, iv = bytes }
+ * val asd = aesEncrypt("haci") { specs = AesAlgorithmSpecs, secretKey = bytes, iv = bytes }
  *
  * created on 27.06.2021
  */
-
-inline fun aes(input: String, block: AesConfig.() -> Unit = {}): String {
-    val config = AesConfig()
+inline fun aesEncrypt(plainText: String, block: AesConfig.() -> Unit = {}): String {
+    val config = AesConfig(operation = AesConfig.OpMode.ENCRYPT)
     block(config)
-    return AESEncrypt(input, config).run { encode(encrypt()) }
+    return AESEncrypt(plainText, config).run { encode(transaction()) }
 }
 
-inline fun aesBytes(input: String, block: AesConfig.() -> Unit = {}): ByteArray {
-    val config = AesConfig()
+inline fun aesEncryptBytes(plainText: String, block: AesConfig.() -> Unit = {}): ByteArray {
+    val config = AesConfig(operation = AesConfig.OpMode.ENCRYPT)
     block(config)
-    return AESEncrypt(input, config).encrypt()
+    return AESEncrypt(plainText, config).transaction()
+}
+
+inline fun aesDecrypt(cipherText: String, block: AesConfig.() -> Unit = {}): String {
+    val config = AesConfig(operation = AesConfig.OpMode.DECRYPT)
+    block(config)
+    return AESEncrypt(cipherText, config).run { String(transaction(), Charsets.UTF_8) }
+}
+
+inline fun aesDecryptBytes(cipherText: String, block: AesConfig.() -> Unit = {}): ByteArray {
+    val config = AesConfig(operation = AesConfig.OpMode.DECRYPT)
+    block(config)
+    return AESEncrypt(cipherText, config).run { transaction() }
 }

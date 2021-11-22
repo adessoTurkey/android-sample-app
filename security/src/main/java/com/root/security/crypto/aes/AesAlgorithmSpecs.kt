@@ -33,6 +33,6 @@ interface AesAlgorithmSpecs {
 
         override fun authTagLengthInBytes(): Int = 16
 
-        override fun encodingType(): EncodingType = EncodingType.HEX
+        override fun encodingType(): EncodingType = EncodingType.BASE64
     }
 }

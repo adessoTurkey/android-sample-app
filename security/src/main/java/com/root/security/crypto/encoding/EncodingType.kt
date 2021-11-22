@@ -7,5 +7,5 @@ import com.root.security.crypto.encoding.hex.HexEncoder
 
 enum class EncodingType(val encoder: Encoder, val decoder: Decoder) {
     HEX(HexEncoder(), HexDecoder()),
-    Base64(Base64Encoder(), Base64Decoder()),
+    BASE64(Base64Encoder(), Base64Decoder()),
 }

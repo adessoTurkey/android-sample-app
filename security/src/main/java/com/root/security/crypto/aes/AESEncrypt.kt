@@ -9,8 +9,8 @@ import javax.crypto.Cipher
 import javax.crypto.IllegalBlockSizeException
 import javax.crypto.KeyGenerator
 import javax.crypto.NoSuchPaddingException
-import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
 /**
  * @author haci
@@ -22,10 +22,15 @@ import javax.crypto.spec.IvParameterSpec
  */
 class AESEncrypt(private val input: String, private val config: AesConfig) {
 
-    fun encrypt(): ByteArray =
-        encrypt(input = input, key = getKey(), iv = getIv())
+    companion object {
+        private const val KEY_ALGORITHM = "AES"
+    }
 
-    fun encode(cipherText: ByteArray): String = config.specs.encodingType().encoder.encode(cipherText)
+    fun encode(cipherText: ByteArray): String =
+        config.specs.encodingType().encoder.encode(cipherText)
+
+    fun decode(cipherText: String): ByteArray =
+        config.specs.encodingType().decoder.decode(cipherText)
 
     @Throws(
         NoSuchPaddingException::class,
@@ -35,33 +40,44 @@ class AESEncrypt(private val input: String, private val config: AesConfig) {
         BadPaddingException::class,
         IllegalBlockSizeException::class
     )
-    private fun encrypt(
-        input: String,
-        key: SecretKey,
-        iv: IvParameterSpec
-    ): ByteArray {
-        val cipher: Cipher = Cipher.getInstance(config.specs.algorithmName())
-        cipher.init(Cipher.ENCRYPT_MODE, key, iv)
-        return cipher.doFinal(input.toByteArray())
-    }
-
-    @Throws(NoSuchAlgorithmException::class)
-    private fun getKey(): SecretKey {
-        val keyGenerator = KeyGenerator.getInstance("AES")
-        keyGenerator.init(config.specs.keyLengthInBytes() * 8)
-        val secret = keyGenerator.generateKey()
-        config.exportKey?.let {
-            it.secretKey = secret.encoded
+    fun transaction(): ByteArray {
+        var secret: ByteArray? = config.importKey?.secretKey
+        var iv: ByteArray? = config.importKey?.iv
+        if (config.importKey == null) {
+            secret = getKey()
+            iv = getIv()
         }
-        return secret
-    }
-
-    private fun getIv(): IvParameterSpec {
-        val iv = ByteArray(config.specs.ivLengthInBytes())
-        SecureRandom().nextBytes(iv)
+        config.exportKey?.let {
+            it.secretKey = secret
+        }
         config.exportKey?.let {
             it.iv = iv
         }
-        return IvParameterSpec(iv)
+        val cipher: Cipher = Cipher.getInstance(config.specs.algorithmName())
+        cipher.init(
+            config.operation.mode,
+            SecretKeySpec(secret, KEY_ALGORITHM),
+            IvParameterSpec(iv)
+        )
+        val plainBytes = if (config.operation == AesConfig.OpMode.DECRYPT) {
+            decode(input)
+        } else {
+            input.toByteArray()
+        }
+        return cipher.doFinal(plainBytes)
+    }
+
+    @Throws(NoSuchAlgorithmException::class)
+    private fun getKey(): ByteArray {
+        val keyGenerator = KeyGenerator.getInstance(KEY_ALGORITHM)
+        keyGenerator.init(config.specs.keyLengthInBytes() * 8)
+        val secret = keyGenerator.generateKey()
+        return secret.encoded
+    }
+
+    private fun getIv(): ByteArray {
+        val iv = ByteArray(config.specs.ivLengthInBytes())
+        SecureRandom().nextBytes(iv)
+        return iv
     }
 }
