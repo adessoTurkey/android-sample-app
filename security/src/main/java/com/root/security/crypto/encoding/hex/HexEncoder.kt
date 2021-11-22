@@ -1,4 +1,4 @@
-package com.root.security.crypto.encoding.hex;
+package com.root.security.crypto.encoding.hex
 
 import com.root.security.crypto.encoding.Encoder
 
@@ -14,5 +14,4 @@ class HexEncoder : Encoder {
     override fun encode(plainText: ByteArray): String = plainText.joinToString("") {
         java.lang.String.format("%02x", it)
     }
-
 }

@@ -1,4 +1,4 @@
-package com.root.security.crypto.encoding.hex;
+package com.root.security.crypto.encoding.hex
 
 import com.root.security.crypto.encoding.Decoder
 

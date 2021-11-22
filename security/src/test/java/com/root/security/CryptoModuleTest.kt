@@ -1,4 +1,4 @@
-package com.root.security;
+package com.root.security
 
 import com.root.security.crypto.aes.ExportKey
 import com.root.security.dsl.aes

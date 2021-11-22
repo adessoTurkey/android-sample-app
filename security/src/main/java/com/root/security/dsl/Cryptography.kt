@@ -17,13 +17,13 @@ import com.root.security.crypto.aes.AesConfig
  * created on 27.06.2021
  */
 
-inline fun aes(input:String, block: AesConfig.() -> Unit = {}): String {
+inline fun aes(input: String, block: AesConfig.() -> Unit = {}): String {
     val config = AesConfig()
     block(config)
     return AESEncrypt(input, config).run { encode(encrypt()) }
 }
 
-inline fun aesBytes(input:String, block: AesConfig.() -> Unit = {}): ByteArray {
+inline fun aesBytes(input: String, block: AesConfig.() -> Unit = {}): ByteArray {
     val config = AesConfig()
     block(config)
     return AESEncrypt(input, config).encrypt()

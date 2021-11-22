@@ -1,4 +1,4 @@
-package com.root.security.crypto.encoding.base64;
+package com.root.security.crypto.encoding.base64
 
 import android.util.Base64
 import com.root.security.crypto.encoding.Decoder
