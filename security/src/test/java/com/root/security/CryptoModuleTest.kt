@@ -1,8 +1,13 @@
 package com.root.security
 
+import android.os.Build.VERSION
+import com.root.security.crypto.aes.AesAlgorithmSpecs
 import com.root.security.crypto.aes.AesKeySpecs
 import com.root.security.dsl.aesDecrypt
 import com.root.security.dsl.aesEncrypt
+import java.lang.Exception
+import java.lang.reflect.Field
+import java.lang.reflect.Modifier
 import org.junit.Assert
 import org.junit.Test
 
@@ -15,18 +20,45 @@ import org.junit.Test
  */
 class CryptoModuleTest {
 
+    @Throws(Exception::class)
+    fun setFinalStatic(field: Field, newValue: Any?) {
+        field.isAccessible = true
+        val modifiersField: Field = Field::class.java.getDeclaredField("modifiers")
+        modifiersField.isAccessible = true
+        modifiersField.setInt(field, field.modifiers and Modifier.FINAL.inv())
+        field.set(null, newValue)
+    }
+
     @Test
     fun test_Aes_256_Cbc_encryption() {
         // Given
         val plainText = "haci"
         val keyData = AesKeySpecs()
         // When
+        val cipherText = aesEncrypt(plainText) { exportKey = keyData }
+
+        val decrypted = aesDecrypt(cipherText) { importKey = keyData }
+
+        // Then
+        Assert.assertEquals(plainText, decrypted)
+    }
+
+    @Test
+    fun test_Aes_256_Gcm_encryption() {
+        // Given
+        val plainText = "haciİŞ^^!%"
+        val keyData = AesKeySpecs()
+        setFinalStatic(VERSION::class.java.getField("SDK_INT"), 19)
+
+        // When
         val cipherText = aesEncrypt(plainText) {
-            this.exportKey = keyData
+            specs = AesAlgorithmSpecs.GcmSpecs()
+            exportKey = keyData
         }
 
         val decrypted = aesDecrypt(cipherText) {
-            this.importKey = keyData
+            specs = AesAlgorithmSpecs.GcmSpecs()
+            importKey = keyData
         }
 
         // Then

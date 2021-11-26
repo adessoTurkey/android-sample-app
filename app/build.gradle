@@ -103,8 +103,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':security')
 
-    implementation kotlinn
     implementation androidx
     implementation common
     implementation network

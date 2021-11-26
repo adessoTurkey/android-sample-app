@@ -8,7 +8,7 @@ package com.root.security.crypto.aes
  * created on 21.11.2021
  */
 class AesKeySpecs(
-    var secretKey: ByteArray? = null,
-    var iv: ByteArray? = null,
-    var authTag: ByteArray? = null
+    var secretKey: String? = null,
+    var iv: String? = null,
+    var aad: String? = null
 )
