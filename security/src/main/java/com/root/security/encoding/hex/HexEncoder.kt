@@ -3,7 +3,7 @@ package com.root.security.encoding.hex
 import com.root.security.encoding.Encoder
 
 /**
- * @author kanal
+ * @author haci
  * @version 0.0.1
  * @since 0.0.1
  * Adesso Security Module.

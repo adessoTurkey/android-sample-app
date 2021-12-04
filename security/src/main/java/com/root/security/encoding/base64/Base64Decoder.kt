@@ -4,7 +4,7 @@ import android.util.Base64
 import com.root.security.encoding.Decoder
 
 /**
- * @author kanal
+ * @author haci
  * @version 0.0.1
  * @since 0.0.1
  * Adesso Security Module.

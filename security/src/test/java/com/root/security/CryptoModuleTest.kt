@@ -12,7 +12,7 @@ import org.junit.Assert
 import org.junit.Test
 
 /**
- * @author kanal
+ * @author haci
  * @version 0.0.1
  * @since 0.0.1
  * Adesso Security Module.
@@ -38,6 +38,29 @@ class CryptoModuleTest {
         val cipherText = aesEncrypt(plainText) { exportKey = keyData }
 
         val decrypted = aesDecrypt(cipherText) { importKey = keyData }
+
+        // Then
+        Assert.assertEquals(plainText, decrypted)
+    }
+
+    @Test
+    fun test_Aes_256_Cbc_with_custom_key_encryption() {
+        // Given
+        val plainText = "haci"
+        val keyData = AesKeySpecs()
+        keyData.secretKey = "6D5A7134743777217A25432A462D4A614E645267556B58703272357538782F41"
+        keyData.iv = "6D5A71346D5A71346D5A71346D5A7134"
+        keyData.aad = "6D5A71346D5A71346D5A7134"
+        // When
+        val cipherText = aesEncrypt(plainText) {
+            specs = AesAlgorithmSpecs.GcmSpecs()
+            importKey = keyData
+        }
+
+        val decrypted = aesDecrypt(cipherText) {
+            specs = AesAlgorithmSpecs.GcmSpecs()
+            importKey = keyData
+        }
 
         // Then
         Assert.assertEquals(plainText, decrypted)

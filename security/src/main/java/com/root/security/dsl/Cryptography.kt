@@ -11,8 +11,9 @@ import com.root.security.crypto.aes.AesEncrypt
  * Adesso Security Module.
  *
  * val abc = aesEncrypt("haci")
- * val bytes = aesEncrypt("haci")
- * val asd = aesEncrypt("haci") { specs = AesAlgorithmSpecs}
+ * val bytes = aesEncryptBytes("haci")
+ * val asd = aesEncrypt("haci") { specs = AesAlgorithmSpecs.GcmSpecs()}
+ * val asd = aesEncrypt("haci") { specs = AesAlgorithmSpecs.CbcSpecs()}
  *
  * val keyData = KeyData()
  * val asd = aesEncrypt("haci") { exportKey = keyData }

@@ -60,7 +60,6 @@ class AesEncrypt(private val input: String, private val config: AesConfig) {
     private fun createCipher(secret: ByteArray?, iv: ByteArray?, aad: ByteArray?): Cipher {
         val cipher: Cipher = Cipher.getInstance(config.specs.algorithmName())
         if (config.specs is AesAlgorithmSpecs.GcmSpecs) {
-            aad?.let { cipher.updateAAD(it) }
             cipher.init(
                 Cipher.ENCRYPT_MODE,
                 SecretKeySpec(secret, KEY_ALGORITHM),
@@ -69,6 +68,7 @@ class AesEncrypt(private val input: String, private val config: AesConfig) {
                     iv
                 )
             )
+            aad?.let { cipher.updateAAD(it) }
         } else {
             cipher.init(
                 Cipher.ENCRYPT_MODE,

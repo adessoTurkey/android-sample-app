@@ -6,7 +6,7 @@ import org.junit.Assert
 import org.junit.Test
 
 /**
- * @author kanal
+ * @author haci
  * @version 0.0.1
  * @since 0.0.1
  * Adesso Security Module.
