@@ -12,8 +12,11 @@ import com.root.security.crypto.aes.AesEncrypt
  *
  * val abc = aesEncrypt("haci")
  * val bytes = aesEncrypt("haci")
- * val asd = aesEncrypt("haci") { specs = AesAlgorithmSpecs, secretKey = bytes, iv = bytes }
- * val asd = aesEncrypt("haci") { specs = AesAlgorithmSpecs, secretKey = bytes, iv = bytes }
+ * val asd = aesEncrypt("haci") { specs = AesAlgorithmSpecs}
+ *
+ * val keyData = KeyData()
+ * val asd = aesEncrypt("haci") { exportKey = keyData }
+ * val asd = aesDecrypt("haci") { importKey = keyData }
  *
  * created on 27.06.2021
  */
