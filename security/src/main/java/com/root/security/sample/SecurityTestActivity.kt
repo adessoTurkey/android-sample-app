@@ -6,6 +6,7 @@ import com.root.security.ssl.AdessoSecurityProvider
 import com.root.security.ssl.PublicKeyPinner
 import com.root.security.ssl.SocketProvider
 import com.root.security.ssl.TrustStore
+import com.root.security.storage.SecureStorage
 import com.root.security.utility.CertificateUtility
 import okhttp3.OkHttpClient
 
@@ -16,7 +17,7 @@ import okhttp3.OkHttpClient
  * Adesso Security Module.
  * created on 21.06.2021
  */
-class SampleTLSUsage : Activity() {
+class SecurityTestActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +26,11 @@ class SampleTLSUsage : Activity() {
         val socketProvider = AdessoSecurityProvider.getSocketProvider()
         val publicKeyPinner = AdessoSecurityProvider.getOkHttpPublicKeyPinner()
 
-        playSecurity.update()
+        playSecurity.update() // This requires google play service dependency
         okHttpCertificatePinning(trustStore, socketProvider)
         okHttpPublicKeyPinning(publicKeyPinner)
+
+        SecureStorage("haci", this).putString("key", "value").apply()
     }
 
     private fun okHttpPublicKeyPinning(publicKeyPinner: PublicKeyPinner) {

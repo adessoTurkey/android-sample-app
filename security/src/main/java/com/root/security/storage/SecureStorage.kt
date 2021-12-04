@@ -15,7 +15,7 @@ import androidx.security.crypto.MasterKey
 class SecureStorage(private val fileName: String, private val appContext: Context) {
 
     /**
-     * Apply or commit should be calledd
+     * Apply or commit should be called
      */
     fun putString(key: String, value: String): SharedPreferences.Editor {
         val sharedPreferences = EncryptedSharedPreferences.create(
@@ -29,6 +29,17 @@ class SecureStorage(private val fileName: String, private val appContext: Contex
             putString(key, value)
             return this
         }
+    }
+
+    fun getString(key: String): String {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            appContext,
+            fileName,
+            getOrCreateMasterKey(),
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getString(key, "").toString()
     }
 
     private fun getOrCreateMasterKey(): MasterKey = MasterKey.Builder(appContext)
