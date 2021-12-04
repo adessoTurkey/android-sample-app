@@ -1,4 +1,4 @@
-package com.root.security
+package com.root.security.ssl
 
 import java.security.cert.Certificate
 import okhttp3.CertificatePinner

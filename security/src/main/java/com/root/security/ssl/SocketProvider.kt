@@ -1,4 +1,4 @@
-package com.root.security
+package com.root.security.ssl
 
 import android.os.Build
 import javax.net.ssl.SSLSocketFactory

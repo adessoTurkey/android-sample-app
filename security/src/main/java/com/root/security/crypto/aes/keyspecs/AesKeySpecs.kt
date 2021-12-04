@@ -1,4 +1,4 @@
-package com.root.security.crypto.aes
+package com.root.security.crypto.aes.keyspecs
 
 /**
  * @author kanal

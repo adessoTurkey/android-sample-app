@@ -1,4 +1,4 @@
-package com.root.security.crypto.encoding
+package com.root.security.encoding
 
 interface Decoder {
     fun decode(encoded: String): ByteArray

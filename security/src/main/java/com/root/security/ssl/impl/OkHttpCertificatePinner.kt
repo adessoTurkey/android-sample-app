@@ -1,6 +1,6 @@
-package com.root.security.impl
+package com.root.security.ssl.impl
 
-import com.root.security.CertPinner
+import com.root.security.ssl.CertPinner
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
 import okhttp3.OkHttpClient

@@ -1,11 +1,11 @@
-package com.root.security.impl
+package com.root.security.ssl.impl
 
 import android.content.Context
 import android.content.Intent
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
-import com.root.security.SecurityProvider
+import com.root.security.ssl.SecurityProvider
 
 /**
  * @author haci

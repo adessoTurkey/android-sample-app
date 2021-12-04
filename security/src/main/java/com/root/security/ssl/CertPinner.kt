@@ -1,4 +1,4 @@
-package com.root.security
+package com.root.security.ssl
 
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager

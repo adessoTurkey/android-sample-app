@@ -1,7 +1,7 @@
-package com.root.security.impl
+package com.root.security.ssl.impl
 
 import android.util.Base64
-import com.root.security.PublicKeyPinner
+import com.root.security.ssl.PublicKeyPinner
 import java.security.MessageDigest
 import java.security.cert.Certificate
 import okhttp3.CertificatePinner

@@ -1,7 +1,8 @@
 package com.root.security.dsl
 
-import com.root.security.crypto.aes.AESEncrypt
 import com.root.security.crypto.aes.AesConfig
+import com.root.security.crypto.aes.AesDecrypt
+import com.root.security.crypto.aes.AesEncrypt
 
 /**
  * @author haci
@@ -17,25 +18,25 @@ import com.root.security.crypto.aes.AesConfig
  * created on 27.06.2021
  */
 inline fun aesEncrypt(plainText: String, block: AesConfig.() -> Unit = {}): String {
-    val config = AesConfig(operation = AesConfig.OpMode.ENCRYPT)
+    val config = AesConfig()
     block(config)
-    return AESEncrypt(plainText, config).run { encode(transaction()) }
+    return AesEncrypt(plainText, config).run { encode(transaction()) }
 }
 
 inline fun aesEncryptBytes(plainText: String, block: AesConfig.() -> Unit = {}): ByteArray {
-    val config = AesConfig(operation = AesConfig.OpMode.ENCRYPT)
+    val config = AesConfig()
     block(config)
-    return AESEncrypt(plainText, config).transaction()
+    return AesEncrypt(plainText, config).transaction()
 }
 
 inline fun aesDecrypt(cipherText: String, block: AesConfig.() -> Unit = {}): String {
-    val config = AesConfig(operation = AesConfig.OpMode.DECRYPT)
+    val config = AesConfig()
     block(config)
-    return AESEncrypt(cipherText, config).run { String(transaction(), Charsets.UTF_8) }
+    return AesDecrypt(cipherText, config).run { encode(transaction()) }
 }
 
 inline fun aesDecryptBytes(cipherText: String, block: AesConfig.() -> Unit = {}): ByteArray {
-    val config = AesConfig(operation = AesConfig.OpMode.DECRYPT)
+    val config = AesConfig()
     block(config)
-    return AESEncrypt(cipherText, config).run { transaction() }
+    return AesDecrypt(cipherText, config).run { transaction() }
 }

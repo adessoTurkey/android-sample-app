@@ -2,7 +2,7 @@ package com.root.security.crypto.aes
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.root.security.crypto.encoding.EncodingType
+import com.root.security.encoding.EncodingType
 
 interface AesAlgorithmSpecs {
 

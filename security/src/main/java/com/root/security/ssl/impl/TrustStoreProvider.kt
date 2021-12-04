@@ -1,6 +1,6 @@
-package com.root.security.impl
+package com.root.security.ssl.impl
 
-import com.root.security.TrustStore
+import com.root.security.ssl.TrustStore
 import java.security.KeyStore
 import java.security.cert.Certificate
 import javax.net.ssl.TrustManagerFactory

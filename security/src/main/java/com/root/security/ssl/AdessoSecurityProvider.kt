@@ -1,11 +1,11 @@
-package com.root.security
+package com.root.security.ssl
 
 import android.content.Context
-import com.root.security.impl.OkHttpCertificatePinner
-import com.root.security.impl.OkHttpPublicKeyPinner
-import com.root.security.impl.PlaySecurityProvider
-import com.root.security.impl.SocketFactoryProvider
-import com.root.security.impl.TrustStoreProvider
+import com.root.security.ssl.impl.OkHttpCertificatePinner
+import com.root.security.ssl.impl.OkHttpPublicKeyPinner
+import com.root.security.ssl.impl.PlaySecurityProvider
+import com.root.security.ssl.impl.SocketFactoryProvider
+import com.root.security.ssl.impl.TrustStoreProvider
 
 /**
  * @author haci

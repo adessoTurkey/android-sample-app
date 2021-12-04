@@ -1,7 +1,7 @@
 package com.root.security
 
-import com.root.security.crypto.encoding.hex.HexDecoder
-import com.root.security.crypto.encoding.hex.HexEncoder
+import com.root.security.encoding.hex.HexDecoder
+import com.root.security.encoding.hex.HexEncoder
 import org.junit.Assert
 import org.junit.Test
 

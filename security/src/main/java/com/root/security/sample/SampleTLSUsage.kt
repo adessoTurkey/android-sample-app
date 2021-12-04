@@ -2,10 +2,10 @@ package com.root.security.sample
 
 import android.app.Activity
 import android.os.Bundle
-import com.root.security.AdessoSecurityProvider
-import com.root.security.PublicKeyPinner
-import com.root.security.SocketProvider
-import com.root.security.TrustStore
+import com.root.security.ssl.AdessoSecurityProvider
+import com.root.security.ssl.PublicKeyPinner
+import com.root.security.ssl.SocketProvider
+import com.root.security.ssl.TrustStore
 import com.root.security.utility.CertificateUtility
 import okhttp3.OkHttpClient
 

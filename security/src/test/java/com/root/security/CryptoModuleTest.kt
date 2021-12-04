@@ -2,7 +2,7 @@ package com.root.security
 
 import android.os.Build.VERSION
 import com.root.security.crypto.aes.AesAlgorithmSpecs
-import com.root.security.crypto.aes.AesKeySpecs
+import com.root.security.crypto.aes.keyspecs.AesKeySpecs
 import com.root.security.dsl.aesDecrypt
 import com.root.security.dsl.aesEncrypt
 import java.lang.Exception

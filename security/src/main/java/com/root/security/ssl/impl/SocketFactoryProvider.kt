@@ -1,9 +1,7 @@
-package com.root.security.impl
+package com.root.security.ssl.impl
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.root.security.SocketProvider
-import com.root.security.impl.socket.TLSSocketFactory
+import com.root.security.ssl.SocketProvider
+import com.root.security.ssl.impl.socket.TLSSocketFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 
@@ -31,7 +29,6 @@ internal class SocketFactoryProvider private constructor() : SocketProvider {
         sslContext.init(null, null, null)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     override fun getFactory(): SSLSocketFactory = sslContext.socketFactory
 
     override fun getFactoryCompat(): SSLSocketFactory = TLSSocketFactory.withSSlContext(sslContext)

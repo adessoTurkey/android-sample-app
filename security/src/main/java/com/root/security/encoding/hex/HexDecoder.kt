@@ -1,6 +1,6 @@
-package com.root.security.crypto.encoding.hex
+package com.root.security.encoding.hex
 
-import com.root.security.crypto.encoding.Decoder
+import com.root.security.encoding.Decoder
 
 /**
  * @author kanal
