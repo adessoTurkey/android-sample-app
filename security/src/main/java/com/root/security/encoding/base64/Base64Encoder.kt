@@ -11,5 +11,6 @@ import com.root.security.encoding.Encoder
  * created on 21.11.2021
  */
 class Base64Encoder : Encoder {
-    override fun encode(plainText: ByteArray): String = Base64.encodeToString(plainText, 0)
+    override fun encode(plainText: ByteArray): String =
+        Base64.encodeToString(plainText, Base64.DEFAULT)
 }

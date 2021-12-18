@@ -11,5 +11,5 @@ import com.root.security.encoding.Decoder
  * created on 21.11.2021
  */
 class Base64Decoder : Decoder {
-    override fun decode(encoded: String): ByteArray = Base64.decode(encoded, 0)
+    override fun decode(encoded: String): ByteArray = Base64.decode(encoded, Base64.DEFAULT)
 }

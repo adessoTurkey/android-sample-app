@@ -27,7 +27,10 @@ class SecurityTestActivity : Activity() {
         val publicKeyPinner = AdessoSecurityProvider.getOkHttpPublicKeyPinner()
 
         playSecurity.update() // This requires google play service dependency
-        okHttpCertificatePinning(trustStore, socketProvider)
+        okHttpCertificatePinning(
+            OkHttpClient.Builder(),
+            trustStore, socketProvider
+        ) // your app's okhttp client builder
         okHttpPublicKeyPinning(publicKeyPinner)
 
         SecureStorage("haci", this).putString("key", "value").apply()
@@ -45,7 +48,11 @@ class SecurityTestActivity : Activity() {
             .pin()
     }
 
-    private fun okHttpCertificatePinning(trustStore: TrustStore, socketProvider: SocketProvider) {
+    private fun okHttpCertificatePinning(
+        builder: OkHttpClient.Builder,
+        trustStore: TrustStore,
+        socketProvider: SocketProvider
+    ) {
         trustStore.trust(
             "alias",
             CertificateUtility.fromFile(
@@ -54,7 +61,6 @@ class SecurityTestActivity : Activity() {
                 CertificateUtility.Extension.DER
             )
         )
-        val builder = OkHttpClient.Builder()
         AdessoSecurityProvider
             .getOkHttpCertPinner()
             .pin(builder, socketProvider.getFactory(), trustStore.getTrustManagers()[0])
