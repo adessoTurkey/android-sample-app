@@ -3,8 +3,14 @@ package com.root.security.dsl
 import com.root.security.crypto.aes.AesConfig
 import com.root.security.crypto.aes.AesDecrypt
 import com.root.security.crypto.aes.AesEncrypt
+import com.root.security.crypto.asymmetric.AsymmetricKeyGenerator
+import com.root.security.crypto.asymmetric.KeyAlgorithm
+import com.root.security.crypto.dsa.DigitalSignature
 import com.root.security.crypto.hash.SecureHash
 import com.root.security.encoding.EncodingType
+import java.security.KeyPair
+import java.security.PrivateKey
+import java.security.PublicKey
 
 /**
  * @author haci
@@ -69,4 +75,24 @@ inline fun sha(
         encodingType ?: EncodingType.BASE64
     )
     return sha.digest(block())
+}
+
+inline fun rsaSign(value: String, block: (KeyPair, String) -> Unit) {
+    val keyPair = AsymmetricKeyGenerator(KeyAlgorithm.RSA).keyPair
+    val signature = DigitalSignature(KeyAlgorithm.RSA, EncodingType.HEX)
+    val signedValue = signature.sign(value.toByteArray(), keyPair!!.private)
+    block(keyPair, signature.encode(signedValue))
+}
+
+inline fun rsaSign(value: String, privateKey: PrivateKey, block: (String) -> Unit) {
+    val signature = DigitalSignature(KeyAlgorithm.RSA, EncodingType.HEX)
+    val signedValue = signature.sign(value.toByteArray(), privateKey)
+    block(signature.encode(signedValue))
+}
+
+fun rsaVerify(value: String, signedValue: String, publicKey: PublicKey): Boolean {
+    val signature = DigitalSignature(KeyAlgorithm.RSA, EncodingType.HEX)
+    return with(signature) {
+        verify(value.toByteArray(), decode(signedValue), publicKey)
+    }
 }
