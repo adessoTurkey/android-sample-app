@@ -36,6 +36,11 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.root.security.sample.SecurityTestActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
