@@ -1,9 +1,9 @@
 apply plugin: "io.gitlab.arturbosch.detekt"
 
 detekt {
-    failFast = true
     parallel = true
     buildUponDefaultConfig = true
+    allRules = false
     config = files("$rootDir/config/.detekt.yml")
 
     reports {
@@ -11,4 +11,8 @@ detekt {
         xml.enabled = true
         txt.enabled = true
     }
+}
+
+dependencies {
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
 }
