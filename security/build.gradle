@@ -7,13 +7,16 @@ apply from: "$rootDir/config/detekt.gradle"
 apply from: "$rootDir/config/ktlint.gradle"
 apply from: "$rootDir/config/spotless.gradle"
 
+
+def ext = rootProject.extensions.ext
+
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+
+    compileSdkVersion ext.android.compileSdk
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion ext.android.minSdk
+        targetSdkVersion ext.android.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -28,28 +31,26 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility ext.compiler.java
+        targetCompatibility ext.compiler.java
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = ext.compiler.java
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.google.android.gms:play-services-basement:17.6.0'
-    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    def versions = rootProject.extensions.ext.version
 
-    api 'com.squareup.okhttp3:okhttp:3.12.12'
+    implementation "androidx.core:core-ktx:$versions.androidKtx"
+    implementation "androidx.appcompat:appcompat:$versions.appCompat"
+    implementation "com.google.android.gms:play-services-basement:$versions.playServices"
+    implementation "androidx.security:security-crypto:$versions.crypto"
 
-    testImplementation 'junit:junit:4.+'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
-    testImplementation 'org.mockito:mockito-inline:4.0.0'
-    testImplementation 'org.robolectric:robolectric:4.7.3'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    api "com.squareup.okhttp3:okhttp:$versions.okhttp"
+    testImplementation "junit:junit:$versions.junit"
+    testImplementation "org.robolectric:robolectric:$versions.robolectric"
+    androidTestImplementation "androidx.test.ext:junit:$versions.junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
 }

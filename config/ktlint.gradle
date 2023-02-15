@@ -1,5 +1,5 @@
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 configurations {
@@ -7,7 +7,9 @@ configurations {
 }
 
 dependencies {
-    ktlint "com.pinterest:ktlint:0.39.0"
+    def versions = rootProject.extensions.ext.version
+
+    ktlint "com.pinterest:ktlint:$versions.ktlint"
 }
 
 task ktlint(type: JavaExec, group: "verification") {

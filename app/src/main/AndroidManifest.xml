@@ -4,7 +4,8 @@
     package="com.adesso.movee">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".application.MainApplication"
@@ -20,7 +21,8 @@
             android:name=".scene.splash.SplashActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Splash">
+            android:theme="@style/AppTheme.Splash"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
