@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     name: Run unit tests & static analysis checks
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -26,7 +26,7 @@ jobs:
 
   buildAndDeployAPK:
     name: Build signed APK and deploy to AppCenter
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -49,7 +49,7 @@ jobs:
         run: |
           bash ./gradlew assembleDevRelease
           mv $(ls app/build/outputs/apk/dev/release/*.apk) app-release.apk
-  # TODO update above when AppCenter-Github-Action supports ant style glob pattern
+      # TODO update above when AppCenter-Github-Action supports ant style glob pattern
 
       - name: Upload APK to AppCenter
         uses: wzieba/AppCenter-Github-Action@v1.0.0

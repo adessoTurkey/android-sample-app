@@ -17,8 +17,10 @@ import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.uimodel.MovieUiModel
 import com.adesso.movee.uimodel.ShowHeaderUiModel
 import com.adesso.movee.uimodel.ShowUiModel
-import javax.inject.Inject
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MovieViewModel @Inject constructor(
     private val fetchPopularMoviesUseCase: FetchPopularMoviesUseCase,
@@ -53,7 +55,9 @@ class MovieViewModel @Inject constructor(
             val nowPlayingMoviesResult = fetchNowPlayingMoviesUseCase.run(UseCase.None)
 
             onUIThread {
-                nowPlayingMoviesResult.either(::handleFailure, ::postNowPlayingMovieList)
+                nowPlayingMoviesResult
+                    .onSuccess(::postNowPlayingMovieList)
+                    .onFailure(::handleFailure)
             }
         }
     }
@@ -67,7 +71,9 @@ class MovieViewModel @Inject constructor(
             val popularMoviesResult = fetchPopularMoviesUseCase.run(UseCase.None)
 
             onUIThread {
-                popularMoviesResult.either(::handleFailure, ::postPopularMovieList)
+                popularMoviesResult
+                    .onSuccess(::postPopularMovieList)
+                    .onFailure(::handleFailure)
             }
         }
     }

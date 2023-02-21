@@ -8,8 +8,10 @@ import com.adesso.movee.domain.FetchMovieCreditsUseCase
 import com.adesso.movee.domain.FetchMovieDetailUseCase
 import com.adesso.movee.uimodel.MovieCreditUiModel
 import com.adesso.movee.uimodel.MovieDetailUiModel
-import javax.inject.Inject
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(
     private val fetchMovieDetailUseCase: FetchMovieDetailUseCase,
@@ -29,7 +31,9 @@ class MovieDetailViewModel @Inject constructor(
                     fetchMovieDetailUseCase.run(FetchMovieDetailUseCase.Params(id))
 
                 onUIThread {
-                    movieDetailResult.either(::handleFailure, ::postMovieDetail)
+                    movieDetailResult
+                        .onSuccess(::postMovieDetail)
+                        .onFailure(::handleFailure)
                 }
             }
         }
@@ -46,7 +50,9 @@ class MovieDetailViewModel @Inject constructor(
                     fetchMovieCreditsUseCase.run(FetchMovieCreditsUseCase.Params(id))
 
                 onUIThread {
-                    movieCreditsResult.either(::handleFailure, ::postMovieCredits)
+                    movieCreditsResult
+                        .onSuccess(::postMovieCredits)
+                        .onFailure(::handleFailure)
                 }
             }
         }

@@ -10,8 +10,10 @@ import com.adesso.movee.domain.FetchTvShowDetailUseCase
 import com.adesso.movee.uimodel.TvShowCastUiModel
 import com.adesso.movee.uimodel.TvShowCreditUiModel
 import com.adesso.movee.uimodel.TvShowDetailUiModel
-import javax.inject.Inject
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class TvShowDetailViewModel @Inject constructor(
     private val fetchTvShowDetailUseCase: FetchTvShowDetailUseCase,
@@ -34,7 +36,9 @@ class TvShowDetailViewModel @Inject constructor(
                     fetchTvShowDetailUseCase.run(FetchTvShowDetailUseCase.Params(id))
 
                 onUIThread {
-                    tvShowDetailResult.either(::handleFailure, ::postTvShowDetail)
+                    tvShowDetailResult
+                        .onSuccess(::postTvShowDetail)
+                        .onFailure(::handleFailure)
                 }
             }
         }
@@ -51,7 +55,9 @@ class TvShowDetailViewModel @Inject constructor(
                     fetchTvShowCreditsUseCase.run(FetchTvShowCreditsUseCase.Params(id))
 
                 onUIThread {
-                    tvShowCreditResult.either(::handleFailure, ::postTvShowCredits)
+                    tvShowCreditResult
+                        .onSuccess(::postTvShowCredits)
+                        .onFailure(::handleFailure)
                 }
             }
         }

@@ -10,8 +10,10 @@ import com.adesso.movee.domain.GetLoginStateUseCase
 import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.uimodel.LoginState
 import com.adesso.movee.uimodel.UserDetailUiModel
-import javax.inject.Inject
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val fetchUserDetailsUseCase: FetchUserDetailsUseCase,
@@ -36,7 +38,9 @@ class ProfileViewModel @Inject constructor(
             val loginStateResult = getLoginStateUseCase.run(UseCase.None)
 
             onUIThread {
-                loginStateResult.either(::handleFailure, ::handleLoginStateSuccess)
+                loginStateResult
+                    .onSuccess(::handleLoginStateSuccess)
+                    .onFailure(::handleFailure)
             }
         }
     }
@@ -62,7 +66,9 @@ class ProfileViewModel @Inject constructor(
             val userDetailsResult = fetchUserDetailsUseCase.run(UseCase.None)
 
             onUIThread {
-                userDetailsResult.either(::handleFailure, ::postUserDetails)
+                userDetailsResult
+                    .onSuccess(::postUserDetails)
+                    .onFailure(::handleFailure)
             }
         }
     }
