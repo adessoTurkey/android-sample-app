@@ -11,8 +11,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseBindingActivity
 import com.adesso.movee.databinding.ActivityMainBinding
-import com.adesso.movee.internal.extension.observeNonNull
 import com.adesso.movee.internal.extension.showPopup
+import com.adesso.movee.internal.util.EventObserver
 import com.adesso.movee.navigation.NavigationCommand
 
 class MainActivity : BaseBindingActivity<MainViewModel, ActivityMainBinding>() {
@@ -37,11 +37,10 @@ class MainActivity : BaseBindingActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     private fun observeNavigation() {
-        viewModel.navigation.observeNonNull(this) {
-            it.getContentIfNotHandled()?.let { command ->
-                handleNavigation(command)
-            }
-        }
+        viewModel.navigation.observe(this, navigation)
+    }
+    private val navigation = EventObserver<NavigationCommand> {
+        handleNavigation(it)
     }
 
     private fun setupBottomNavigationView() {

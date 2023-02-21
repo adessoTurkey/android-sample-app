@@ -18,8 +18,9 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.adesso.movee.BR
-import com.adesso.movee.internal.extension.observeNonNull
 import com.adesso.movee.internal.extension.showPopup
+import com.adesso.movee.internal.popup.PopupUiModel
+import com.adesso.movee.internal.util.EventObserver
 import com.adesso.movee.internal.util.functional.lazyThreadSafetyNone
 import com.adesso.movee.navigation.NavigationCommand
 import com.adesso.movee.scene.main.MainActivity
@@ -88,11 +89,10 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
     }
 
     private fun observeNavigation() {
-        viewModel.navigation.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { command ->
-                handleNavigation(command)
-            }
-        }
+        viewModel.navigation.observe(viewLifecycleOwner, navigation)
+    }
+    private val navigation = EventObserver<NavigationCommand> {
+        handleNavigation(it)
     }
 
     protected open fun handleNavigation(command: NavigationCommand) {
@@ -115,19 +115,17 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
     }
 
     private fun observeFailure() {
-        viewModel.failurePopup.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { popupUiModel ->
-                context?.showPopup(popupUiModel)
-            }
-        }
+        viewModel.failurePopup.observe(viewLifecycleOwner, failurePopup)
+    }
+    private val failurePopup = EventObserver<PopupUiModel> {
+        context?.showPopup(it)
     }
 
     private fun observeSuccess() {
-        viewModel.success.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { message ->
-                showSnackBarMessage(message)
-            }
-        }
+        viewModel.success.observe(viewLifecycleOwner, success)
+    }
+    private val success = EventObserver<String> {
+        showSnackBarMessage(it)
     }
 
     private fun showSnackBarMessage(message: String) {

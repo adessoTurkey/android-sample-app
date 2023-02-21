@@ -13,6 +13,7 @@ import com.adesso.movee.internal.popup.PopupCallback
 import com.adesso.movee.internal.popup.PopupUiModel
 import com.adesso.movee.internal.util.Event
 import com.adesso.movee.internal.util.Failure
+import com.adesso.movee.internal.util.event
 import com.adesso.movee.navigation.NavigationCommand
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,25 +68,24 @@ abstract class BaseAndroidViewModel(application: Application) : AndroidViewModel
             else -> Pair("", failure.message ?: failure.toString())
         }
 
-        _failurePopup.value = Event(
+        _failurePopup.value =
             PopupUiModel(
                 title = title,
                 message = message,
                 popUpType = PopUpType.ERROR
-            )
-        )
+            ).event()
     }
 
     protected fun showSnackBar(message: String) {
-        _success.value = Event(message)
+        _success.value = message.event()
     }
 
     fun navigate(directions: NavDirections) {
-        _navigation.value = Event(NavigationCommand.ToDirection(directions))
+        _navigation.value = NavigationCommand.ToDirection(directions).event()
     }
 
     fun navigate(deepLink: String) {
-        _navigation.value = Event(NavigationCommand.ToDeepLink(deepLink))
+        _navigation.value = NavigationCommand.ToDeepLink(deepLink).event()
     }
 
     fun navigate(@StringRes deepLinkRes: Int) {
@@ -93,11 +93,11 @@ abstract class BaseAndroidViewModel(application: Application) : AndroidViewModel
     }
 
     fun navigate(model: PopupUiModel, callback: PopupCallback?) {
-        _navigation.value = Event(NavigationCommand.Popup(model, callback))
+        _navigation.value = NavigationCommand.Popup(model, callback).event()
     }
 
     fun navigateBack() {
-        _navigation.value = Event(NavigationCommand.Back)
+        _navigation.value = NavigationCommand.Back.event()
     }
 
     protected suspend fun onUIThread(block: suspend CoroutineScope.() -> Unit) {

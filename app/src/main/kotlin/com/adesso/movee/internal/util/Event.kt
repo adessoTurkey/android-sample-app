@@ -25,3 +25,7 @@ open class Event<out T>(private val content: T) {
      */
     fun peekContent(): T = content
 }
+
+inline fun <reified T> Any.event(): Event<T> {
+    return Event(this as T)
+}
