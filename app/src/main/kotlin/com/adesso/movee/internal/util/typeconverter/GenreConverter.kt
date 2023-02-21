@@ -6,7 +6,11 @@ class GenreConverter {
 
     @TypeConverter
     fun fromString(genreIds: String): List<Long> {
-        return genreIds.split(",").map { it.toLong() }
+        return if (genreIds.isNotEmpty()) {
+            genreIds.split(",").map { it.toLong() }
+        } else {
+            emptyList()
+        }
     }
 
     @TypeConverter

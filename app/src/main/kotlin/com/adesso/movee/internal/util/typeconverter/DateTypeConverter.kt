@@ -2,7 +2,6 @@ package com.adesso.movee.internal.util.typeconverter
 
 import androidx.room.TypeConverter
 import com.adesso.movee.internal.util.Constant
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -12,15 +11,15 @@ class DateTypeConverter {
     @TypeConverter
     fun fromString(value: String?): Date? {
         return try {
-            dateFormat.parse(value)
-        } catch (e: ParseException) {
+            value?.let { dateFormat.parse(value) }
+        } catch (e: Exception) {
             null
         }
     }
 
     @TypeConverter
     fun dateToString(date: Date?): String? {
-        return dateFormat.format(date)
+        return date?.let { dateFormat.format(it) }
     }
 
     companion object {
