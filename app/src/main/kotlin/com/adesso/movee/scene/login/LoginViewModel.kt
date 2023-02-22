@@ -2,14 +2,15 @@ package com.adesso.movee.scene.login
 
 import android.app.Application
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.LoginUseCase
-import com.adesso.movee.internal.util.Event
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,13 +21,14 @@ class LoginViewModel @Inject constructor(
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val _navigateUri = MutableLiveData<Event<Uri>>()
-    private val _loginInProgress = MutableLiveData<Boolean>()
-    val navigateUri: LiveData<Event<Uri>> get() = _navigateUri
-    val loginInProgress: LiveData<Boolean> get() = _loginInProgress
+    private val _navigateUri = Channel<Uri>(Channel.CONFLATED)
+    val navigateUri = _navigateUri.receiveAsFlow()
 
-    val username = MutableLiveData<String>()
-    val password = MutableLiveData<String>()
+    private val _loginInProgress = MutableStateFlow<Boolean>(false)
+    val loginInProgress: StateFlow<Boolean> get() = _loginInProgress
+
+    val username = MutableStateFlow<String?>(null)
+    val password = MutableStateFlow<String?>(null)
 
     fun onForgotPasswordClick() {
         postNavigateUri(URL_FORGOT_PASSWORD)
@@ -60,7 +62,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun postNavigateUri(url: String) {
-        _navigateUri.value = Event(Uri.parse(url))
+        _navigateUri.trySend(Uri.parse(url))
     }
 
     companion object {

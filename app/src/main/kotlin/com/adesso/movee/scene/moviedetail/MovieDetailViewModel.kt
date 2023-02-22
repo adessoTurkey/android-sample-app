@@ -1,8 +1,6 @@
 package com.adesso.movee.scene.moviedetail
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchMovieCreditsUseCase
@@ -12,6 +10,8 @@ import com.adesso.movee.uimodel.MovieCreditUiModel
 import com.adesso.movee.uimodel.MovieDetailUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,10 +23,10 @@ class MovieDetailViewModel @Inject constructor(
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val _movieDetails = MutableLiveData<MovieDetailUiModel>()
-    private val _movieCredits = MutableLiveData<MovieCreditUiModel>()
-    val movieDetails: LiveData<MovieDetailUiModel> get() = _movieDetails
-    val movieCredits: LiveData<MovieCreditUiModel> get() = _movieCredits
+    private val _movieDetails = MutableStateFlow<MovieDetailUiModel?>(null)
+    private val _movieCredits = MutableStateFlow<MovieCreditUiModel?>(null)
+    val movieDetails: StateFlow<MovieDetailUiModel?> get() = _movieDetails
+    val movieCredits: StateFlow<MovieCreditUiModel?> get() = _movieCredits
 
     fun fetchMovieDetails(id: Long) {
         if (_movieDetails.value == null) {

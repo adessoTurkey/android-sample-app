@@ -1,8 +1,6 @@
 package com.adesso.movee.scene.search
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.MultiSearchUseCase
@@ -16,6 +14,8 @@ import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,10 +25,12 @@ class SearchViewModel @Inject constructor(
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val _multiSearchResults = MutableLiveData<List<MultiSearchUiModel>>()
-    private val _shouldShowEmptyResultView = MutableLiveData<Boolean>()
-    val multiSearchResults: LiveData<List<MultiSearchUiModel>> = _multiSearchResults
-    val shouldShowEmptyResultView: LiveData<Boolean> get() = _shouldShowEmptyResultView
+    private val _multiSearchResults = MutableStateFlow<List<MultiSearchUiModel>?>(null)
+    val multiSearchResults: StateFlow<List<MultiSearchUiModel>?> = _multiSearchResults
+
+    private val _shouldShowEmptyResultView = MutableStateFlow(false)
+    val shouldShowEmptyResultView: StateFlow<Boolean> get() = _shouldShowEmptyResultView
+
     private var multiSearchJob: Job? = null
     val searchDebounce = DURATION_MS_INPUT_TIMEOUT
 

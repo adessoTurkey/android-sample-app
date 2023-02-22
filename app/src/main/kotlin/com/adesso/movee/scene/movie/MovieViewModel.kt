@@ -2,7 +2,6 @@ package com.adesso.movee.scene.movie
 
 import android.app.Application
 import androidx.annotation.StringRes
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -15,7 +14,6 @@ import com.adesso.movee.internal.util.AppBarStateChangeListener
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.COLLAPSED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.EXPANDED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.IDLE
-import com.adesso.movee.internal.util.TripleCombinedLiveData
 import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.uimodel.MovieUiModel
 import com.adesso.movee.uimodel.ShowHeaderUiModel
@@ -26,7 +24,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -38,11 +39,12 @@ class MovieViewModel @Inject constructor(
 ) : BaseAndroidViewModel(application) {
 
     private val _popularMovies = MutableStateFlow<PagingData<MovieUiModel>>(PagingData.empty())
-    private val _toolbarTitle = MutableLiveData<String>()
-    private val _toolbarSubtitle = MutableLiveData(getString(R.string.movie_message_popular))
-    private val _nowPlayingMovies = MutableLiveData<List<MovieUiModel>>()
+    private val _toolbarTitle = MutableStateFlow<String?>(null)
+    private val _toolbarSubtitle = MutableStateFlow(getString(R.string.movie_message_popular))
+    private val _nowPlayingMovies = MutableStateFlow<List<MovieUiModel>?>(null)
     val popularMovies = _popularMovies.asStateFlow()
-    val showHeader = TripleCombinedLiveData(
+
+    val showHeader = combine(
         _toolbarTitle,
         _toolbarSubtitle,
         _nowPlayingMovies
@@ -52,7 +54,8 @@ class MovieViewModel @Inject constructor(
             subtitle,
             nowPlayingShows
         )
-    }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
 
     val shouldRefreshPaging = shouldRefreshPagingUseCase.execute()
 

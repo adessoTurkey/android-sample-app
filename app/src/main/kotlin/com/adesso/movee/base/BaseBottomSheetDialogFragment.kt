@@ -18,7 +18,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.adesso.movee.BR
-import com.adesso.movee.internal.extension.observeNonNull
+import com.adesso.movee.internal.extension.collectFlow
 import com.adesso.movee.internal.extension.showPopup
 import com.adesso.movee.internal.util.functional.lazyThreadSafetyNone
 import com.adesso.movee.navigation.NavigationCommand
@@ -88,10 +88,9 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
     }
 
     private fun observeNavigation() {
-        viewModel.navigation.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { command ->
-                handleNavigation(command)
-            }
+
+        collectFlow(viewModel.navigation) { command ->
+            handleNavigation(command)
         }
     }
 
@@ -100,33 +99,36 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
             is NavigationCommand.ToDirection -> {
                 findNavController().navigate(command.directions, getExtras())
             }
+
             is NavigationCommand.ToDeepLink -> {
                 (activity as? MainActivity)
                     ?.navController
                     ?.navigate(command.deepLink.toUri(), null, getExtras())
             }
+
             is NavigationCommand.Popup -> {
                 with(command) {
                     context?.showPopup(model, callback)
                 }
             }
+
             is NavigationCommand.Back -> findNavController().navigateUp()
         }
     }
 
     private fun observeFailure() {
-        viewModel.failurePopup.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { popupUiModel ->
-                context?.showPopup(popupUiModel)
-            }
+
+        collectFlow(viewModel.failurePopup) { popupUiModel ->
+
+            context?.showPopup(popupUiModel)
         }
     }
 
     private fun observeSuccess() {
-        viewModel.success.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { message ->
-                showSnackBarMessage(message)
-            }
+
+        collectFlow(viewModel.success) { message ->
+
+            showSnackBarMessage(message)
         }
     }
 

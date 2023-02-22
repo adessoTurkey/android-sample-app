@@ -15,7 +15,8 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.adesso.movee.BR
-import com.adesso.movee.internal.extension.observeNonNull
+import com.adesso.movee.internal.extension.collectFlow
+import com.adesso.movee.internal.extension.collectFlowNonNull
 import com.adesso.movee.internal.extension.showPopup
 import com.adesso.movee.navigation.NavigationCommand
 import com.adesso.movee.scene.main.MainActivity
@@ -70,10 +71,10 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> : Fr
     }
 
     private fun observeNavigation() {
-        viewModel.navigation.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { command ->
-                handleNavigation(command)
-            }
+
+        collectFlow(viewModel.navigation) { command ->
+
+            handleNavigation(command)
         }
     }
 
@@ -100,18 +101,18 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> : Fr
     }
 
     private fun observeFailure() {
-        viewModel.failurePopup.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { popupUiModel ->
-                context?.showPopup(popupUiModel)
-            }
+
+        collectFlow(viewModel.failurePopup) { popupUiModel ->
+
+            context?.showPopup(popupUiModel)
         }
     }
 
     private fun observeSuccess() {
-        viewModel.success.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { message ->
-                showSnackBarMessage(message)
-            }
+
+        collectFlowNonNull(viewModel.success) { message ->
+
+            showSnackBarMessage(message)
         }
     }
 
