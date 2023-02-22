@@ -16,8 +16,10 @@ import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.uimodel.ShowHeaderUiModel
 import com.adesso.movee.uimodel.ShowUiModel
 import com.adesso.movee.uimodel.TvShowUiModel
-import javax.inject.Inject
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class TvShowViewModel @Inject constructor(
     private val fetchTopRatedTvShowsUseCase: FetchTopRatedTvShowsUseCase,
@@ -52,7 +54,9 @@ class TvShowViewModel @Inject constructor(
             val topRatedTvShowsResult = fetchTopRatedTvShowsUseCase.run(UseCase.None)
 
             onUIThread {
-                topRatedTvShowsResult.either(::handleFailure, ::postTopRatedTvShows)
+                topRatedTvShowsResult
+                    .onSuccess(::postTopRatedTvShows)
+                    .onFailure(::handleFailure)
             }
         }
     }
@@ -66,7 +70,9 @@ class TvShowViewModel @Inject constructor(
             val nowPlayingTvShowsResult = fetchNowPlayingTvShowsUseCase.run(UseCase.None)
 
             onUIThread {
-                nowPlayingTvShowsResult.either(::handleFailure, ::postNowPlayingTvShows)
+                nowPlayingTvShowsResult
+                    .onSuccess(::postNowPlayingTvShows)
+                    .onFailure(::handleFailure)
             }
         }
     }

@@ -10,10 +10,12 @@ import com.adesso.movee.uimodel.MovieMultiSearchUiModel
 import com.adesso.movee.uimodel.MultiSearchUiModel
 import com.adesso.movee.uimodel.PersonMultiSearchUiModel
 import com.adesso.movee.uimodel.TvShowMultiSearchUiModel
-import javax.inject.Inject
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     private val multiSearchUseCase: MultiSearchUseCase,
@@ -34,7 +36,9 @@ class SearchViewModel @Inject constructor(
             multiSearchJob = bgScope.launch {
                 val searchResult = multiSearchUseCase.run(MultiSearchUseCase.Params(query))
                 onUIThread {
-                    searchResult.either(::handleSearchFailure, ::postMultiSearchResult)
+                    searchResult
+                        .onSuccess(::postMultiSearchResult)
+                        .onFailure(::handleFailure)
                 }
             }
         }

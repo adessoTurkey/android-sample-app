@@ -10,8 +10,10 @@ import com.adesso.movee.internal.util.AppBarStateChangeListener.State.COLLAPSED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.EXPANDED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.IDLE
 import com.adesso.movee.uimodel.PersonDetailUiModel
-import javax.inject.Inject
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class PersonDetailViewModel @Inject constructor(
     private val fetchPersonDetailsUseCase: FetchPersonDetailsUseCase,
@@ -30,7 +32,9 @@ class PersonDetailViewModel @Inject constructor(
                     fetchPersonDetailsUseCase.run(FetchPersonDetailsUseCase.Params(personId))
 
                 onUIThread {
-                    personDetailResult.either(::handleFailure, ::postPersonDetails)
+                    personDetailResult
+                        .onSuccess(::postPersonDetails)
+                        .onFailure(::handleFailure)
                 }
             }
         }

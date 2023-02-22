@@ -57,7 +57,8 @@ ext {
             playServices    : '18.1.0',
             crypto          : '1.1.0-alpha03',
             robolectric     : '4.9',
-            ktlint          : '0.40.0'
+            ktlint          : '0.40.0',
+            kotlinResult    : '1.1.16'
     ]
 
     dependency = [
@@ -91,6 +92,7 @@ ext {
                     "com.github.bumptech.glide:glide:$version.glide",
                     "com.airbnb.android:lottie:$version.lottie",
                     "com.jakewharton.timber:timber:$version.timber",
+                    "com.michael-bull.kotlin-result:kotlin-result:$version.kotlinResult",
             ],
 
             commonKapt = [

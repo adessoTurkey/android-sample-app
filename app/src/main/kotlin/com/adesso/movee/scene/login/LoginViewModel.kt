@@ -7,8 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.LoginUseCase
 import com.adesso.movee.internal.util.Event
-import javax.inject.Inject
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
@@ -38,7 +40,9 @@ class LoginViewModel @Inject constructor(
                 loginUseCase.run(LoginUseCase.Params(username, password))
             }
 
-            loginResult.either(::handleFailure, ::navigateHome)
+            loginResult
+                .onSuccess { navigateHome() }
+                .onFailure(::handleFailure)
 
             _loginInProgress.value = false
         }
