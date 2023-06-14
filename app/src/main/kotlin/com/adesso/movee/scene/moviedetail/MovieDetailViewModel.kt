@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchMovieCreditsUseCase
 import com.adesso.movee.domain.FetchMovieDetailUseCase
+import com.adesso.movee.uimodel.MovieCastUiModel
 import com.adesso.movee.uimodel.MovieCreditUiModel
 import com.adesso.movee.uimodel.MovieDetailUiModel
 import com.github.michaelbull.result.onFailure
@@ -60,5 +61,9 @@ class MovieDetailViewModel @Inject constructor(
 
     private fun postMovieCredits(movieCreditUiModel: MovieCreditUiModel) {
         _movieCredits.value = movieCreditUiModel
+    }
+
+    fun onMovieCastClick(movieCastViewModel: MovieCastUiModel) {
+        navigate(MovieDetailFragmentDirections.toPersonDetail(movieCastViewModel.id))
     }
 }

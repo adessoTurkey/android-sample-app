@@ -1,5 +1,7 @@
 package com.adesso.movee.uimodel
 
+import com.adesso.movee.base.ListAdapterItem
+
 data class MovieCastUiModel(
     override val creditId: String,
     override val id: Long,
@@ -7,4 +9,4 @@ data class MovieCastUiModel(
     override val profilePath: String?,
     val castId: Long,
     val character: String
-) : CreditUiModel
+) : ListAdapterItem, CreditUiModel
