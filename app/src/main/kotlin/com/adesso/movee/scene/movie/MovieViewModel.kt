@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
@@ -51,10 +52,10 @@ class MovieViewModel @Inject constructor(
     }
 
     private fun fetchNowPlayingMovies() {
-        bgScope.launch {
+        viewModelScope.launch {
             val nowPlayingMoviesResult = fetchNowPlayingMoviesUseCase.run(UseCase.None)
 
-            onUIThread {
+            runOnViewModelScope {
                 nowPlayingMoviesResult
                     .onSuccess(::postNowPlayingMovieList)
                     .onFailure(::handleFailure)
@@ -67,10 +68,10 @@ class MovieViewModel @Inject constructor(
     }
 
     private fun fetchPopularMovies() {
-        bgScope.launch {
+        viewModelScope.launch {
             val popularMoviesResult = fetchPopularMoviesUseCase.run(UseCase.None)
 
-            onUIThread {
+            runOnViewModelScope {
                 popularMoviesResult
                     .onSuccess(::postPopularMovieList)
                     .onFailure(::handleFailure)
