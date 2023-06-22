@@ -7,11 +7,12 @@ import com.adesso.movee.base.BaseTransparentStatusBarFragment
 import com.adesso.movee.databinding.FragmentLoginBinding
 import com.adesso.movee.internal.extension.observeNonNull
 import com.adesso.movee.internal.util.Event
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : BaseTransparentStatusBarFragment<LoginViewModel, FragmentLoginBinding>() {
 
     override val layoutId = R.layout.fragment_login
-
     override fun initialize() {
         super.initialize()
 

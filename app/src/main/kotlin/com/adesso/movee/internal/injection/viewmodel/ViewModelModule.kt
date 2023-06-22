@@ -1,5 +1,4 @@
 package com.adesso.movee.internal.injection.viewmodel
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.adesso.movee.scene.login.LoginViewModel
@@ -14,9 +13,12 @@ import com.adesso.movee.scene.tvshow.TvShowViewModel
 import com.adesso.movee.scene.tvshowdetail.TvShowDetailViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
 
 @Module
+@InstallIn(SingletonComponent::class)
 abstract class ViewModelModule {
 
     @Binds
@@ -25,50 +27,50 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)
-    abstract fun bindsMainViewModel(viewModel: MainViewModel): ViewModel
+    abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(SplashViewModel::class)
-    abstract fun bindsSplashViewModel(viewModel: SplashViewModel): ViewModel
+    abstract fun bindSplashViewModel(viewModel: SplashViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(MovieViewModel::class)
-    abstract fun bindsMovieViewModel(viewModel: MovieViewModel): ViewModel
+    abstract fun bindMovieViewModel(viewModel: MovieViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(TvShowViewModel::class)
-    abstract fun bindsTvShowViewModel(viewModel: TvShowViewModel): ViewModel
+    abstract fun bindTvShowViewModel(viewModel: TvShowViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(TvShowDetailViewModel::class)
-    abstract fun bindsTvShowDetailViewModel(viewModel: TvShowDetailViewModel): ViewModel
+    abstract fun bindTvShowDetailViewModel(viewModel: TvShowDetailViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(MovieDetailViewModel::class)
-    abstract fun bindsMovieDetailViewModel(viewModel: MovieDetailViewModel): ViewModel
+    abstract fun bindMovieDetailViewModel(viewModel: MovieDetailViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(PersonDetailViewModel::class)
-    abstract fun bindsPersonDetailViewModel(viewModel: PersonDetailViewModel): ViewModel
+    abstract fun bindPersonDetailViewModel(viewModel: PersonDetailViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
-    abstract fun bindsSearchViewModel(viewModel: SearchViewModel): ViewModel
+    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
-    abstract fun bindsProfileViewModel(viewModel: ProfileViewModel): ViewModel
+    abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
-    abstract fun bindsLoginViewModel(viewModel: LoginViewModel): ViewModel
+    abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
 }

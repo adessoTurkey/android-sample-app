@@ -20,30 +20,31 @@ import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
-import java.io.File
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.File
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
-internal class NetworkModule {
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
 
-    companion object {
-        private const val CLIENT_TIME_OUT = 120L
-        private const val CLIENT_CACHE_SIZE = 10 * 1024 * 1024L
-        private const val CLIENT_CACHE_DIRECTORY = "http"
-    }
+    private const val CLIENT_TIME_OUT = 120L
+    private const val CLIENT_CACHE_SIZE = 10 * 1024 * 1024L
+    private const val CLIENT_CACHE_DIRECTORY = "http"
 
     /**
      * Create Cache object for OkHttp instance
      */
     @Provides
     @Singleton
-    internal fun providesCache(context: Context): Cache = Cache(
+    fun providesCache(context: Context): Cache = Cache(
         File(
             context.cacheDir,
             CLIENT_CACHE_DIRECTORY
@@ -53,7 +54,7 @@ internal class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
@@ -65,7 +66,7 @@ internal class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideCurlInterceptor(): CurlInterceptor {
+    fun provideCurlInterceptor(): CurlInterceptor {
         return CurlInterceptor(
             logger = object : Logger {
                 override fun log(message: String) {

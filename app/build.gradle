@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs'
 apply from: "$rootDir/config/git-hooks.gradle.kts"
 apply from: "$rootDir/config/detekt.gradle"
@@ -108,7 +109,7 @@ dependencies {
     implementation androidx
     implementation common
     implementation network
-    implementation dagger
+    implementation hiltt
 
     kapt commonKapt
     debugImplementation commonDebug

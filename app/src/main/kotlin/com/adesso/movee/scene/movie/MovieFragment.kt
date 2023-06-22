@@ -7,7 +7,9 @@ import com.adesso.movee.internal.util.addAppBarStateChangeListener
 import com.adesso.movee.uimodel.MovieUiModel
 import com.adesso.movee.uimodel.ShowUiModel
 import com.adesso.movee.widget.nowplayingshow.NowPlayingShowCallback
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieFragment :
     BaseFragment<MovieViewModel, FragmentMovieBinding>(),
     PopularMovieCallback,

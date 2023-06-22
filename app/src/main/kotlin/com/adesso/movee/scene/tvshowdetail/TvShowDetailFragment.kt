@@ -5,7 +5,9 @@ import com.adesso.movee.R
 import com.adesso.movee.base.BaseTransparentStatusBarFragment
 import com.adesso.movee.databinding.FragmentTvShowDetailBinding
 import com.adesso.movee.uimodel.TvShowCastUiModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TvShowDetailFragment :
     BaseTransparentStatusBarFragment<TvShowDetailViewModel, FragmentTvShowDetailBinding>(),
     TvShowCastCallback {
