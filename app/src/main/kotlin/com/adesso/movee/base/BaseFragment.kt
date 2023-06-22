@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -24,12 +25,10 @@ import com.adesso.movee.internal.util.functional.lazyThreadSafetyNone
 import com.adesso.movee.navigation.NavigationCommand
 import com.adesso.movee.scene.main.MainActivity
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
-    DaggerFragment() {
+abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -43,10 +42,11 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
 
     @Suppress("UNCHECKED_CAST")
     protected open val viewModel by lazyThreadSafetyNone {
-        val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
-            .actualTypeArguments[0] as Class<VM>
-        return@lazyThreadSafetyNone ViewModelProvider(this, viewModelFactory)
-            .get(persistentViewModelClass)
+        val persistentViewModelClass =
+            (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>
+        return@lazyThreadSafetyNone ViewModelProvider(this, viewModelFactory).get(
+            persistentViewModelClass
+        )
     }
 
     protected inline fun <reified VM : ViewModel> activityViewModels(): Lazy<VM> {
@@ -100,16 +100,19 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
             is NavigationCommand.ToDirection -> {
                 findNavController().navigate(command.directions, getExtras())
             }
+
             is NavigationCommand.ToDeepLink -> {
-                (activity as? MainActivity)
-                    ?.navController
-                    ?.navigate(command.deepLink.toUri(), null, getExtras())
+                (activity as? MainActivity)?.navController?.navigate(
+                    command.deepLink.toUri(), null, getExtras()
+                )
             }
+
             is NavigationCommand.Popup -> {
                 with(command) {
                     context?.showPopup(model, callback)
                 }
             }
+
             is NavigationCommand.Back -> findNavController().navigateUp()
         }
     }

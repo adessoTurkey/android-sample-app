@@ -5,7 +5,9 @@ import com.adesso.movee.base.BaseFragment
 import com.adesso.movee.databinding.FragmentSearchBinding
 import com.adesso.movee.internal.databinding.TextChangeCallback
 import com.adesso.movee.uimodel.MultiSearchUiModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment :
     BaseFragment<SearchViewModel, FragmentSearchBinding>(),
     MultiSearchCallback,
