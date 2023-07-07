@@ -17,6 +17,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/introduction_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
         <fragment
             android:id="@+id/main_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"

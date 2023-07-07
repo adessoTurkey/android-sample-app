@@ -55,4 +55,15 @@
     <!-- Login -->
     <dimen name="margin_login_image_view_movee">100dp</dimen>
 
+    <!-- Introduction -->
+    <dimen name="introduction_header_height">200dp</dimen>
+    <dimen name="introduction_slide_text_top_padding">16dp</dimen>
+    <dimen name="introduction_slide_image_weight">1f</dimen>
+    <dimen name="introduction_slide_bottom_padding">90dp</dimen>
+    <dimen name="introduction_done_button_top_padding">16dp</dimen>
+    <dimen name="introduction_indicator_padding">8dp</dimen>
+    <dimen name="introduction_indicator_box_size">18dp</dimen>
+    <dimen name="introduction_indicator_box_padding">4dp</dimen>
+    <dimen name="introduction_done_button_width">200dp</dimen>
+
 </resources>

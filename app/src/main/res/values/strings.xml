@@ -75,6 +75,14 @@
     <string name="profile_message_login">Login</string>
     <!-- endregion -->
 
+    <!-- region Introduction -->
+    <string name="introduction_title_first">If you looking for latest movies</string>
+    <string name="introduction_title_second">Welcome to best movies</string>
+    <string name="introduction_title_third">Only with us only for you</string>
+    <string name="introduction_skip">Skip</string>
+    <string name="introduction_get_started">Get Started</string>
+    <!-- endregion -->
+
     <!-- region Login -->
     <string name="login_hint_username">Username</string>
     <string name="login_hint_password">Password</string>
