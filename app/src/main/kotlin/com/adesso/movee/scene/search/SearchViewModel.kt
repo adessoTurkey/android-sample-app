@@ -1,6 +1,8 @@
 package com.adesso.movee.scene.search
 
 import android.app.Application
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.adesso.movee.base.BaseAndroidViewModel
@@ -22,12 +24,12 @@ class SearchViewModel @Inject constructor(
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val _multiSearchResults = MutableLiveData<List<MultiSearchUiModel>>()
-    private val _shouldShowEmptyResultView = MutableLiveData<Boolean>()
-    val multiSearchResults: LiveData<List<MultiSearchUiModel>> = _multiSearchResults
+    private val _multiSearchResults = mutableStateOf<List<MultiSearchUiModel>>(listOf())
+    val multiSearchResults: State<List<MultiSearchUiModel>> = _multiSearchResults
+
+    private val _shouldShowEmptyResultView = MutableLiveData(false)
     val shouldShowEmptyResultView: LiveData<Boolean> get() = _shouldShowEmptyResultView
     private var multiSearchJob: Job? = null
-    val searchDebounce = DURATION_MS_INPUT_TIMEOUT
 
     fun onTextChange(text: String?) {
         val query = text?.trim() ?: return
@@ -38,10 +40,14 @@ class SearchViewModel @Inject constructor(
                 onUIThread {
                     searchResult
                         .onSuccess(::postMultiSearchResult)
-                        .onFailure(::handleFailure)
+                        .onFailure(::handleSearchFailure)
                 }
             }
         }
+    }
+
+    fun refreshData() {
+        _multiSearchResults.value = emptyList()
     }
 
     private fun handleSearchFailure(failure: Failure) {
@@ -72,6 +78,5 @@ class SearchViewModel @Inject constructor(
 
     companion object {
         private const val MIN_SEARCHABLE_LENGTH = 2
-        private const val DURATION_MS_INPUT_TIMEOUT = 250L
     }
 }

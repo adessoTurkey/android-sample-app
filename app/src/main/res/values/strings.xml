@@ -67,6 +67,9 @@
     <string name="search_message_writer">Writer</string>
     <string name="search_message_crew">Crew</string>
     <string name="search_message_empty_search_result">Your search didn’t have any results</string>
+    <string name="search_content_type_icon_content_description">Content item type icon</string>
+    <string name="search_content_item_empty_view_content_description">@string/search_message_empty_search_result</string>
+    <string name="search_bar_icon_content_description">Search bar icon</string>
     <!-- endregion -->
 
     <!-- region Profile -->

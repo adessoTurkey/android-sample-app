@@ -85,6 +85,11 @@ android {
 
     buildFeatures {
         dataBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.3'
     }
 
     packagingOptions {
@@ -110,6 +115,7 @@ dependencies {
     implementation common
     implementation network
     implementation hiltt
+    implementation compose
 
     kapt commonKapt
     debugImplementation commonDebug

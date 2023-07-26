@@ -3,7 +3,6 @@ package com.adesso.movee.scene.tvshowdetail
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchTvShowCreditsUseCase
 import com.adesso.movee.domain.FetchTvShowDetailUseCase
@@ -25,8 +24,8 @@ class TvShowDetailViewModel @Inject constructor(
     val tvShowDetails: LiveData<TvShowDetailUiModel> get() = _tvShowDetails
     private val _tvShowCredits = MutableLiveData<TvShowCreditUiModel>()
     val tvShowCasts: LiveData<List<TvShowCastUiModel>> =
-        Transformations.map(_tvShowCredits) { tvShowCredits ->
-            tvShowCredits.cast
+        MutableLiveData<List<TvShowCastUiModel>>().apply {
+            value = _tvShowCredits.value?.cast.orEmpty()
         }
 
     fun fetchTvShowDetail(id: Long) {
@@ -55,9 +54,7 @@ class TvShowDetailViewModel @Inject constructor(
                     fetchTvShowCreditsUseCase.run(FetchTvShowCreditsUseCase.Params(id))
 
                 onUIThread {
-                    tvShowCreditResult
-                        .onSuccess(::postTvShowCredits)
-                        .onFailure(::handleFailure)
+                    tvShowCreditResult.onSuccess(::postTvShowCredits).onFailure(::handleFailure)
                 }
             }
         }

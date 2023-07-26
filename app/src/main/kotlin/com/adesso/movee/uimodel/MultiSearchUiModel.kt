@@ -25,6 +25,15 @@ sealed class MultiSearchUiModel : ListAdapterItem, Serializable {
         return ContextCompat.getDrawable(context, typeDrawableRes)
     }
 
+    fun getTypeDrawableId(): Int {
+        val typeDrawableRes = when (this) {
+            is MovieMultiSearchUiModel -> R.drawable.ic_movie
+            is TvShowMultiSearchUiModel -> R.drawable.ic_tv_show
+            is PersonMultiSearchUiModel -> R.drawable.ic_person
+        }
+        return typeDrawableRes
+    }
+
     @StringRes
     fun getTypeStringRes(): Int {
         return when (this) {
