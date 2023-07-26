@@ -3,7 +3,6 @@ package com.adesso.movee.scene.profile
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchUserDetailsUseCase
 import com.adesso.movee.domain.GetLoginStateUseCase
@@ -24,9 +23,12 @@ class ProfileViewModel @Inject constructor(
     private val _userDetails = MutableLiveData<UserDetailUiModel?>()
     val userDetails: LiveData<UserDetailUiModel?> get() = _userDetails
     private val _loginState = MutableLiveData<LoginState>()
-    val shouldShowUserDetails: LiveData<Boolean> = Transformations.map(_userDetails) { it != null }
-    val shouldShowLoginView: LiveData<Boolean> = Transformations.map(_loginState) { loginState ->
-        loginState == LoginState.LOGGED_IN
+    val shouldShowUserDetails: LiveData<Boolean> = MutableLiveData<Boolean>().apply {
+        value = _userDetails.value != null
+    }
+
+    val shouldShowLoginView: LiveData<Boolean> = MutableLiveData<Boolean>().apply {
+        value = _loginState.value == LoginState.LOGGED_IN
     }
 
     init {

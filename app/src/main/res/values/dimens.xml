@@ -51,6 +51,27 @@
 
     <!-- Multi Search -->
     <dimen name="margin_multi_search_text">10dp</dimen>
+    <dimen name="search_list_item_width">80dp</dimen>
+    <dimen name="search_list_item_type_icon_width">30dp</dimen>
+    <dimen name="search_list_item_title_text_size">20sp</dimen>
+    <dimen name="search_list_item_subtitle_text_size">15sp</dimen>
+    <dimen name="search_list_item_type_title_text_size">12sp</dimen>
+    <dimen name="search_page_toolbar_height">176dp</dimen>
+    <dimen name="search_toolbar_title_size">34sp</dimen>
+    <dimen name="search_title_horizontal_padding">32dp</dimen>
+    <dimen name="search_title_vertical_padding">24dp</dimen>
+    <dimen name="search_bar_top_padding">0dp</dimen>
+    <dimen name="search_bar_bottom_end_start_padding">16dp</dimen>
+    <dimen name="search_bar_icon_start_padding">12dp</dimen>
+    <dimen name="search_bar_icon_top_bottom_end_padding">8dp</dimen>
+    <dimen name="search_text_field_horizontal_padding">4dp</dimen>
+    <dimen name="search_text_field_vertical_padding">8dp</dimen>
+    <dimen name="search_hint_text_top_padding">10dp</dimen>
+    <dimen name="search_hint_text_start_padding">4dp</dimen>
+    <dimen name="search_hint_text_bottom_end_padding">8dp</dimen>
+    <dimen name="search_page_empty_view_top_margin">100dp</dimen>
+    <dimen name="search_page_empty_view_image_width">160dp</dimen>
+    <dimen name="search_page_empty_view_image_height">180dp</dimen>
 
     <!-- Login -->
     <dimen name="margin_login_image_view_movee">100dp</dimen>
