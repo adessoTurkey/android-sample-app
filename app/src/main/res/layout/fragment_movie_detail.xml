@@ -11,6 +11,9 @@
             name="viewModel"
             type="com.adesso.movee.scene.moviedetail.MovieDetailViewModel" />
 
+        <variable
+            name="movieCastAdapter"
+            type="com.adesso.movee.scene.moviedetail.MovieCastAdapter" />
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -88,33 +91,39 @@
                     app:layout_constraintStart_toEndOf="@id/barrier_crew_title"
                     tools:text="Todd Phillips, Scott Silver" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_view_star_title"
-                    style="@style/TextField.ShowDetail.PersonTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:text="@string/movie_detail_message_stars"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_view_writer_title" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_view_star"
-                    style="@style/TextField.ShowDetail.Person"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.movieCredits.stars}"
-                    app:layout_constraintBaseline_toBaselineOf="@id/text_view_star_title"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/barrier_crew_title"
-                    tools:text="Joaquin Phoenix" />
-
                 <androidx.constraintlayout.widget.Barrier
                     android:id="@+id/barrier_crew_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:barrierDirection="end"
-                    app:constraint_referenced_ids="text_view_director_title,text_view_writer_title,text_view_star_title" />
+                    app:constraint_referenced_ids="text_view_director_title,text_view_writer_title" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_view_cast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:paddingStart="@dimen/margin_xxl"
+                    android:paddingEnd="@dimen/margin_xxl"
+                    android:text="@string/common_text_cast"
+                    android:textAppearance="@style/TextField.Header5"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_writer" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_cast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_xxl"
+                    android:paddingEnd="@dimen/margin_xxl"
+                    app:adapter="@{movieCastAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_cast"
+                    app:submitList="@{viewModel.movieCredits.cast}"
+                    tools:listitem="@layout/item_movie_cast" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

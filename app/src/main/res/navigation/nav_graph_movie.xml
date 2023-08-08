@@ -33,6 +33,29 @@
             app:argType="long"
             app:nullable="false" />
 
+        <action
+            android:id="@+id/to_person_detail"
+            app:destination="@id/personDetailFragment">
+
+            <argument
+                android:name="id"
+                app:argType="long"
+                app:nullable="false" />
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/personDetailFragment"
+        android:name="com.adesso.movee.scene.persondetail.PersonDetailFragment"
+        tools:layout="@layout/fragment_person_detail">
+
+        <argument
+            android:name="id"
+            app:argType="long"
+            app:nullable="false" />
+
     </fragment>
 
 </navigation>
