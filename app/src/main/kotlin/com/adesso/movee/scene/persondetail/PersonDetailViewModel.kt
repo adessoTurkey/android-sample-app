@@ -3,6 +3,7 @@ package com.adesso.movee.scene.persondetail
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchPersonDetailsUseCase
 import com.adesso.movee.internal.util.AppBarStateChangeListener
@@ -27,11 +28,11 @@ class PersonDetailViewModel @Inject constructor(
 
     fun fetchPersonDetails(personId: Long) {
         if (_personDetails.value == null) {
-            bgScope.launch {
+            viewModelScope.launch {
                 val personDetailResult =
                     fetchPersonDetailsUseCase.run(FetchPersonDetailsUseCase.Params(personId))
 
-                onUIThread {
+                runOnViewModelScope {
                     personDetailResult
                         .onSuccess(::postPersonDetails)
                         .onFailure(::handleFailure)

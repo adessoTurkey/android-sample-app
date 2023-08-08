@@ -3,6 +3,7 @@ package com.adesso.movee.scene.tvshow
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchNowPlayingTvShowsUseCase
@@ -50,10 +51,10 @@ class TvShowViewModel @Inject constructor(
     }
 
     private fun fetchTopRatedTvShows() {
-        bgScope.launch {
+        viewModelScope.launch {
             val topRatedTvShowsResult = fetchTopRatedTvShowsUseCase.run(UseCase.None)
 
-            onUIThread {
+            runOnViewModelScope {
                 topRatedTvShowsResult
                     .onSuccess(::postTopRatedTvShows)
                     .onFailure(::handleFailure)
@@ -66,10 +67,10 @@ class TvShowViewModel @Inject constructor(
     }
 
     private fun fetchNowPlayingTvShows() {
-        bgScope.launch {
+        viewModelScope.launch {
             val nowPlayingTvShowsResult = fetchNowPlayingTvShowsUseCase.run(UseCase.None)
 
-            onUIThread {
+            runOnViewModelScope {
                 nowPlayingTvShowsResult
                     .onSuccess(::postNowPlayingTvShows)
                     .onFailure(::handleFailure)

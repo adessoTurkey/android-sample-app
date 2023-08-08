@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchUserDetailsUseCase
 import com.adesso.movee.domain.GetLoginStateUseCase
@@ -34,10 +35,10 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getLoginState() {
-        bgScope.launch {
+        viewModelScope.launch {
             val loginStateResult = getLoginStateUseCase.run(UseCase.None)
 
-            onUIThread {
+            runOnViewModelScope {
                 loginStateResult
                     .onSuccess(::handleLoginStateSuccess)
                     .onFailure(::handleFailure)
@@ -62,10 +63,10 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun fetchUserDetails() {
-        bgScope.launch {
+        viewModelScope.launch {
             val userDetailsResult = fetchUserDetailsUseCase.run(UseCase.None)
 
-            onUIThread {
+            runOnViewModelScope {
                 userDetailsResult
                     .onSuccess(::postUserDetails)
                     .onFailure(::handleFailure)
