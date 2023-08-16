@@ -1,15 +1,24 @@
 package com.adesso.movee.data.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.adesso.movee.data.local.database.entity.MovieGenreEntity
-import com.adesso.movee.data.local.database.entity.NowPlayingMovieIdEntity
-import com.adesso.movee.data.local.database.entity.PopularMovieIdEntity
+import com.adesso.movee.data.local.database.entity.NowPlayingMovieIdPageEntity
+import com.adesso.movee.data.local.database.entity.PopularMovieEntity
+import com.adesso.movee.data.local.database.entity.PopularMovieIdPageEntity
 import com.adesso.movee.data.local.datasource.MovieLocalDataSource
 import com.adesso.movee.data.remote.datasource.MovieRemoteDataSource
+import com.adesso.movee.data.remote.mediator.PopularMovieRemoteMediator
 import com.adesso.movee.uimodel.MovieUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 @Singleton
 class MovieRepository @Inject constructor(
@@ -17,8 +26,25 @@ class MovieRepository @Inject constructor(
     private val remoteDataSource: MovieRemoteDataSource
 ) {
 
-    suspend fun fetchPopularMovies(): List<MovieUiModel> = coroutineScope {
-        val deferredPopularMovieResponse = async { remoteDataSource.fetchPopularMovies() }
+    @OptIn(ExperimentalPagingApi::class)
+    fun getPopularMoviesPagingFlow(): Flow<PagingData<MovieUiModel>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            remoteMediator = PopularMovieRemoteMediator(
+                fetchPopularMovies = ::fetchPopularMovies,
+                getLastPageInLocal = localDataSource::getLastPageInDataSource,
+                clearLocalData = localDataSource::clearPopularMovieData
+            ),
+            pagingSourceFactory = { localDataSource.getPopularMoviesWithGenresPagingSource() }
+        ).flow.map { pagingData ->
+            pagingData.map {
+                it.toUiModel()
+            }
+        }
+    }
+
+    private suspend fun fetchPopularMovies(page: Int): List<PopularMovieEntity> = coroutineScope {
+        val deferredPopularMovieResponse = async { remoteDataSource.fetchPopularMovies(page) }
         checkMovieGenres()
 
         deferredPopularMovieResponse.await()
@@ -29,22 +55,15 @@ class MovieRepository @Inject constructor(
                         movieModel.toMovieGenreCrossRefEntity(it)
                     )
                 }
-                movieModel.toMovieEntity()
+                movieModel.toPopularMovieEntity()
             }
             .also { movieEntityList ->
-                localDataSource.insertMovies(movieEntityList)
+                localDataSource.insertPopularMovies(movieEntityList)
                 localDataSource.insertPopularMovieIds(
                     movieEntityList.map {
-                        PopularMovieIdEntity(it.id)
+                        PopularMovieIdPageEntity(it.id, page)
                     }
                 )
-            }
-
-        val movieIds = localDataSource.getPopularMovieIds()
-        localDataSource
-            .getMoviesWithGenres(movieIds)
-            .map { movieWithGenres ->
-                movieWithGenres.toUiModel()
             }
     }
 
@@ -76,14 +95,14 @@ class MovieRepository @Inject constructor(
                         movieModel.toMovieGenreCrossRefEntity(it)
                     )
                 }
-                movieModel.toMovieEntity()
+                movieModel.toNowPlayingMovieEntity()
             }
             .also { movieEntityList ->
-                localDataSource.insertMovies(movieEntityList)
+                localDataSource.insertNowPlayingMovies(movieEntityList)
                 localDataSource.insertNowPlayingMovieIds(
                     movieEntityList.map {
-                        NowPlayingMovieIdEntity(
-                            it.id
+                        NowPlayingMovieIdPageEntity(
+                            it.id, 1
                         )
                     }
                 )
@@ -91,7 +110,7 @@ class MovieRepository @Inject constructor(
 
         val movieIds = localDataSource.getNowPlayingMovieIds()
         localDataSource
-            .getMoviesWithGenres(movieIds)
+            .getNowPlayingMoviesWithGenres(movieIds)
             .map { movieWithGenres ->
                 movieWithGenres.toUiModel()
             }

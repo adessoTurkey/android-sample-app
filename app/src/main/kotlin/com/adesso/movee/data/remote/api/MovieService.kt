@@ -7,11 +7,12 @@ import com.adesso.movee.data.remote.model.movie.NowPlayingMovieResponseModel
 import com.adesso.movee.data.remote.model.movie.PopularMovieResponseModel
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieService {
 
     @GET(POPULAR)
-    suspend fun fetchPopularMovies(): PopularMovieResponseModel
+    suspend fun fetchPopularMovies(@Query(QUERY_PAGE) page: Int = 1): PopularMovieResponseModel
 
     @GET(GENRE)
     suspend fun fetchMovieGenres(): MovieGenreResponseModel
@@ -30,6 +31,7 @@ interface MovieService {
         const val GENRE = "genre/movie/list"
         const val NOW_PLAYING = "movie/now_playing"
         const val PATH_MOVIE_ID = "movie_id"
+        const val QUERY_PAGE = "page"
         const val DETAIL = "movie/{$PATH_MOVIE_ID}"
         const val CREDIT = "movie/{$PATH_MOVIE_ID}/credits"
     }

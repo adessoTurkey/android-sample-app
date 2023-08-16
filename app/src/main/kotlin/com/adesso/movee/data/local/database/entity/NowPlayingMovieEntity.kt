@@ -8,8 +8,8 @@ import com.adesso.movee.uimodel.MovieGenreUiModel
 import com.adesso.movee.uimodel.MovieUiModel
 import java.util.Date
 
-@Entity(tableName = "movie")
-data class MovieEntity(
+@Entity(tableName = "now_playing_movie")
+data class NowPlayingMovieEntity(
     @ColumnInfo(name = "id") @PrimaryKey val id: Long,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "overview") val overview: String,

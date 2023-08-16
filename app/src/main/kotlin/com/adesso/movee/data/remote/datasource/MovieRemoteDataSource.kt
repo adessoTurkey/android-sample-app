@@ -13,8 +13,8 @@ class MovieRemoteDataSource @Inject constructor(
     private val service: MovieService
 ) : BaseRemoteDataSource() {
 
-    suspend fun fetchPopularMovies(): PopularMovieResponseModel = invoke {
-        service.fetchPopularMovies()
+    suspend fun fetchPopularMovies(page: Int): PopularMovieResponseModel = invoke {
+        service.fetchPopularMovies(page)
     }
 
     suspend fun fetchMovieGenres(): MovieGenreResponseModel = invoke {

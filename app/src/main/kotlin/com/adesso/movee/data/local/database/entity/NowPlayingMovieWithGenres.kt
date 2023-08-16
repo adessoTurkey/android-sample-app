@@ -6,8 +6,8 @@ import androidx.room.Relation
 import com.adesso.movee.internal.extension.convertMovieGenres
 import com.adesso.movee.uimodel.MovieUiModel
 
-data class MovieWithGenres(
-    @Embedded val movie: MovieEntity,
+class NowPlayingMovieWithGenres(
+    @Embedded val movie: NowPlayingMovieEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "genre_id",
