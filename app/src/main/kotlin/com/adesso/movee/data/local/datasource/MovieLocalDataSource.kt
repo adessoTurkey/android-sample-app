@@ -52,9 +52,10 @@ class MovieLocalDataSource @Inject constructor(
         return popularMovieDao.getMoviesWithGenresByIds(movieIds)
     }
 
-    suspend fun getNowPlayingMoviesWithGenres(movieIds: List<Long>): List<NowPlayingMovieWithGenres> {
-        return nowPlayingMovieDao.getMoviesWithGenresByIds(movieIds)
-    }
+    suspend fun getNowPlayingMoviesWithGenres(movieIds: List<Long>):
+        List<NowPlayingMovieWithGenres> {
+            return nowPlayingMovieDao.getMoviesWithGenresByIds(movieIds)
+        }
 
     suspend fun getPopularMovieIds(): List<Long> {
         return popularMovieIdPageDao.getIds()

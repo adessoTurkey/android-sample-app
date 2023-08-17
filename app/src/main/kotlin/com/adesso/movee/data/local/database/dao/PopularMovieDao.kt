@@ -12,7 +12,8 @@ abstract class PopularMovieDao : BaseDao<PopularMovieEntity> {
 
     @Transaction
     @Query("SELECT * FROM popular_movie WHERE id IN (:movieIds)")
-    abstract suspend fun getMoviesWithGenresByIds(movieIds: List<Long>): List<PopularMovieWithGenres>
+    abstract suspend fun getMoviesWithGenresByIds(movieIds: List<Long>):
+        List<PopularMovieWithGenres>
 
     @Transaction
     @Query("SELECT * FROM popular_movie")

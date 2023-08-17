@@ -9,9 +9,12 @@ import androidx.annotation.DrawableRes
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseListAdapter
+import com.adesso.movee.base.BasePagingAdapter
 import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.internal.extension.loadImage
 import com.adesso.movee.internal.extension.setOnDrawableEndClickListener
@@ -50,9 +53,19 @@ fun visibleIf(view: View, shouldVisible: Boolean) {
 
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("submitList")
-fun submitList(view: RecyclerView, list: List<ListAdapterItem>?) {
-    val adapter = view.adapter as BaseListAdapter<ViewDataBinding, ListAdapterItem>?
+fun <T : ListAdapterItem> submitList(view: RecyclerView, list: List<T>?) {
+    val adapter = view.adapter as BaseListAdapter<ViewDataBinding, T>?
     adapter?.submitList(list)
+}
+
+@Suppress("UNCHECKED_CAST")
+@BindingAdapter("submitList")
+fun <T : ListAdapterItem> submitList(view: RecyclerView, data: PagingData<T>) {
+    val adapter = view.adapter as BasePagingAdapter<ViewDataBinding, T>?
+
+    if (ViewTreeLifecycleOwner.get(view)?.lifecycle == null) return
+
+    adapter?.submitData(ViewTreeLifecycleOwner.get(view)!!.lifecycle, data)
 }
 
 @BindingAdapter("adapter")
