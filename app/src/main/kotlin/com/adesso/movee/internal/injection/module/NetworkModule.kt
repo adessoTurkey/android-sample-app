@@ -21,6 +21,7 @@ import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -44,7 +45,7 @@ object NetworkModule {
      */
     @Provides
     @Singleton
-    fun providesCache(context: Context): Cache = Cache(
+    fun providesCache(@ApplicationContext context: Context): Cache = Cache(
         File(
             context.cacheDir,
             CLIENT_CACHE_DIRECTORY
@@ -79,7 +80,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        context: Context,
+        @ApplicationContext context: Context,
         cache: Cache,
         loggingInterceptor: HttpLoggingInterceptor,
         curlInterceptor: CurlInterceptor,

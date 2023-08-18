@@ -4,6 +4,7 @@ import android.content.Context
 import com.adesso.movee.R
 import com.adesso.movee.data.local.datasource.LoginLocalDataSource
 import com.adesso.movee.internal.util.Failure
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -12,7 +13,7 @@ const val HEADER_REQUIRE_SESSION_TOKEN =
     "${RequiresSessionTokenInterceptor.HEADER_KEY}: ${RequiresSessionTokenInterceptor.HEADER_VALUE}"
 
 class RequiresSessionTokenInterceptor @Inject constructor(
-    context: Context,
+    @ApplicationContext context: Context,
     private val loginLocalDataSource: LoginLocalDataSource
 ) : Interceptor {
 

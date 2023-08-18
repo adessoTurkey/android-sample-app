@@ -19,9 +19,11 @@ import com.adesso.movee.uimodel.ShowUiModel
 import com.adesso.movee.uimodel.TvShowUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class TvShowViewModel @Inject constructor(
     private val fetchTopRatedTvShowsUseCase: FetchTopRatedTvShowsUseCase,
     private val fetchNowPlayingTvShowsUseCase: FetchNowPlayingTvShowsUseCase,

@@ -21,12 +21,15 @@ import com.adesso.movee.uimodel.ShowHeaderUiModel
 import com.adesso.movee.uimodel.ShowUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+@HiltViewModel
 class MovieViewModel @Inject constructor(
     private val getPopularMoviesPagingFlowUseCase: GetPopularMoviesPagingFlowUseCase,
     private val fetchNowPlayingMoviesUseCase: FetchNowPlayingMoviesUseCase,

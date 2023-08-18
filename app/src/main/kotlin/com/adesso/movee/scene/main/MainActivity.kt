@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -17,9 +18,10 @@ import com.adesso.movee.navigation.NavigationCommand
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseBindingActivity<MainViewModel, ActivityMainBinding>() {
+class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
     override val layoutId get() = R.layout.activity_main
+    private val viewModel: MainViewModel by viewModels()
 
     val navController: NavController by lazy { findNavController(R.id.main_host_fragment) }
 
