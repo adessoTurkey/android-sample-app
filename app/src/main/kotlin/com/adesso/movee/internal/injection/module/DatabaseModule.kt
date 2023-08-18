@@ -3,12 +3,13 @@ package com.adesso.movee.internal.injection.module
 import android.app.Application
 import androidx.room.Room
 import com.adesso.movee.data.local.database.MainDatabase
-import com.adesso.movee.data.local.database.dao.MovieDao
+import com.adesso.movee.data.local.database.dao.PopularMovieDao
 import com.adesso.movee.data.local.database.dao.MovieGenreCrossRefDao
 import com.adesso.movee.data.local.database.dao.MovieGenreDao
-import com.adesso.movee.data.local.database.dao.NowPlayingMovieIdDao
+import com.adesso.movee.data.local.database.dao.NowPlayingMovieDao
+import com.adesso.movee.data.local.database.dao.NowPlayingMovieIdPageDao
 import com.adesso.movee.data.local.database.dao.NowPlayingTvShowIdDao
-import com.adesso.movee.data.local.database.dao.PopularMovieIdDao
+import com.adesso.movee.data.local.database.dao.PopularMovieIdPageDao
 import com.adesso.movee.data.local.database.dao.TopRatedTvShowIdDao
 import com.adesso.movee.data.local.database.dao.TvShowDao
 import com.adesso.movee.data.local.database.dao.TvShowGenreCrossRefDao
@@ -38,19 +39,25 @@ internal class DatabaseModule {
 
     @Provides
     @Singleton
-    internal fun provideMovieDao(mainDatabase: MainDatabase): MovieDao {
-        return mainDatabase.movieDao()
+    internal fun providePopularMovieDao(mainDatabase: MainDatabase): PopularMovieDao {
+        return mainDatabase.popularMovieDao()
     }
 
     @Provides
     @Singleton
-    internal fun providePopularMovieIdDao(mainDatabase: MainDatabase): PopularMovieIdDao {
+    internal fun provideNowPlayingMovieDao(mainDatabase: MainDatabase): NowPlayingMovieDao {
+        return mainDatabase.nowPlayingMovieDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun providePopularMovieIdDao(mainDatabase: MainDatabase): PopularMovieIdPageDao {
         return mainDatabase.popularMovieIdDao()
     }
 
     @Provides
     @Singleton
-    internal fun provideNowPlayingMovieIdDao(mainDatabase: MainDatabase): NowPlayingMovieIdDao {
+    internal fun provideNowPlayingMovieIdDao(mainDatabase: MainDatabase): NowPlayingMovieIdPageDao {
         return mainDatabase.nowPlayingMovieIdDao()
     }
 

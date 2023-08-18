@@ -58,7 +58,8 @@ ext {
             crypto          : '1.1.0-alpha03',
             robolectric     : '4.9',
             ktlint          : '0.40.0',
-            kotlinResult    : '1.1.16'
+            kotlinResult    : '1.1.16',
+            paging          : '3.1.1',
     ]
 
     dependency = [
@@ -77,10 +78,12 @@ ext {
                     "androidx.viewpager2:viewpager2:$version.viewPager2",
                     "androidx.preference:preference-ktx:$version.preference",
                     "androidx.room:room-runtime:$version.room",
+                    "androidx.room:room-paging:$version.room",
                     "androidx.room:room-ktx:$version.room",
                     "androidx.lifecycle:lifecycle-viewmodel-ktx:$version.lifecycle",
                     "androidx.lifecycle:lifecycle-livedata-ktx:$version.lifecycle",
                     "androidx.lifecycle:lifecycle-common-java8:$version.lifecycle",
+                    "androidx.paging:paging-runtime:$version.paging"
             ],
 
             dagger = [
