@@ -27,7 +27,6 @@ ext {
     ]
 
     version = [
-            dagger          : '2.45',
             retrofit        : '2.9.0',
             okhttp          : '4.10.0',
             moshi           : '1.14.0',
@@ -59,6 +58,8 @@ ext {
             robolectric     : '4.9',
             ktlint          : '0.40.0',
             kotlinResult    : '1.1.16',
+            hilt            : '2.44',
+            kotlinResult    : '1.1.16',
             paging          : '3.1.1',
     ]
 
@@ -86,9 +87,8 @@ ext {
                     "androidx.paging:paging-runtime:$version.paging"
             ],
 
-            dagger = [
-                    "com.google.dagger:dagger:$version.dagger",
-                    "com.google.dagger:dagger-android-support:$version.dagger",
+            hiltt = [
+                    "com.google.dagger:hilt-android:$version.hilt",
             ],
 
             common = [
@@ -99,9 +99,8 @@ ext {
             ],
 
             commonKapt = [
-                    "com.google.dagger:dagger-compiler:$version.dagger",
-                    "com.google.dagger:dagger-android-processor:$version.dagger",
                     "androidx.room:room-compiler:$version.room",
+                    "com.google.dagger:hilt-android-compiler:$version.hilt"
             ],
 
             network = [

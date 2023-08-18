@@ -13,9 +13,11 @@ import com.adesso.movee.uimodel.LoginState
 import com.adesso.movee.uimodel.UserDetailUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val fetchUserDetailsUseCase: FetchUserDetailsUseCase,
     private val getLoginStateUseCase: GetLoginStateUseCase,

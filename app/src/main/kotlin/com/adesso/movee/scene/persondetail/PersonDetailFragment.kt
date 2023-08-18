@@ -5,7 +5,9 @@ import com.adesso.movee.R
 import com.adesso.movee.base.BaseTransparentStatusBarFragment
 import com.adesso.movee.databinding.FragmentPersonDetailBinding
 import com.adesso.movee.internal.util.addAppBarStateChangeListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PersonDetailFragment :
     BaseTransparentStatusBarFragment<PersonDetailViewModel, FragmentPersonDetailBinding>() {
 

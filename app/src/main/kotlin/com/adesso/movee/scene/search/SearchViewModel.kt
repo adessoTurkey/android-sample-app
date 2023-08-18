@@ -13,11 +13,13 @@ import com.adesso.movee.uimodel.PersonMultiSearchUiModel
 import com.adesso.movee.uimodel.TvShowMultiSearchUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class SearchViewModel @Inject constructor(
     private val multiSearchUseCase: MultiSearchUseCase,
     application: Application

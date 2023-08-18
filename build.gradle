@@ -15,6 +15,7 @@ buildscript {
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$it.version.spotless"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$version.detekt"
         classpath "com.github.ben-manes:gradle-versions-plugin:$version.gradleVersions"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$version.hilt"
     }
 }
 

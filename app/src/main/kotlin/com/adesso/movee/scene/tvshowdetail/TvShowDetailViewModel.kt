@@ -13,9 +13,11 @@ import com.adesso.movee.uimodel.TvShowCreditUiModel
 import com.adesso.movee.uimodel.TvShowDetailUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class TvShowDetailViewModel @Inject constructor(
     private val fetchTvShowDetailUseCase: FetchTvShowDetailUseCase,
     private val fetchTvShowCreditsUseCase: FetchTvShowCreditsUseCase,

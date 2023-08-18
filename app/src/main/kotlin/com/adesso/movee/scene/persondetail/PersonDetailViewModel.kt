@@ -13,9 +13,11 @@ import com.adesso.movee.internal.util.AppBarStateChangeListener.State.IDLE
 import com.adesso.movee.uimodel.PersonDetailUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class PersonDetailViewModel @Inject constructor(
     private val fetchPersonDetailsUseCase: FetchPersonDetailsUseCase,
     application: Application

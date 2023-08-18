@@ -1,6 +1,5 @@
 package com.adesso.movee.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,18 +25,11 @@ import com.adesso.movee.navigation.NavigationCommand
 import com.adesso.movee.scene.main.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
 abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
-    BottomSheetDialogFragment(), HasAndroidInjector {
-
-    @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    BottomSheetDialogFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -73,13 +65,6 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
         Lazy<VM> {
             return navGraphViewModels(navGraphId) { viewModelFactory }
         }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
