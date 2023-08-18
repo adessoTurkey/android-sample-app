@@ -36,12 +36,6 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideMovieDao(mainDatabase: MainDatabase): MovieDao {
-        return mainDatabase.movieDao()
-    }
-
-    @Provides
-    @Singleton
     fun providePopularMovieDao(mainDatabase: MainDatabase): PopularMovieDao {
         return mainDatabase.popularMovieDao()
     }
