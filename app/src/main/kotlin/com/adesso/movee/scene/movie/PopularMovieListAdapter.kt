@@ -15,6 +15,10 @@ class PopularMovieListAdapter(
     private val popularMovieCallback: PopularMovieCallback,
 ) : BasePagingAdapter<ItemPopularMovieBinding, MovieUiModel>() {
 
+    init {
+        stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
+    }
+
     override val layoutRes: Int get() = R.layout.item_popular_movie
 
     override fun bind(binding: ItemPopularMovieBinding, item: MovieUiModel) {
