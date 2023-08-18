@@ -20,7 +20,7 @@ interface ShowUiModel : ListAdapterItem, Serializable {
 
     val releaseDate: Date?
 
-    val averageString: String get() = average.toString()
+    val averageString: String get() = String.format("%.1f", average)
 
     val releaseDateString: String
         get() = releaseDate?.formatDate(DATE_FORMAT_SHOW) ?: ""
