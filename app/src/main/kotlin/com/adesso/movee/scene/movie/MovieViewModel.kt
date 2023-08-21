@@ -10,6 +10,7 @@ import com.adesso.movee.R
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
 import com.adesso.movee.domain.GetPopularMoviesPagingFlowUseCase
+import com.adesso.movee.domain.ShouldRefreshPagingUseCase
 import com.adesso.movee.internal.util.AppBarStateChangeListener
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.COLLAPSED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.EXPANDED
@@ -22,17 +23,20 @@ import com.adesso.movee.uimodel.ShowUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val getPopularMoviesPagingFlowUseCase: GetPopularMoviesPagingFlowUseCase,
     private val fetchNowPlayingMoviesUseCase: FetchNowPlayingMoviesUseCase,
+    private val shouldRefreshPagingUseCase: ShouldRefreshPagingUseCase,
     application: Application
 ) : BaseAndroidViewModel(application) {
 
@@ -52,6 +56,19 @@ class MovieViewModel @Inject constructor(
             nowPlayingShows
         )
     }
+
+    private val _shouldRefreshPaging = MutableStateFlow(false)
+    val shouldRefreshPaging: StateFlow<Boolean>
+        get() {
+            viewModelScope.launch {
+                shouldRefreshPagingUseCase.execute().collectLatest {
+                    Timber.d("SHOULD REFRESH: $it")
+                    _shouldRefreshPaging.value = it
+                }
+            }
+
+            return _shouldRefreshPaging.asStateFlow()
+        }
 
     init {
         fetchPopularMovies()
