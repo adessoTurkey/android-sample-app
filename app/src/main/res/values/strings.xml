@@ -16,6 +16,8 @@
     <string name="common_error_unauthorized">Only logged in users can perform this operation</string>
 
     <string name="common_text_cast">Cast</string>
+
+    <string name="common_paging_list_refreshed_message">Lists have been refreshed.</string>
     <!-- endregion -->
 
     <!-- region Movie -->
@@ -81,7 +83,6 @@
     <string name="login_message_forgot_password">Forgot Password?</string>
     <string name="login_message_login">Login</string>
     <string name="login_message_register">Don\'t have an account? Register now</string>
-    <string name="paging_list_refreshed_message">Lists have been refreshed.</string>
     <!-- endregion -->
 
 </resources>

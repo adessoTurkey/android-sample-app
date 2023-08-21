@@ -45,7 +45,7 @@ class MovieFragment :
             viewModel.shouldRefreshPaging.collectLatest {
                 if (it) {
                     binder.popularMovieAdapter?.refresh()
-                    requireContext().toast(getString(R.string.paging_list_refreshed_message))
+                    requireContext().toast(getString(R.string.common_paging_list_refreshed_message))
                     binder.recyclerViewPopularMovies.scrollToPosition(0)
                 }
             }
