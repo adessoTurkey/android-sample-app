@@ -34,11 +34,25 @@ class NetworkConnectionDispatcherImpl @Inject constructor(
     init {
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 
+        _state.trySend(getConnectionState())
+
+        registerNetworkCallback()
+    }
+
+    private fun getConnectionState(): NetworkConnection {
+        return if (context.isNetworkAvailable()) {
+            NetworkConnection.AVAILABLE
+        } else {
+            NetworkConnection.UNAVAILABLE
+        }
+    }
+
+    private fun registerNetworkCallback() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val connectivityManager = context.getSystemService(ConnectivityManager::class.java)
 
-            connectivityManager.registerDefaultNetworkCallback(object :
-                    ConnectivityManager.NetworkCallback() {
+            connectivityManager.registerDefaultNetworkCallback(
+                object : ConnectivityManager.NetworkCallback() {
                     override fun onAvailable(network: Network) {
                         _state.trySend(NetworkConnection.AVAILABLE)
                     }
@@ -51,14 +65,7 @@ class NetworkConnectionDispatcherImpl @Inject constructor(
             launch {
                 while (true) {
                     delay(3000)
-
-                    val state = if (context.isNetworkAvailable()) {
-                        NetworkConnection.AVAILABLE
-                    } else {
-                        NetworkConnection.UNAVAILABLE
-                    }
-
-                    _state.send(state)
+                    _state.send(getConnectionState())
                 }
             }
         }
