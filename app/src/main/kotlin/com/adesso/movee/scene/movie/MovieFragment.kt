@@ -1,17 +1,15 @@
 package com.adesso.movee.scene.movie
 
-import androidx.lifecycle.lifecycleScope
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseFragment
 import com.adesso.movee.databinding.FragmentMovieBinding
+import com.adesso.movee.internal.extension.collectFlow
 import com.adesso.movee.internal.extension.toast
 import com.adesso.movee.internal.util.addAppBarStateChangeListener
 import com.adesso.movee.uimodel.MovieUiModel
 import com.adesso.movee.uimodel.ShowUiModel
 import com.adesso.movee.widget.nowplayingshow.NowPlayingShowCallback
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieFragment :
@@ -41,13 +39,11 @@ class MovieFragment :
     }
 
     private fun setShouldRefreshPagingListener() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.shouldRefreshPaging.collectLatest {
-                if (it) {
-                    binder.popularMovieAdapter?.refresh()
-                    requireContext().toast(getString(R.string.common_paging_list_refreshed_message))
-                    binder.recyclerViewPopularMovies.scrollToPosition(0)
-                }
+        collectFlow(viewModel.shouldRefreshPaging) {
+            if (it) {
+                binder.popularMovieAdapter?.refresh()
+                requireContext().toast(getString(R.string.common_paging_list_refreshed_message))
+                binder.recyclerViewPopularMovies.scrollToPosition(0)
             }
         }
     }

@@ -26,11 +26,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
@@ -57,18 +54,7 @@ class MovieViewModel @Inject constructor(
         )
     }
 
-    private val _shouldRefreshPaging = MutableStateFlow(false)
-    val shouldRefreshPaging: StateFlow<Boolean>
-        get() {
-            viewModelScope.launch {
-                shouldRefreshPagingUseCase.execute().collectLatest {
-                    Timber.d("SHOULD REFRESH: $it")
-                    _shouldRefreshPaging.value = it
-                }
-            }
-
-            return _shouldRefreshPaging.asStateFlow()
-        }
+    val shouldRefreshPaging = shouldRefreshPagingUseCase.execute()
 
     init {
         fetchPopularMovies()
