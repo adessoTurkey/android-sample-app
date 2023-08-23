@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:visibleIf="@{!viewModel.shouldShowLoginView}"
+        app:visibleIf="@{viewModel.shouldShowLoginView}"
         tools:visibility="gone">
 
         <androidx.appcompat.widget.AppCompatButton

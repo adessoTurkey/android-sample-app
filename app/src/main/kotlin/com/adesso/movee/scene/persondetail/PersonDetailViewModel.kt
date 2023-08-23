@@ -1,8 +1,6 @@
 package com.adesso.movee.scene.persondetail
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchPersonDetailsUseCase
@@ -13,6 +11,8 @@ import com.adesso.movee.internal.util.AppBarStateChangeListener.State.IDLE
 import com.adesso.movee.uimodel.PersonDetailUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,10 +23,10 @@ class PersonDetailViewModel @Inject constructor(
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val _personDetails = MutableLiveData<PersonDetailUiModel>()
-    private val _profileToolbarTitle = MutableLiveData<String>()
-    val personDetails: LiveData<PersonDetailUiModel> get() = _personDetails
-    val profileToolbarTitle: LiveData<String> get() = _profileToolbarTitle
+    private val _personDetails = MutableStateFlow<PersonDetailUiModel?>(null)
+    private val _profileToolbarTitle = MutableStateFlow<String?>(null)
+    val personDetails: StateFlow<PersonDetailUiModel?> get() = _personDetails
+    val profileToolbarTitle: StateFlow<String?> get() = _profileToolbarTitle
 
     fun fetchPersonDetails(personId: Long) {
         if (_personDetails.value == null) {

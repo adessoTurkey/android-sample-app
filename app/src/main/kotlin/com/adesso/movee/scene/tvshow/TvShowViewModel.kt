@@ -1,8 +1,6 @@
 package com.adesso.movee.scene.tvshow
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseAndroidViewModel
@@ -12,7 +10,6 @@ import com.adesso.movee.internal.util.AppBarStateChangeListener
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.COLLAPSED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.EXPANDED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.IDLE
-import com.adesso.movee.internal.util.TripleCombinedLiveData
 import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.uimodel.ShowHeaderUiModel
 import com.adesso.movee.uimodel.ShowUiModel
@@ -20,6 +17,11 @@ import com.adesso.movee.uimodel.TvShowUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,22 +32,22 @@ class TvShowViewModel @Inject constructor(
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val _topRatedTvShows = MutableLiveData<List<TvShowUiModel>>()
-    private val _toolbarTitle = MutableLiveData<String>()
-    private val _toolbarSubtitle = MutableLiveData(getString(R.string.tv_show_message_top_rated))
-    private val _nowPlayingTvShows = MutableLiveData<List<TvShowUiModel>>()
-    val topRatedTvShows: LiveData<List<TvShowUiModel>> get() = _topRatedTvShows
-    val showHeader = TripleCombinedLiveData(
+    private val _topRatedTvShows = MutableStateFlow<List<TvShowUiModel>?>(null)
+    private val _toolbarTitle = MutableStateFlow<String?>(null)
+    private val _toolbarSubtitle = MutableStateFlow(getString(R.string.tv_show_message_top_rated))
+    private val _nowPlayingTvShows = MutableStateFlow<List<TvShowUiModel>?>(null)
+    val topRatedTvShows: StateFlow<List<TvShowUiModel>?> get() = _topRatedTvShows
+    val showHeader = combine(
         _toolbarTitle,
         _toolbarSubtitle,
         _nowPlayingTvShows
-    ) { title, subtitle, nowPlayingShows ->
+    ) { title, subtitle, nowPlayingTvShows ->
         ShowHeaderUiModel(
-            title,
-            subtitle,
-            nowPlayingShows
+            title = title,
+            subtitle = subtitle,
+            nowPlayingShows = nowPlayingTvShows
         )
-    }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     init {
         fetchTopRatedTvShows()
