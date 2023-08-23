@@ -3,6 +3,8 @@ package com.adesso.movee.scene.movie
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseFragment
 import com.adesso.movee.databinding.FragmentMovieBinding
+import com.adesso.movee.internal.extension.collectFlow
+import com.adesso.movee.internal.extension.toast
 import com.adesso.movee.internal.util.addAppBarStateChangeListener
 import com.adesso.movee.uimodel.MovieUiModel
 import com.adesso.movee.uimodel.ShowUiModel
@@ -25,6 +27,7 @@ class MovieFragment :
         binder.layoutShowHeader.appBarShow.addAppBarStateChangeListener { _, state ->
             viewModel.appbarStateChanged(state)
         }
+        setShouldRefreshPagingListener()
     }
 
     override fun onPopularMovieClick(movie: MovieUiModel) {
@@ -33,5 +36,15 @@ class MovieFragment :
 
     override fun onNowPlayingShowClick(show: ShowUiModel) {
         viewModel.onNowPlayingShowClick(show)
+    }
+
+    private fun setShouldRefreshPagingListener() {
+        collectFlow(viewModel.shouldRefreshPaging) {
+            if (it) {
+                binder.popularMovieAdapter?.refresh()
+                requireContext().toast(getString(R.string.common_paging_list_refreshed_message))
+                binder.recyclerViewPopularMovies.scrollToPosition(0)
+            }
+        }
     }
 }

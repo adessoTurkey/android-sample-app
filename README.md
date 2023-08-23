@@ -71,6 +71,7 @@ If you want to know more about naming convention, code style and more please loo
 - **[Retrofit](https://github.com/square/retrofit):** Type safe HTTP client
 - **[Moshi](https://github.com/square/moshi):** JSON serializer/deserializer
 - **[Room](https://developer.android.com/topic/libraries/architecture/room):** Object mapping for SQLite
+- **[Paging3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview):** Load and display pages of data
 
 #### Plugins
 

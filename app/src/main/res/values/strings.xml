@@ -16,6 +16,8 @@
     <string name="common_error_unauthorized">Only logged in users can perform this operation</string>
 
     <string name="common_text_cast">Cast</string>
+
+    <string name="common_paging_list_refreshed_message">Lists have been refreshed.</string>
     <!-- endregion -->
 
     <!-- region Movie -->
