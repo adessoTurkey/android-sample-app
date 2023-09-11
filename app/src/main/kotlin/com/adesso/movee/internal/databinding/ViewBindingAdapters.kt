@@ -68,13 +68,6 @@ fun <T : ListAdapterItem> submitList(view: RecyclerView, data: PagingData<T>) {
     adapter?.submitData(ViewTreeLifecycleOwner.get(view)!!.lifecycle, data)
 }
 
-@BindingAdapter("adapter")
-fun setAdapter(view: RecyclerView, adapter: BaseListAdapter<ViewDataBinding, ListAdapterItem>?) {
-    adapter?.let {
-        view.adapter = it
-    }
-}
-
 @BindingAdapter("spaceItemDecoration")
 fun addSpaceItemDecoration(view: RecyclerView, @Dimension space: Float) {
     val spaceItemDecoration = GridLayoutSpaceItemDecoration(space.toInt())

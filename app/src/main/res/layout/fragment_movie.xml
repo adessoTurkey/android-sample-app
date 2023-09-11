@@ -12,7 +12,7 @@
 
         <variable
             name="popularMovieAdapter"
-            type="com.adesso.movee.scene.movie.PopularMovieListAdapter" />
+            type="com.adesso.movee.scene.movie.PopularMoviePagingAdapter" />
 
     </data>
 

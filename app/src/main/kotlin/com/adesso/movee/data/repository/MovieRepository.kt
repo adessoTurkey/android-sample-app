@@ -6,18 +6,21 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.adesso.movee.data.local.database.entity.MovieGenreEntity
+import com.adesso.movee.data.local.database.entity.NowPlayingMovieEntity
 import com.adesso.movee.data.local.database.entity.NowPlayingMovieIdPageEntity
 import com.adesso.movee.data.local.database.entity.PopularMovieEntity
 import com.adesso.movee.data.local.database.entity.PopularMovieIdPageEntity
 import com.adesso.movee.data.local.datasource.MovieLocalDataSource
 import com.adesso.movee.data.remote.datasource.MovieRemoteDataSource
+import com.adesso.movee.data.remote.mediator.NowPlayingMovieRemoteMediator
 import com.adesso.movee.data.remote.mediator.PopularMovieRemoteMediator
+import com.adesso.movee.data.remote.model.movie.NowPlayingMovieResponseModel
 import com.adesso.movee.data.remote.model.movie.PopularMovieResponseModel
 import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.uimodel.MovieUiModel
 import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.toResultOr
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
@@ -39,9 +42,25 @@ class MovieRepository @Inject constructor(
             config = PagingConfig(pageSize = 20),
             remoteMediator = PopularMovieRemoteMediator(
                 fetchPopularMovies = ::fetchPopularMovies,
-                getLastPageInLocal = localDataSource::getLastPageInDataSource
+                getLastPageInLocal = localDataSource::getPopularMoviesLastPage
             ),
             pagingSourceFactory = { localDataSource.getPopularMoviesWithGenresPagingSource() }
+        ).flow.map { pagingData ->
+            pagingData.map {
+                it.toUiModel()
+            }
+        }
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    fun getNowPlayingMoviesPagingFlow(): Flow<PagingData<MovieUiModel>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            remoteMediator = NowPlayingMovieRemoteMediator(
+                fetchNowPlayingMovies = ::fetchNowPlayingMovies,
+                getLastPageInLocal = localDataSource::getMovieNowPlayingLastPage
+            ),
+            pagingSourceFactory = { localDataSource.getNowPlayingMoviesWithGenresPagingSource() }
         ).flow.map { pagingData ->
             pagingData.map {
                 it.toUiModel()
@@ -86,7 +105,7 @@ class MovieRepository @Inject constructor(
                                     PopularMovieIdPageEntity(it.id, page)
                                 }
                             )
-                        }.toResultOr { Failure.IoError }
+                        }.run { Ok(this) }
                 }
             } catch (failure: Failure) {
                 Err(failure)
@@ -109,38 +128,48 @@ class MovieRepository @Inject constructor(
             .also { localDataSource.insertGenres(it) }
     }
 
-    suspend fun fetchNowPlayingMovies(): List<MovieUiModel> = coroutineScope {
-        val deferredNowPlayingMovieResponse = async { remoteDataSource.fetchNowPlayingMovies() }
-        checkMovieGenres()
+    private suspend fun fetchNowPlayingMovies(page: Int, clearLocalData: Boolean):
+        Result<List<NowPlayingMovieEntity>, Failure> {
+            return try {
+                coroutineScope {
+                    val response: NowPlayingMovieResponseModel
 
-        deferredNowPlayingMovieResponse.await()
-            .movieList
-            .map { movieModel ->
-                movieModel.genreIds.map {
-                    localDataSource.insertMovieGenreCrossRef(
-                        movieModel.toMovieGenreCrossRefEntity(it)
-                    )
-                }
-                movieModel.toNowPlayingMovieEntity()
-            }
-            .also { movieEntityList ->
-                localDataSource.insertNowPlayingMovies(movieEntityList)
-                localDataSource.insertNowPlayingMovieIds(
-                    movieEntityList.map {
-                        NowPlayingMovieIdPageEntity(
-                            it.id, 1
-                        )
+                    try {
+                        val deferredNowPlayingResponse =
+                            async { remoteDataSource.fetchNowPlayingMovies(page) }
+                        checkMovieGenres()
+
+                        response = deferredNowPlayingResponse.await()
+                    } catch (failure: Failure) {
+                        throw failure
                     }
-                )
-            }
 
-        val movieIds = localDataSource.getNowPlayingMovieIds()
-        localDataSource
-            .getNowPlayingMoviesWithGenres(movieIds)
-            .map { movieWithGenres ->
-                movieWithGenres.toUiModel()
+                    if (clearLocalData) {
+                        withContext(Dispatchers.IO) { localDataSource.clearNowPlayingMovieData() }
+                    }
+
+                    response.movieList
+                        .map { movieModel ->
+                            movieModel.genreIds.map {
+                                localDataSource.insertMovieGenreCrossRef(
+                                    movieModel.toMovieGenreCrossRefEntity(it)
+                                )
+                            }
+                            movieModel.toNowPlayingMovieEntity()
+                        }
+                        .also { movieEntityList ->
+                            localDataSource.insertNowPlayingMovies(movieEntityList)
+                            localDataSource.insertNowPlayingMovieIds(
+                                movieEntityList.map {
+                                    NowPlayingMovieIdPageEntity(it.id, page)
+                                }
+                            )
+                        }.run { Ok(this) }
+                }
+            } catch (failure: Failure) {
+                Err(failure)
             }
-    }
+        }
 
     suspend fun fetchMovieDetail(id: Long) = remoteDataSource.fetchMovieDetail(id).toUiModel()
 

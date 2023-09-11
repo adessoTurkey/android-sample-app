@@ -11,15 +11,10 @@ import com.adesso.movee.data.local.database.entity.NowPlayingMovieWithGenres
 abstract class NowPlayingMovieDao : BaseDao<NowPlayingMovieEntity> {
 
     @Transaction
-    @Query("SELECT * FROM now_playing_movie WHERE id IN (:movieIds)")
-    abstract suspend fun getMoviesWithGenresByIds(movieIds: List<Long>):
-        List<NowPlayingMovieWithGenres>
-
-    @Transaction
     @Query("SELECT * FROM now_playing_movie")
-    abstract fun getMoviesWithGenresPagingSource(): PagingSource<Int, NowPlayingMovieWithGenres>
+    abstract fun getPagingSource(): PagingSource<Int, NowPlayingMovieWithGenres>
 
     @Transaction
     @Query("DELETE FROM now_playing_movie")
-    abstract fun clearNowPlayingMoviesWithGenres()
+    abstract suspend fun clear()
 }

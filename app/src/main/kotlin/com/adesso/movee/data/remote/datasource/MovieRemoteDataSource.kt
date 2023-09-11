@@ -21,8 +21,8 @@ class MovieRemoteDataSource @Inject constructor(
         service.fetchMovieGenres()
     }
 
-    suspend fun fetchNowPlayingMovies(): NowPlayingMovieResponseModel = invoke {
-        service.fetchNowPlayingMovies()
+    suspend fun fetchNowPlayingMovies(page: Int): NowPlayingMovieResponseModel = invoke {
+        service.fetchNowPlayingMovies(page)
     }
 
     suspend fun fetchMovieDetail(id: Long): MovieDetailResponseModel = invoke {

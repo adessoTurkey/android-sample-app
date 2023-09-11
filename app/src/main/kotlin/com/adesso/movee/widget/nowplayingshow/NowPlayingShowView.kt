@@ -6,18 +6,26 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.paging.PagingData
 import androidx.viewpager2.widget.ViewPager2
 import com.adesso.movee.R
-import com.adesso.movee.base.BaseListAdapter
+import com.adesso.movee.base.BasePagingAdapter
+import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.databinding.ItemNowPlayingShowBinding
 import com.adesso.movee.databinding.ViewNowPlayingShowBinding
 import com.adesso.movee.internal.extension.executeAfter
-import com.adesso.movee.internal.extension.thisOrEmptyList
 import com.adesso.movee.uimodel.ShowUiModel
 
+@Suppress("UNCHECKED_CAST")
 @BindingAdapter("submitList")
-fun submitList(view: NowPlayingShowView, showUiModelList: List<ShowUiModel>?) {
-    view.updateList(showUiModelList ?: emptyList())
+fun <T : ListAdapterItem> submitList(view: NowPlayingShowView, data: PagingData<T>) {
+    val adapter = view.nowPlayingShowAdapter as BasePagingAdapter<ViewDataBinding, T>?
+
+    if (ViewTreeLifecycleOwner.get(view)?.lifecycle == null) return
+
+    adapter?.submitData(ViewTreeLifecycleOwner.get(view)!!.lifecycle, data)
 }
 
 @BindingAdapter("callback")
@@ -36,25 +44,14 @@ class NowPlayingShowView @JvmOverloads constructor(
         this,
         true
     )
-    private val nowPlayingShowAdapter = NowPlayingShowAdapter()
-
-    private var showUiModelList: List<ShowUiModel>? = null
-        set(value) {
-            if (value == showUiModelList) {
-                return
-            }
-
-            field = value.thisOrEmptyList()
-            nowPlayingShowAdapter.submitList(showUiModelList)
-            binder.viewPagerNowPlayingShow.currentItem = 0
-        }
+    val nowPlayingShowAdapter = NowPlayingShowAdapter()
 
     init {
         orientation = VERTICAL
 
-        with(binder.viewPagerNowPlayingShow) {
+        with(binder.viewPagerHeaderShow) {
             adapter = nowPlayingShowAdapter
-            offscreenPageLimit = 3
+            offscreenPageLimit = 20
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
             val pageMargin = resources.getDimensionPixelSize(R.dimen.margin_now_playing_page)
@@ -67,9 +64,11 @@ class NowPlayingShowView @JvmOverloads constructor(
             registerOnPageChangeCallback(
                 object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
+                        if (nowPlayingShowAdapter.itemCount == 0) return
 
-                        val showUiModel = nowPlayingShowAdapter.getShow(position)
+                        val showUiModel =
+                            nowPlayingShowAdapter.getShow(position)
+
                         binder.executeAfter {
                             show = showUiModel
                         }
@@ -77,10 +76,6 @@ class NowPlayingShowView @JvmOverloads constructor(
                 }
             )
         }
-    }
-
-    fun updateList(showUiModels: List<ShowUiModel>) {
-        showUiModelList = showUiModels
     }
 
     override fun setOrientation(orientation: Int) {
@@ -93,15 +88,19 @@ class NowPlayingShowView @JvmOverloads constructor(
     fun setNowPlayingShowCallback(callback: NowPlayingShowCallback) {
         nowPlayingShowAdapter.nowPlayingShowCallback = callback
     }
+
+    fun setCurrentItem(index: Int) {
+        binder.viewPagerHeaderShow.currentItem = index
+    }
 }
 
 interface NowPlayingShowCallback {
 
-    fun onNowPlayingShowClick(show: ShowUiModel)
+    fun onShowClick(show: ShowUiModel)
 }
 
-private class NowPlayingShowAdapter :
-    BaseListAdapter<ItemNowPlayingShowBinding, ShowUiModel>() {
+class NowPlayingShowAdapter :
+    BasePagingAdapter<ItemNowPlayingShowBinding, ShowUiModel>() {
 
     var nowPlayingShowCallback: NowPlayingShowCallback? = null
 
@@ -114,7 +113,7 @@ private class NowPlayingShowAdapter :
         }
     }
 
-    fun getShow(position: Int): ShowUiModel {
+    fun getShow(position: Int): ShowUiModel? {
         return getItem(position)
     }
 }

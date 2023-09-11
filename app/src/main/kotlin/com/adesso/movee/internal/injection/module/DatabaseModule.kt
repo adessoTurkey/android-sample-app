@@ -3,15 +3,16 @@ package com.adesso.movee.internal.injection.module
 import android.app.Application
 import androidx.room.Room
 import com.adesso.movee.data.local.database.MainDatabase
-import com.adesso.movee.data.local.database.dao.PopularMovieDao
 import com.adesso.movee.data.local.database.dao.MovieGenreCrossRefDao
 import com.adesso.movee.data.local.database.dao.MovieGenreDao
 import com.adesso.movee.data.local.database.dao.NowPlayingMovieDao
 import com.adesso.movee.data.local.database.dao.NowPlayingMovieIdPageDao
-import com.adesso.movee.data.local.database.dao.NowPlayingTvShowIdDao
+import com.adesso.movee.data.local.database.dao.NowPlayingTvShowDao
+import com.adesso.movee.data.local.database.dao.NowPlayingTvShowIdPageDao
+import com.adesso.movee.data.local.database.dao.PopularMovieDao
 import com.adesso.movee.data.local.database.dao.PopularMovieIdPageDao
-import com.adesso.movee.data.local.database.dao.TopRatedTvShowIdDao
-import com.adesso.movee.data.local.database.dao.TvShowDao
+import com.adesso.movee.data.local.database.dao.TopRatedTvShowDao
+import com.adesso.movee.data.local.database.dao.TopRatedTvShowIdPageDao
 import com.adesso.movee.data.local.database.dao.TvShowGenreCrossRefDao
 import com.adesso.movee.data.local.database.dao.TvShowGenreDao
 import dagger.Module
@@ -72,20 +73,26 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideTvShowDao(mainDatabase: MainDatabase): TvShowDao {
-        return mainDatabase.tvShowDao()
+    fun provideNowPlayingTvShowDao(mainDatabase: MainDatabase): NowPlayingTvShowDao {
+        return mainDatabase.nowPlayingTvShowDao()
     }
 
     @Provides
     @Singleton
-    fun provideTopRatedTvShowIdDao(mainDatabase: MainDatabase): TopRatedTvShowIdDao {
-        return mainDatabase.topRatedTvShowIdDao()
+    fun provideTopRatedTvShowDao(mainDatabase: MainDatabase): TopRatedTvShowDao {
+        return mainDatabase.topRatedTvShowDao()
     }
 
     @Provides
     @Singleton
-    fun provideNowPlayingTvShowIdDao(mainDatabase: MainDatabase): NowPlayingTvShowIdDao {
-        return mainDatabase.nowPlayingTvShowIdDao()
+    fun provideTopRatedTvShowIdPageDao(mainDatabase: MainDatabase): TopRatedTvShowIdPageDao {
+        return mainDatabase.topRatedTvShowIdPageDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNowPlayingTvShowIdPageDao(mainDatabase: MainDatabase): NowPlayingTvShowIdPageDao {
+        return mainDatabase.nowPlayingTvShowIdPageDao()
     }
 
     @Provides

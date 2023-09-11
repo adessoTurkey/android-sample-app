@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseAndroidViewModel
-import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
+import com.adesso.movee.domain.GetNowPlayingMoviesPagingFlowUseCase
 import com.adesso.movee.domain.GetPopularMoviesPagingFlowUseCase
 import com.adesso.movee.domain.ShouldRefreshPagingUseCase
 import com.adesso.movee.internal.util.AppBarStateChangeListener
@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val getPopularMoviesPagingFlowUseCase: GetPopularMoviesPagingFlowUseCase,
-    private val fetchNowPlayingMoviesUseCase: FetchNowPlayingMoviesUseCase,
+    private val getNowPlayingMoviesPagingFlowUseCase: GetNowPlayingMoviesPagingFlowUseCase,
     private val shouldRefreshPagingUseCase: ShouldRefreshPagingUseCase,
     application: Application
 ) : BaseAndroidViewModel(application) {
@@ -40,17 +40,19 @@ class MovieViewModel @Inject constructor(
     private val _popularMovies = MutableStateFlow<PagingData<MovieUiModel>>(PagingData.empty())
     private val _toolbarTitle = MutableLiveData<String>()
     private val _toolbarSubtitle = MutableLiveData(getString(R.string.movie_message_popular))
-    private val _nowPlayingMovies = MutableLiveData<List<MovieUiModel>>()
+    private val _nowPlayingMovies = MutableLiveData<PagingData<MovieUiModel>>(PagingData.empty())
     val popularMovies = _popularMovies.asStateFlow()
+
+    @Suppress("UNCHECKED_CAST")
     val showHeader = TripleCombinedLiveData(
         _toolbarTitle,
         _toolbarSubtitle,
         _nowPlayingMovies
-    ) { title, subtitle, nowPlayingShows ->
+    ) { title, subtitle, nowPlayingMovies ->
         ShowHeaderUiModel(
             title,
             subtitle,
-            nowPlayingShows
+            nowPlayingMovies as PagingData<ShowUiModel>?
         )
     }
 
@@ -63,18 +65,14 @@ class MovieViewModel @Inject constructor(
 
     private fun fetchNowPlayingMovies() {
         viewModelScope.launch {
-            val nowPlayingMoviesResult = fetchNowPlayingMoviesUseCase.run(UseCase.None)
+            val nowPlayingMoviesResult = getNowPlayingMoviesPagingFlowUseCase.run(UseCase.None)
 
             runOnViewModelScope {
                 nowPlayingMoviesResult
-                    .onSuccess(::postNowPlayingMovieList)
+                    .onSuccess(::postNowPlayingMoviesPagedData)
                     .onFailure(::handleFailure)
             }
         }
-    }
-
-    private fun postNowPlayingMovieList(movies: List<MovieUiModel>) {
-        _nowPlayingMovies.value = movies
     }
 
     private fun fetchPopularMovies() {
@@ -93,6 +91,14 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch {
             pagingFlow.cachedIn(viewModelScope).collect {
                 _popularMovies.value = it
+            }
+        }
+    }
+
+    private fun postNowPlayingMoviesPagedData(pagingFlow: Flow<PagingData<MovieUiModel>>) {
+        viewModelScope.launch {
+            pagingFlow.cachedIn(viewModelScope).collect {
+                _nowPlayingMovies.value = it
             }
         }
     }

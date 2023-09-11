@@ -18,7 +18,8 @@ interface MovieService {
     suspend fun fetchMovieGenres(): MovieGenreResponseModel
 
     @GET(NOW_PLAYING)
-    suspend fun fetchNowPlayingMovies(): NowPlayingMovieResponseModel
+    suspend fun fetchNowPlayingMovies(@Query(QUERY_PAGE) page: Int = 1):
+        NowPlayingMovieResponseModel
 
     @GET(DETAIL)
     suspend fun fetchMovieDetail(@Path(PATH_MOVIE_ID) id: Long): MovieDetailResponseModel

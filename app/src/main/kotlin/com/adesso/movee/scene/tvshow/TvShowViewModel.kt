@@ -1,13 +1,15 @@
 package com.adesso.movee.scene.tvshow
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseAndroidViewModel
-import com.adesso.movee.domain.FetchNowPlayingTvShowsUseCase
-import com.adesso.movee.domain.FetchTopRatedTvShowsUseCase
+import com.adesso.movee.domain.GetNowPlayingTvShowsPagingFlowUseCase
+import com.adesso.movee.domain.GetTopRatedTvShowsPagingFlowUseCase
+import com.adesso.movee.domain.ShouldRefreshPagingUseCase
 import com.adesso.movee.internal.util.AppBarStateChangeListener
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.COLLAPSED
 import com.adesso.movee.internal.util.AppBarStateChangeListener.State.EXPANDED
@@ -20,21 +22,27 @@ import com.adesso.movee.uimodel.TvShowUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class TvShowViewModel @Inject constructor(
-    private val fetchTopRatedTvShowsUseCase: FetchTopRatedTvShowsUseCase,
-    private val fetchNowPlayingTvShowsUseCase: FetchNowPlayingTvShowsUseCase,
+    private val shouldRefreshPagingUseCase: ShouldRefreshPagingUseCase,
+    private val getNowPlayingTvShowsPagingFlowUseCase: GetNowPlayingTvShowsPagingFlowUseCase,
+    private val getTopRatedTvShowsPagingFlowUseCase: GetTopRatedTvShowsPagingFlowUseCase,
     application: Application
 ) : BaseAndroidViewModel(application) {
 
-    private val _topRatedTvShows = MutableLiveData<List<TvShowUiModel>>()
+    private val _topRatedTvShows = MutableStateFlow<PagingData<TvShowUiModel>>(PagingData.empty())
     private val _toolbarTitle = MutableLiveData<String>()
     private val _toolbarSubtitle = MutableLiveData(getString(R.string.tv_show_message_top_rated))
-    private val _nowPlayingTvShows = MutableLiveData<List<TvShowUiModel>>()
-    val topRatedTvShows: LiveData<List<TvShowUiModel>> get() = _topRatedTvShows
+    private val _nowPlayingTvShows = MutableLiveData<PagingData<TvShowUiModel>>(PagingData.empty())
+    val topRatedTvShows = _topRatedTvShows.asStateFlow()
+
+    @Suppress("UNCHECKED_CAST")
     val showHeader = TripleCombinedLiveData(
         _toolbarTitle,
         _toolbarSubtitle,
@@ -43,9 +51,11 @@ class TvShowViewModel @Inject constructor(
         ShowHeaderUiModel(
             title,
             subtitle,
-            nowPlayingShows
+            nowPlayingShows as PagingData<ShowUiModel>?
         )
     }
+
+    val shouldRefreshPaging = shouldRefreshPagingUseCase.execute()
 
     init {
         fetchTopRatedTvShows()
@@ -54,7 +64,7 @@ class TvShowViewModel @Inject constructor(
 
     private fun fetchTopRatedTvShows() {
         viewModelScope.launch {
-            val topRatedTvShowsResult = fetchTopRatedTvShowsUseCase.run(UseCase.None)
+            val topRatedTvShowsResult = getTopRatedTvShowsPagingFlowUseCase.run(UseCase.None)
 
             runOnViewModelScope {
                 topRatedTvShowsResult
@@ -64,13 +74,9 @@ class TvShowViewModel @Inject constructor(
         }
     }
 
-    private fun postTopRatedTvShows(tvShows: List<TvShowUiModel>) {
-        _topRatedTvShows.value = tvShows
-    }
-
     private fun fetchNowPlayingTvShows() {
         viewModelScope.launch {
-            val nowPlayingTvShowsResult = fetchNowPlayingTvShowsUseCase.run(UseCase.None)
+            val nowPlayingTvShowsResult = getNowPlayingTvShowsPagingFlowUseCase.run(UseCase.None)
 
             runOnViewModelScope {
                 nowPlayingTvShowsResult
@@ -80,8 +86,20 @@ class TvShowViewModel @Inject constructor(
         }
     }
 
-    private fun postNowPlayingTvShows(tvShows: List<TvShowUiModel>) {
-        _nowPlayingTvShows.value = tvShows
+    private fun postTopRatedTvShows(pagingFlow: Flow<PagingData<TvShowUiModel>>) {
+        viewModelScope.launch {
+            pagingFlow.cachedIn(viewModelScope).collect {
+                _topRatedTvShows.value = it
+            }
+        }
+    }
+
+    private fun postNowPlayingTvShows(pagingFlow: Flow<PagingData<TvShowUiModel>>) {
+        viewModelScope.launch {
+            pagingFlow.cachedIn(viewModelScope).collect {
+                _nowPlayingTvShows.value = it
+            }
+        }
     }
 
     fun onAppBarStateChanged(state: AppBarStateChangeListener.State) {

@@ -13,16 +13,16 @@ class TvShowRemoteDataSource @Inject constructor(
     private val service: TvShowService
 ) : BaseRemoteDataSource() {
 
-    suspend fun fetchTopRatedTvShows(): TopRatedTvShowResponseModel = invoke {
-        service.fetchTopRatedTvShows()
+    suspend fun fetchTopRatedTvShows(page: Int): TopRatedTvShowResponseModel = invoke {
+        service.fetchTopRatedTvShows(page)
     }
 
     suspend fun fetchTvShowGenres(): TvShowGenreResponseModel = invoke {
         service.fetchTvShowGenres()
     }
 
-    suspend fun fetchNowPlayingTvShows(): NowPlayingTvShowResponseModel = invoke {
-        service.fetchNowPlayingTvShows()
+    suspend fun fetchNowPlayingTvShows(page: Int): NowPlayingTvShowResponseModel = invoke {
+        service.fetchNowPlayingTvShows(page)
     }
 
     suspend fun fetchTvShowDetail(id: Long): TvShowDetailResponseModel = invoke {

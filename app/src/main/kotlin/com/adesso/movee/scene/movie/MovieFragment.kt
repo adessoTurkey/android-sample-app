@@ -22,7 +22,7 @@ class MovieFragment :
     override fun initialize() {
         super.initialize()
 
-        binder.popularMovieAdapter = PopularMovieListAdapter(popularMovieCallback = this)
+        binder.popularMovieAdapter = PopularMoviePagingAdapter(popularMovieCallback = this)
         binder.layoutShowHeader.nowPlayingShowCallback = this
         binder.layoutShowHeader.appBarShow.addAppBarStateChangeListener { _, state ->
             viewModel.appbarStateChanged(state)
@@ -34,7 +34,7 @@ class MovieFragment :
         viewModel.onPopularMovieClick(movie)
     }
 
-    override fun onNowPlayingShowClick(show: ShowUiModel) {
+    override fun onShowClick(show: ShowUiModel) {
         viewModel.onNowPlayingShowClick(show)
     }
 
@@ -42,8 +42,10 @@ class MovieFragment :
         collectFlow(viewModel.shouldRefreshPaging) {
             if (it) {
                 binder.popularMovieAdapter?.refresh()
+                binder.layoutShowHeader.nowPlayingShowView.nowPlayingShowAdapter.refresh()
                 requireContext().toast(getString(R.string.common_paging_list_refreshed_message))
                 binder.recyclerViewPopularMovies.scrollToPosition(0)
+                binder.layoutShowHeader.nowPlayingShowView.setCurrentItem(0)
             }
         }
     }

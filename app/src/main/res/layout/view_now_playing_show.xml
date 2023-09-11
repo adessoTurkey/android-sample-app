@@ -17,7 +17,7 @@
         tools:parentTag="android.widget.LinearLayout">
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager_now_playing_show"
+            android:id="@+id/view_pager_header_show"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"

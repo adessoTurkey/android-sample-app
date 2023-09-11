@@ -11,7 +11,7 @@ interface PopularMovieCallback {
     fun onPopularMovieClick(movie: MovieUiModel)
 }
 
-class PopularMovieListAdapter(
+class PopularMoviePagingAdapter(
     private val popularMovieCallback: PopularMovieCallback,
 ) : BasePagingAdapter<ItemPopularMovieBinding, MovieUiModel>() {
 

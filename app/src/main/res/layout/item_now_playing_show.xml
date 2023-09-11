@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_and_offset_now_playing_page"
         android:layout_marginEnd="@dimen/margin_and_offset_now_playing_page"
-        android:onClick="@{() -> callback.onNowPlayingShowClick(show)}">
+        android:onClick="@{() -> callback.onShowClick(show)}">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_poster"
