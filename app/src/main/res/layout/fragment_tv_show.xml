@@ -12,7 +12,7 @@
 
         <variable
             name="topRatedTvShowAdapter"
-            type="com.adesso.movee.scene.tvshow.TopRatedTvShowListAdapter" />
+            type="com.adesso.movee.scene.tvshow.TopRatedTvShowPagingAdapter" />
 
     </data>
 

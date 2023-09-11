@@ -11,15 +11,10 @@ import com.adesso.movee.data.local.database.entity.PopularMovieWithGenres
 abstract class PopularMovieDao : BaseDao<PopularMovieEntity> {
 
     @Transaction
-    @Query("SELECT * FROM popular_movie WHERE id IN (:movieIds)")
-    abstract suspend fun getMoviesWithGenresByIds(movieIds: List<Long>):
-        List<PopularMovieWithGenres>
-
-    @Transaction
     @Query("SELECT * FROM popular_movie")
-    abstract fun getMoviesWithGenresPagingSource(): PagingSource<Int, PopularMovieWithGenres>
+    abstract fun getPagingSource(): PagingSource<Int, PopularMovieWithGenres>
 
     @Transaction
     @Query("DELETE FROM popular_movie")
-    abstract fun clearPopularMoviesWithGenres()
+    abstract suspend fun clear()
 }

@@ -31,38 +31,29 @@ class MovieLocalDataSource @Inject constructor(
     }
 
     fun getPopularMoviesWithGenresPagingSource(): PagingSource<Int, PopularMovieWithGenres> {
-        return popularMovieDao.getMoviesWithGenresPagingSource()
+        return popularMovieDao.getPagingSource()
     }
 
-    fun clearPopularMovieData() {
-        popularMovieDao.clearPopularMoviesWithGenres()
-        popularMovieIdPageDao.clearPopularMovieIds()
+    fun getNowPlayingMoviesWithGenresPagingSource(): PagingSource<Int, NowPlayingMovieWithGenres> {
+        return nowPlayingMovieDao.getPagingSource()
     }
 
-    fun clearNowPlayingMovieData() { // Will be used for now playing movies paging.
-        nowPlayingMovieDao.clearNowPlayingMoviesWithGenres()
-        nowPlayingMovieIdPageDao.clearNowPlayingMovieIds()
+    suspend fun clearPopularMovieData() {
+        popularMovieDao.clear()
+        popularMovieIdPageDao.clear()
     }
 
-    suspend fun getLastPageInDataSource(): Int? {
-        return popularMovieIdPageDao.getPopularMoviePages().lastOrNull()
+    suspend fun clearNowPlayingMovieData() { // Will be used for now playing movies paging.
+        nowPlayingMovieDao.clear()
+        nowPlayingMovieIdPageDao.clear()
     }
 
-    suspend fun getPopularMoviesWithGenres(movieIds: List<Long>): List<PopularMovieWithGenres> {
-        return popularMovieDao.getMoviesWithGenresByIds(movieIds)
+    suspend fun getPopularMoviesLastPage(): Int? {
+        return popularMovieIdPageDao.getPages().lastOrNull()
     }
 
-    suspend fun getNowPlayingMoviesWithGenres(movieIds: List<Long>):
-        List<NowPlayingMovieWithGenres> {
-            return nowPlayingMovieDao.getMoviesWithGenresByIds(movieIds)
-        }
-
-    suspend fun getPopularMovieIds(): List<Long> {
-        return popularMovieIdPageDao.getIds()
-    }
-
-    suspend fun getNowPlayingMovieIds(): List<Long> {
-        return nowPlayingMovieIdPageDao.getIds()
+    suspend fun getMovieNowPlayingLastPage(): Int? {
+        return nowPlayingMovieIdPageDao.getPages().lastOrNull()
     }
 
     suspend fun insertGenres(genres: List<MovieGenreEntity>) {

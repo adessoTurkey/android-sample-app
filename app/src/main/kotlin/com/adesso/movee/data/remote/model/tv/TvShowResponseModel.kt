@@ -1,6 +1,7 @@
 package com.adesso.movee.data.remote.model.tv
 
-import com.adesso.movee.data.local.database.entity.TvShowEntity
+import com.adesso.movee.data.local.database.entity.NowPlayingTvShowEntity
+import com.adesso.movee.data.local.database.entity.TopRatedTvShowEntity
 import com.adesso.movee.data.local.database.entity.TvShowGenreCrossRefEntity
 import com.adesso.movee.data.remote.BaseResponseModel
 import com.adesso.movee.internal.util.Image
@@ -19,7 +20,19 @@ data class TvShowResponseModel(
     @Json(name = "first_air_date") val releaseDate: Date?
 ) : BaseResponseModel() {
 
-    fun toEntity() = TvShowEntity(
+    fun toNowPlayingEntity() = NowPlayingTvShowEntity(
+        id = id,
+        title = title,
+        overview = overview,
+        genreIds = genreIds,
+        posterPath = posterPath,
+        backdropPath = backdropPath,
+        popularity = popularity,
+        average = average,
+        releaseDate = releaseDate
+    )
+
+    fun toTopRatedEntity() = TopRatedTvShowEntity(
         id = id,
         title = title,
         overview = overview,

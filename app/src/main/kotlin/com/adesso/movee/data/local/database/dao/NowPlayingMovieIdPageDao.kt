@@ -8,9 +8,9 @@ import com.adesso.movee.data.local.database.entity.TABLE_NOW_PLAYING_MOVIE_ID_PA
 @Dao
 abstract class NowPlayingMovieIdPageDao : BaseDao<NowPlayingMovieIdPageEntity> {
 
-    @Query("SELECT id FROM $TABLE_NOW_PLAYING_MOVIE_ID_PAGE")
-    abstract suspend fun getIds(): List<Long>
+    @Query("SELECT page FROM $TABLE_NOW_PLAYING_MOVIE_ID_PAGE")
+    abstract suspend fun getPages(): List<Int>
 
     @Query("DELETE FROM $TABLE_NOW_PLAYING_MOVIE_ID_PAGE")
-    abstract fun clearNowPlayingMovieIds()
+    abstract suspend fun clear()
 }
